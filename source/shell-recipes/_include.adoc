@@ -1,0 +1,112 @@
+== Nix shell recipes
+
+=== Shell with access to a package from the Nixpkgs/NixOS repo
+
+This shell provides access to two packages from nixpkgs: hello and
+cowsay.
+
+[source,nix,linenums]
+....
+include::0100-shell-with-nixpkgs.nix[]
+....
+
+Here’s a demonstration using the shell.
+
+....
+$ nix-shell
+$ hello
+Hello, world!
+$ cowsay "moo"
+ _____
+< moo >
+ -----
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+....
+
+The command-line equivalent would be `nix-shell -p hello cowsay`
+
+=== Shell with access to a package defined in a remote git repo
+
+[source,nix,linenums]
+....
+include::0150-shell-with-git-nix-pkg.nix[]
+....
+
+Here’s a demonstration using the shell.
+
+....
+$ nix-shell
+$ hello-nix
+Hello from your nix package!
+....
+
+=== Shell with access to a flake
+
+[source,nix,linenums]
+....
+include::0200-shell-with-flake.nix[]
+....
+
+Here’s a demonstration using the shell.
+
+....
+$ nix-shell
+$ hello-flake
+Hello from your flake!
+....
+
+=== Shell with access to a specific revision of a flake
+
+[source,nix,linenums]
+....
+include::0250-shell-with-flake-rev.nix[]
+....
+
+Here’s a demonstration using the shell.
+
+....
+$ nix-shell
+$ hello-flake
+Hello from your flake!
+....
+
+=== Shell with access to a Haskell package on your local computer
+
+This shell provides access to three Haskell packages that are on my hard
+drive.
+
+[source,nix,linenums]
+....
+include::0300-shell-haskell-local.nix[]
+....
+
+=== Shell with access to a Haskell package on your local computer, with interdependencies
+
+This shell provides access to four Haskell packages that are on my hard
+drive. The fourth package depends on the first three to build.
+
+[source,nix,linenums]
+....
+include::0350-shell-haskell-local-deps.nix[]
+....
+
+=== Shell with an environment variable set
+
+This shell has the environment variable FOO set to ``bar''
+
+[source,nix,linenums]
+....
+include::0400-shell-with-env-var.nix[]
+....
+
+Here’s a demonstration using the shell.
+
+....
+$ nix-shell
+$ echo $FOO
+bar
+....
