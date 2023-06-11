@@ -1,0 +1,28 @@
+= Wombat's Book of Nix
+{authors}, {build_date}
+:sectnums:
+:toc: left
+:source-highlighter: pygments
+:pygments-style: manni
+:pygments-linenums-mode: table
+:!prewrap:
+
+include::intro.adoc[]
+
+include::hello-flake.adoc[]
+
+include::hello-flake-repo.adoc[]
+
+include::flake-structure.adoc[]
+
+include::generic-flake.adoc[]
+
+include::hello-flake-return.adoc[]
+
+include::modify-hello-flake.adoc[]
+
+include::python-flake.adoc[]
+
+include::shell-recipes/_include.adoc[]
+
+include::shebangs/_include.adoc[]
