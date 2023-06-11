@@ -5,7 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>The Dangers of Wolpertingers</title>
+<meta name="author" content="{authors}, {build_date}">
+<title>Wombat&#8217;s Book of Nix</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,28 +436,1714 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<style>
+pre.pygments .hll { background-color: #ffffcc }
+pre.pygments { background: #f0f3f3; }
+pre.pygments .tok-c { color: #0099FF; font-style: italic } /* Comment */
+pre.pygments .tok-err { color: #AA0000; background-color: #FFAAAA } /* Error */
+pre.pygments .tok-k { color: #006699; font-weight: bold } /* Keyword */
+pre.pygments .tok-o { color: #555555 } /* Operator */
+pre.pygments .tok-ch { color: #0099FF; font-style: italic } /* Comment.Hashbang */
+pre.pygments .tok-cm { color: #0099FF; font-style: italic } /* Comment.Multiline */
+pre.pygments .tok-cp { color: #009999 } /* Comment.Preproc */
+pre.pygments .tok-cpf { color: #0099FF; font-style: italic } /* Comment.PreprocFile */
+pre.pygments .tok-c1 { color: #0099FF; font-style: italic } /* Comment.Single */
+pre.pygments .tok-cs { color: #0099FF; font-weight: bold; font-style: italic } /* Comment.Special */
+pre.pygments .tok-gd { background-color: #FFCCCC; border: 1px solid #CC0000 } /* Generic.Deleted */
+pre.pygments .tok-ge { font-style: italic } /* Generic.Emph */
+pre.pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+pre.pygments .tok-gh { color: #003300; font-weight: bold } /* Generic.Heading */
+pre.pygments .tok-gi { background-color: #CCFFCC; border: 1px solid #00CC00 } /* Generic.Inserted */
+pre.pygments .tok-go { color: #AAAAAA } /* Generic.Output */
+pre.pygments .tok-gp { color: #000099; font-weight: bold } /* Generic.Prompt */
+pre.pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+pre.pygments .tok-gu { color: #003300; font-weight: bold } /* Generic.Subheading */
+pre.pygments .tok-gt { color: #99CC66 } /* Generic.Traceback */
+pre.pygments .tok-kc { color: #006699; font-weight: bold } /* Keyword.Constant */
+pre.pygments .tok-kd { color: #006699; font-weight: bold } /* Keyword.Declaration */
+pre.pygments .tok-kn { color: #006699; font-weight: bold } /* Keyword.Namespace */
+pre.pygments .tok-kp { color: #006699 } /* Keyword.Pseudo */
+pre.pygments .tok-kr { color: #006699; font-weight: bold } /* Keyword.Reserved */
+pre.pygments .tok-kt { color: #007788; font-weight: bold } /* Keyword.Type */
+pre.pygments .tok-m { color: #FF6600 } /* Literal.Number */
+pre.pygments .tok-s { color: #CC3300 } /* Literal.String */
+pre.pygments .tok-na { color: #330099 } /* Name.Attribute */
+pre.pygments .tok-nb { color: #336666 } /* Name.Builtin */
+pre.pygments .tok-nc { color: #00AA88; font-weight: bold } /* Name.Class */
+pre.pygments .tok-no { color: #336600 } /* Name.Constant */
+pre.pygments .tok-nd { color: #9999FF } /* Name.Decorator */
+pre.pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+pre.pygments .tok-ne { color: #CC0000; font-weight: bold } /* Name.Exception */
+pre.pygments .tok-nf { color: #CC00FF } /* Name.Function */
+pre.pygments .tok-nl { color: #9999FF } /* Name.Label */
+pre.pygments .tok-nn { color: #00CCFF; font-weight: bold } /* Name.Namespace */
+pre.pygments .tok-nt { color: #330099; font-weight: bold } /* Name.Tag */
+pre.pygments .tok-nv { color: #003333 } /* Name.Variable */
+pre.pygments .tok-ow { color: #000000; font-weight: bold } /* Operator.Word */
+pre.pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+pre.pygments .tok-mb { color: #FF6600 } /* Literal.Number.Bin */
+pre.pygments .tok-mf { color: #FF6600 } /* Literal.Number.Float */
+pre.pygments .tok-mh { color: #FF6600 } /* Literal.Number.Hex */
+pre.pygments .tok-mi { color: #FF6600 } /* Literal.Number.Integer */
+pre.pygments .tok-mo { color: #FF6600 } /* Literal.Number.Oct */
+pre.pygments .tok-sa { color: #CC3300 } /* Literal.String.Affix */
+pre.pygments .tok-sb { color: #CC3300 } /* Literal.String.Backtick */
+pre.pygments .tok-sc { color: #CC3300 } /* Literal.String.Char */
+pre.pygments .tok-dl { color: #CC3300 } /* Literal.String.Delimiter */
+pre.pygments .tok-sd { color: #CC3300; font-style: italic } /* Literal.String.Doc */
+pre.pygments .tok-s2 { color: #CC3300 } /* Literal.String.Double */
+pre.pygments .tok-se { color: #CC3300; font-weight: bold } /* Literal.String.Escape */
+pre.pygments .tok-sh { color: #CC3300 } /* Literal.String.Heredoc */
+pre.pygments .tok-si { color: #AA0000 } /* Literal.String.Interpol */
+pre.pygments .tok-sx { color: #CC3300 } /* Literal.String.Other */
+pre.pygments .tok-sr { color: #33AAAA } /* Literal.String.Regex */
+pre.pygments .tok-s1 { color: #CC3300 } /* Literal.String.Single */
+pre.pygments .tok-ss { color: #FFCC33 } /* Literal.String.Symbol */
+pre.pygments .tok-bp { color: #336666 } /* Name.Builtin.Pseudo */
+pre.pygments .tok-fm { color: #CC00FF } /* Name.Function.Magic */
+pre.pygments .tok-vc { color: #003333 } /* Name.Variable.Class */
+pre.pygments .tok-vg { color: #003333 } /* Name.Variable.Global */
+pre.pygments .tok-vi { color: #003333 } /* Name.Variable.Instance */
+pre.pygments .tok-vm { color: #003333 } /* Name.Variable.Magic */
+pre.pygments .tok-il { color: #FF6600 } /* Literal.Number.Integer.Long */
+</style>
 </head>
-<body class="article">
+<body class="book toc2 toc-left">
 <div id="header">
-<h1>The Dangers of Wolpertingers</h1>
+<h1>Wombat&#8217;s Book of Nix</h1>
+<div class="details">
+<span id="author" class="author">{authors}, {build_date}</span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_why_nix">1.1. Why Nix?</a></li>
+<li><a href="#_why_flakes">1.2. Why <em>flakes</em>?</a></li>
+<li><a href="#_prerequisites">1.3. Prerequisites</a></li>
+<li><a href="#_tip_pay_attention_to_those_hyphens">1.4. Tip: Pay attention to those hyphens</a></li>
+</ul>
+</li>
+<li><a href="#_hello_flake">2. Hello, flake!</a></li>
+<li><a href="#_the_hello_flake_repo">3. The hello-flake repo</a></li>
+<li><a href="#_flake_structure">4. Flake structure</a>
+<ul class="sectlevel2">
+<li><a href="#_inputs">4.1. Inputs</a></li>
+<li><a href="#_outputs">4.2. Outputs</a></li>
+</ul>
+</li>
+<li><a href="#_a_generic_flake">5. A generic flake</a></li>
+<li><a href="#_another_look_at_hello_flake">6. Another look at hello-flake</a></li>
+<li><a href="#_modifying_the_flake">7. Modifying the flake</a>
+<ul class="sectlevel2">
+<li><a href="#_development_workflows">7.1. Development workflows</a></li>
+<li><a href="#_this_all_seems_like_a_hassle">7.2. This all seems like a hassle!</a></li>
+</ul>
+</li>
+<li><a href="#_a_new_flake_from_scratch_python">8. A new flake from scratch (Python)</a></li>
+<li><a href="#_nix_shell_recipes">9. Nix shell recipes</a>
+<ul class="sectlevel2">
+<li><a href="#_shell_with_access_to_a_package_from_the_nixpkgsnixos_repo">9.1. Shell with access to a package from the Nixpkgs/NixOS repo</a></li>
+<li><a href="#_shell_with_access_to_a_package_defined_in_a_remote_git_repo">9.2. Shell with access to a package defined in a remote git repo</a></li>
+<li><a href="#_shell_with_access_to_a_flake">9.3. Shell with access to a flake</a></li>
+<li><a href="#_shell_with_access_to_a_specific_revision_of_a_flake">9.4. Shell with access to a specific revision of a flake</a></li>
+<li><a href="#_shell_with_access_to_a_haskell_package_on_your_local_computer">9.5. Shell with access to a Haskell package on your local computer</a></li>
+<li><a href="#_shell_with_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.6. Shell with access to a Haskell package on your local computer, with interdependencies</a></li>
+<li><a href="#_shell_with_an_environment_variable_set">9.7. Shell with an environment variable set</a></li>
+</ul>
+</li>
+<li><a href="#_nix_shell_shebangs">10. Nix-shell shebangs</a>
+<ul class="sectlevel2">
+<li><a href="#_a_bash_script_depending_on_a_package_in_the_nixpkgs_repo">10.1. A Bash script depending on a package in the nixpkgs repo.</a></li>
+<li><a href="#_a_python_script_depending_on_a_package_in_the_nixpkgs_repo">10.2. A Python script depending on a package in the nixpkgs repo.</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="_introduction">1. Introduction</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_why_nix">1.1. Why Nix?</h3>
 <div class="paragraph">
-<p>Don&#8217;t worry about gumberoos or splintercats.
-Something far more fearsome plagues the days, nights, and inbetweens.
-Wolpertingers.</p>
+<p>If you’ve opened this PDF, you already have your own motivation for
+learning Nix. Here’s how it helps me. As a researcher, I tend to work on
+a series of short-term projects, mostly demos and prototypes. For each
+one, I typically develop some software using a compiler, often with some
+open source libraries. Often I use other tools to analyse data or
+generate documentation, for example.</p>
+</div>
+<div class="paragraph">
+<p>Problems would arise when handing off the project to colleagues; they
+would report errors when trying to build or run the project. Belatedly I
+would realise that my code relies on a library that they need to
+install. Or perhaps they had installed the library, but the version
+they’re using is incompatible.</p>
+</div>
+<div class="paragraph">
+<p>Using containers helped with the problem. However, I didn’t want to
+<em>develop</em> in a container. I did all my development in my nice, familiar,
+environment with my custom aliases and shell prompt. and <em>then</em> I
+containerised the software. This added step was annoying for me, and if
+my colleague wanted to do some additional development, they would
+probably extract all of the source code from the container first anyway.
+Containers are great, but this isn’t the ideal use case for them.</p>
+</div>
+<div class="paragraph">
+<p>Nix allows me to work in my custom environment, but forces me to specify
+any dependencies. It automatically tracks the version of each dependency
+so that it can replicate the environment wherever and whenever it’s
+needed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_why_flakes">1.2. Why <em>flakes</em>?</h3>
+<div class="paragraph">
+<p>Flakes are labeled as an experimental feature, so it might seem safer to
+avoid them. However, they have been in use for years, and there is
+widespread adoption, so the aren’t going away any time soon. Flakes are
+easier to understand, and offer more features than the traditional Nix
+approach. After weighing the pros and cons, I feel it’s better to learn
+and use flakes; and this seems to be the general consensus.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites">1.3. Prerequisites</h3>
+<div class="paragraph">
+<p>To follow along with this tutorial, you will need access to a computer
+or (virtual machine) with Nix installed and <em>flakes enabled</em>.</p>
+</div>
+<div class="paragraph">
+<p>I recommend the installer from
+<a href="https://zero-to-nix.com/start/install">zero-to-nix.com</a>. This installer
+automatically enables flakes.</p>
+</div>
+<div class="paragraph">
+<p>More documentation (and another installer) available at
+<a href="https://nixos.org/">nixos.org</a>.</p>
+</div>
+<div class="paragraph">
+<p>To enable flakes on an existing installation, see the instructions in
+the <a href="https://nixos.wiki/wiki/Flakes">NixOS wiki</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tip_pay_attention_to_those_hyphens">1.4. Tip: Pay attention to those hyphens</h3>
+<div class="paragraph">
+<p>There are hyphenated and unhyphenated versions of many Nix commands. For
+example, <code>nix-shell</code> and <code>nix shell</code> are two different commands.</p>
+</div>
+<div class="paragraph">
+<p>Generally speaking, the unhyphenated versions are for working directly
+with flakes, while the hyphenated versions are for everything else.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_origins">Origins</h2>
+<h2 id="_hello_flake">2. Hello, flake!</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Wolpertingers are <a href="https://en.wikipedia.org/wiki/Wolpertinger">ravenous beasts</a>.</p>
+<p>Before learning to write Nix flakes, let’s learn how to use them. I’ve
+created a simple example of a flake in this git
+<a href="https://codeberg.org/mhwombat/hello-flake">repository</a>. To run this
+flake, you don’t need to install anything; simply run the command below.
+The first time you use a package, Nix has to fetch and build it, which
+may take a few minutes. Subsequent invocations should be instantaneous.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix run "git+https://codeberg.org/mhwombat/hello-flake"</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>That’s a lot to type every time we want to use this package. Instead, we
+can enter a shell with the package available to us, using the
+<code>nix shell</code> command.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix shell "git+https://codeberg.org/mhwombat/hello-flake"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this shell, the command is on our <code>$PATH</code>, so we can execute the
+command by name.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Nix didn’t <em>install</em> the package; it merely built and placed it in a
+directory called the ``Nix store''. Thus we can have multiple versions
+of a package without worrying about conflicts. We can find out the
+location of the executable, if we’re curious.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ which hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once we exit that shell, the <code>hello-flake</code> command is no longer
+available.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# echo '$ exit'
+$# echo '$ hello-flake'
+sh: line 3: hello-flake: command not found</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Actually, we can still access the command using the store path we found
+earlier. That’s not particularly convenient, but it does demonstrate
+that the package remains in the store for future use.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">/nix/store/0xbn2hi6h1m5h4kc02vwffs2cydrbc0r-hello-flake/bin/hello-flake</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_hello_flake_repo">3. The hello-flake repo</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let’s clone the repository and see how the flake is defined.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ cd ~/tutorial-practice
+$ git clone https://codeberg.org/mhwombat/hello-flake
+$ cd hello-flake
+$ ls</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is a simple repo with just a few files. Like most git repos, it
+includes <code>LICENSE</code>, which contains the software license, and <code>README.md</code>
+which provides information about the repo.</p>
+</div>
+<div class="paragraph">
+<p>The <code>hello-flake</code> file is the command we were executing earlier. This
+particular executable is just a shell script, so we can view it. It’s an
+extremly simple script with just two lines.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ cat hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now that we have a copy of the repo, we can execute this script
+directly.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ ./hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Not terribly exciting, I know. But starting with such a simple package
+makes it easier to focus on the flake system without getting bogged down
+in the details. We’ll make this script a little more interesting later.</p>
+</div>
+<div class="paragraph">
+<p>Let’s look at another file. The file that defines how to package a flake
+is always called <code>flake.nix</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ cat flake.nix</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If this is your first time seeing a flake definition, it probably looks
+intimidating. Flakes are written in a functional language called
+Nix<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>. Yes,
+``Nix'' is the name of both the package manager and the language it
+uses. We’ll look at this in more detail shortly. For now, I’d like to
+focus on the inputs section.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are just two entries, one for <code>nixpkgs</code> and one for <code>flake-utils</code>.
+The first one, <code>nixpkgs</code> refers to the collection of standard software
+packages that can be installed with the Nix package manager. The second,
+<code>flake-utils</code>, is a collection of utilities that simplify writing
+flakes. The important thing to note is that the <code>hello-flake</code> package
+<em>depends</em> on <code>nixpkgs</code> and <code>flake-utils</code>.</p>
+</div>
+<div class="paragraph">
+<p>Finally, let’s look at <code>flake.lock</code>, or rather, just part of it.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ head -n 40 flake.lock</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If <code>flake.nix</code> seemed intimidating, then this file looks like an
+invocation for Cthulhu. The good news is that this file is automatically
+generated; you never need to write it. It contains information about all
+of the dependencies for the flake, including where they came from, the
+exact version/revision, and hash. This lockfile <em>uniquely</em> specifies all
+flake dependencies, (e.g., version number, branch, revision, hash), so
+that <em>anyone, anywhere, any time, can re-create the exact same
+environment that the original developer used.</em></p>
+</div>
+<div class="paragraph">
+<p>No more complaints of ``but it works on my machine!''. That is the
+benefit of using flakes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_flake_structure">4. Flake structure</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The basic structure of a flake is shown below.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">{
+  description = ... # package description
+  inputs = ... # dependencies
+  outputs = ... # what the flake produces
+  nixConfig = ... # advanced configuration options
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>description</code> part is self-explanatory; it’s just a string. You
+probably won’t need <code>nixConfig</code> unless you’re doing something fancy. I’m
+going to focus on what goes into the <code>inputs</code> and <code>outputs</code> sections,
+and highlight some of the things I found confusing.</p>
+</div>
+<div class="sect2">
+<h3 id="_inputs">4.1. Inputs</h3>
+<div class="paragraph">
+<p>This section specifies the dependencies of a flake. It’s an <em>attribute
+set</em>; it maps keys to values.</p>
+</div>
+<div class="paragraph">
+<p>To ensure that a build is reproducible, the build step runs in a <em>pure</em>
+environment with no network access. Therefore, any external dependencies
+must be specified in the ``inputs'' section so they can be fetched in
+advance (before we enter the pure environment).</p>
+</div>
+<div class="paragraph">
+<p>Each entry in this section maps an input name to a <em>flake reference</em>.
+This commonly takes the following form.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">NAME.url = URL-LIKE-EXPRESSION</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As a first example, all (almost all?) flakes depend on ``nixpkgs'',
+which is a large Git repository of programs and libraries that are
+pre-packaged for Nix. We can write that as</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">nixpkgs.url = "github:NixOS/nixpkgs/nixos-VERSION";</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>NN.MM</code> is replaced with the version number that you used to build
+the package, e.g. <code>22.11</code>. Information about the latest nixpkgs releases
+is available at <a href="https://status.nixos.org/" class="bare">https://status.nixos.org/</a>. You can also write the entry
+without the version number</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">nixpkgs.url = "github:NixOS/nixpkgs/nixos-VERSION";</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or more simply,</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">nixpkgs.url = "nixpkgs";</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You might be concerned that omitting the version number would make the
+build non-reproducible. If someone else builds the flake, could they end
+up with a different version of nixpkgs? No! remember that the lockfile
+(<code>flake.lock</code>) <em>uniquely</em> specifies all flake inputs.</p>
+</div>
+<div class="paragraph">
+<p>Git and Mercurial repositories are the most common type of flake
+reference, as in the examples below.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">A Git repository</dt>
+<dd>
+<p><code>git+https://github.com/NixOS/patchelf</code></p>
+</dd>
+<dt class="hdlist1">A specific branch of a Git repository</dt>
+<dd>
+<p><code>git+https://github.com/NixOS/patchelf?ref=master</code></p>
+</dd>
+<dt class="hdlist1">A specific revision of a Git repository</dt>
+<dd>
+<p><br>
+<code>git+https://github.com/NixOS/patchelf?ref=master&amp;rev=f34751b88bd07d7f44f5cd3200fb4122bf916c7e</code></p>
+</dd>
+<dt class="hdlist1">A tarball</dt>
+<dd>
+<p><code><a href="https://github.com/NixOS/patchelf/archive/master.tar.gz" class="bare">https://github.com/NixOS/patchelf/archive/master.tar.gz</a></code></p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>You can find more examples of flake references in the
+<a href="https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake.html#examples">Nix
+Reference Manual</a>.</p>
+</div>
+<div class="paragraph">
+<p>Although you probably won’t need to use it, there is another syntax for
+flake references that you might encounter. This example</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">inputs.import-cargo = {
+  type = "github";
+  owner = "edolstra";
+  repo = "import-cargo";
+};</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">inputs.import-cargo.url = "github:edolstra/import-cargo";</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each of the <code>inputs</code> is fetched, evaluated and passed to the <code>outputs</code>
+function as a set of attributes with the same name as the corresponding
+input.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_outputs">4.2. Outputs</h3>
+<div class="paragraph">
+<p>This section is a function that essentially returns the recipe for
+building the flake.</p>
+</div>
+<div class="paragraph">
+<p>We said above that <code>inputs</code> are passed to the <code>outputs</code>, so we need to
+list them as parameters. This example references the <code>import-cargo</code>
+dependency defined in the previous example.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">outputs = { self, nixpkgs, import-cargo }: {
+  ... outputs ...
+};</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So what actually goes in this section (where I wrote <code>&#8230;&#8203;outputs&#8230;&#8203;</code>)?
+That depends on the programming languages your software is written in,
+the build system you use, and more. There are Nix functions and tools
+that can simplify much of this, and new, easier-to-use ones are released
+regularly. We’ll look at some of these in the next section.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_a_generic_flake">5. A generic flake</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The previous section presented a very high-level view of flakes,
+focusing on the basic structure. In this section, we will add a bit more
+detail.</p>
+</div>
+<div class="paragraph">
+<p>Flakes are written in the Nix programming language, which is a
+functional language. As with most programming languages, there are many
+ways to achieve the same result. Below is an example you can follow when
+writing your own flakes. I’ll explain the example in some detail.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="template.png" alt="image"></span></p>
+</div>
+<div class="paragraph">
+<p>We discussed how to specify flake inputs ❶ in the previous section, so
+this part of the flake should be familiar. Remember also that any
+dependencies in the input section should also be listed at the beginning
+of the outputs section ❷.</p>
+</div>
+<div class="paragraph">
+<p>Now it’s time to look at the content of the output section. If we want
+the package to be available for multiple systems (e.g.,
+<code>x86_64-linux'', </code>aarch64-linux'', <code>x86_64-darwin'', and
+</code>aarch64-darwin''), we need to define the output for each of those
+systems. Often the definitions are identical, apart from the name of the
+system. The eachDefaultSystem function ❸ provided by flake-utils allows
+us to write a single definition using a variable for the system name.
+The function then iterates over all default systems to generate the
+outputs for each one.</p>
+</div>
+<div class="paragraph">
+<p>The <code>devShells</code> variable specifies the environment that should be
+available when doing development on the package. If you don’t need a
+special development environment, you can omit this section. At ❹ you
+would list any tools (e.g., compilers and language-specific build tools)
+you want to have available in a development shell. If the compiler needs
+access to language-specific packages, there are Nix functions to assist
+with that. These functions are very language-specific, and not always
+well-documented. We will see examples for some languages later in the
+tutorial. In general, I recommend that you do a web search for ``nix
+language'', and try to find resources that were written or updated
+recently.</p>
+</div>
+<div class="paragraph">
+<p>The <code>packages</code> variable defines the packages that this flake provides.
+The package definition ❺ depends on the programming languages your
+software is written in, the build system you use, and more. There are
+Nix functions and tools that can simplify much of this, and new,
+easier-to-use ones are released regularly. Again, I recommend that you
+do a web search for ``nix language'', and try to find resources that
+were written or updated recently.</p>
+</div>
+<div class="paragraph">
+<p>The <code>apps</code> variable identifies any applications provided by the flake.
+In particular, it identifies the default executable ❻ that <code>nix run</code>
+will run if you don’t specify an app.</p>
+</div>
+<div class="paragraph">
+<p>The list below contains are a few functions that are commonly used in
+this section.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">General-purpose</dt>
+<dd>
+<p>The standard environment provides <code>mkDerivation</code>, which is especially
+useful for the typical <code>./configure; make; make install</code> scenario.
+It’s customisable.</p>
+</dd>
+<dt class="hdlist1">Python</dt>
+<dd>
+<p><code>buildPythonApplication</code>, <code>buildPythonPackage</code>.</p>
+</dd>
+<dt class="hdlist1">Haskell</dt>
+<dd>
+<p><code>mkDerivation</code> (Haskell version, which is a wrapper around the
+standard environment version), <code>developPackage</code>, <code>callCabal2Nix</code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_another_look_at_hello_flake">6. Another look at hello-flake</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we have a better understanding of the structure of <code>flake.nix</code>,
+let’s have a look at the one we saw earlier, in the <code>hello-flake</code> repo.
+If you compare this flake definition to the colour-coded template
+presented in the previous section, most of it should look familiar.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">{
+  description = "a very simple and friendly flake";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        packages = rec {
+          hello =
+            . . .
+            SOME UNFAMILIAR STUFF
+            . . .
+          };
+          default = hello;
+        };
+
+        apps = rec {
+          hello = flake-utils.lib.mkApp { drv = self.packages.${system}.hello; };
+          default = hello;
+        };
+      }
+    );
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This <code>flake.nix</code> doesn’t have a <code>devShells</code> section, because development
+on the current version doesn’t require anything beyond the ``bare
+bones'' linux commands. Later we will add a feature that requires
+additional development tools.</p>
+</div>
+<div class="paragraph">
+<p>Now let’s look at the section I labeled ```SOME UNFAMILIAR STUFF&#8217;' and
+see what it does.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">        packages = rec {
+          hello = pkgs.stdenv.mkDerivation rec {           # See (1) in text
+            name = "hello-flake";
+
+            src = ./.;                                     # See (2) in text
+
+            unpackPhase = "true";
+
+            buildPhase = ":";
+
+            installPhase =
+              ''
+                mkdir -p $out/bin                          # See (3) in text
+                cp $src/hello-flake $out/bin/hello-flake   # See (4) in text
+                chmod +x $out/bin/hello-flake              # See (5) in text
+              '';
+          };</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This flake uses <code>mkDerivation</code> (1) which is a very useful
+general-purpose package builder provided by the Nix standard
+environment. It’s especially useful for the typical
+<code>./configure; make; make install</code> scenario, but for this flake we don’t
+even need that.</p>
+</div>
+<div class="paragraph">
+<p>The <code>name</code> variable is the name of the flake, as it would appear in a
+package listing if we were to add it to Nixpkgs or another package
+collection. The <code>src</code> variable (2) supplies the location of the source
+files, relative to <code>flake.nix</code>. When a flake is accessed for the first
+time, the repository contents are fetched in the form of a tarball. The
+<code>unpackPhase</code> variable indicates that we do want the tarball to be
+unpacked.</p>
+</div>
+<div class="paragraph">
+<p>The <code>buildPhase</code> variable is a sequence of Linux commands to build the
+package. Typically, building a package requires compiling the source
+code. However, that’s not required for a simple shell script. So
+<code>buildPhase</code> consists of a single command, <code>:</code>, which is a no-op or ``do
+nothing'' command.</p>
+</div>
+<div class="paragraph">
+<p>The <code>installPhase</code> variable is a sequence of Linux commands that will do
+the actual installation. In this case, we create a directory (3) for the
+installation, copy the <code>hello-flake</code> script (4) there, and make the
+script executable (5). The environment variable <code>$src</code> refers to the
+source directory, which we specified earlier (2).</p>
+</div>
+<div class="paragraph">
+<p>Earlier we said that the build step runs in a pure environment to ensure
+that builds are reproducible. This means no Internet access; indeed no
+access to any files outside the build directory. During the build and
+install phases, the only commands available are those provided by the
+Nix standard environment and the external dependencies identified in the
+<code>inputs</code> section of the flake.</p>
+</div>
+<div class="paragraph">
+<p>I’ve mentioned the Nix standard environment before, but I didn’t explain
+what it is. The standard environment, or <code>stdenv</code>, refers to the
+functionality that is available during the build and install phases of a
+Nix package (or flake). It includes the commands listed
+below<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The GNU C Compiler, configured with C and C++ support.</p>
+</li>
+<li>
+<p>GNU coreutils (contains a few dozen standard Unix commands).</p>
+</li>
+<li>
+<p>GNU findutils (contains find).</p>
+</li>
+<li>
+<p>GNU diffutils (contains diff, cmp).</p>
+</li>
+<li>
+<p>GNU sed.</p>
+</li>
+<li>
+<p>GNU grep.</p>
+</li>
+<li>
+<p>GNU awk.</p>
+</li>
+<li>
+<p>GNU tar.</p>
+</li>
+<li>
+<p>gzip, bzip2 and xz.</p>
+</li>
+<li>
+<p>GNU Make.</p>
+</li>
+<li>
+<p>Bash.</p>
+</li>
+<li>
+<p>The patch command.</p>
+</li>
+<li>
+<p>On Linux, stdenv also includes the patchelf utility.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Only a few environment variables are available. The most interesting
+ones are listed below.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>$name</code> is the package name.</p>
+</li>
+<li>
+<p><code>$src</code> refers to the source directory.</p>
+</li>
+<li>
+<p><code>$out</code> is the path to the location in the Nix store where the package
+will be added.</p>
+</li>
+<li>
+<p><code>$system</code> is the system that the package is being built for.</p>
+</li>
+<li>
+<p><code>$PWD</code> and <code>$TMP</code> both point to a temporary build directories</p>
+</li>
+<li>
+<p><code>$HOME</code> and <code>$PATH</code> point to nonexistent directories, so the build
+cannot rely on them.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_modifying_the_flake">7. Modifying the flake</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let’s make a simple modification to the script. This will give you an
+opportunity to check your understanding of flakes.</p>
+</div>
+<div class="paragraph">
+<p>The first step is to enter a development shell.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ cd ~/tutorial-practice/hello-flake
+$ nix develop</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>flake.nix</code> file specifies all of the tools that are needed during
+development of the package. The <code>nix develop</code> command puts us in a shell
+with those tools. As it turns out, we didn’t need any extra tools
+(beyond the standard environment) for development yet, but that’s
+usually not the case. Also, we will soon need another tool.</p>
+</div>
+<div class="paragraph">
+<p>A development environment only allows you to <em>develop</em> the package.
+Don’t expect the package <em>outputs</em> (e.g. executables) to be available
+until you build them. However, our script doesn’t need to be compiled,
+so can’t we just run it?</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That worked before; why isn’t it working now? Earlier we used
+<code>nix shell</code> to enter a <em>runtime</em> environment where <code>hello-flake</code> was
+available and on the <code>$PATH</code>. This time we entered a <em>development</em>
+environment using the <code>nix develop</code> command. Since the flake hasn’t been
+built yet, the executable won’t be on the <code>$PATH</code>. We can, however, run
+it by specifying the path to the script.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ ./hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can also build the flake using the <code>nix build</code> command, which places
+the build outputs in a directory called <code>result</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix build
+$ result/bin/hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rather than typing the full path to the executable, it’s more convenient
+to use <code>nix run</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here’s a summary of the more common Nix commands.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 17%;">
+<col style="width: 83%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">command</th>
+<th class="tableblock halign-left valign-top">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nix develop</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enters a <em>development</em> shell with all the required
+development tools (e.g. compilers and linkers) available (as specified
+by <code>flake.nix</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nix shell</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enters a <em>runtime</em> shell where the flake’s executables are
+available on the <code>$PATH</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nix build</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds the flake and puts the output in a directory called
+<code>result</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nix run</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Runs the flake’s default executable, rebuilding the package
+first if needed. Specifically, it runs the version in the Nix store, not
+the version in <code>result</code>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Now we’re ready to make the flake a little more interesting. Instead of
+using the <code>echo</code> command in the script, we can use the Linux <code>cowsay</code>
+command. The <code>sed</code> command below will make the necessary changes.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ sed -i 's/echo/cowsay/' hello-flake
+$ cat hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s test the modified script.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ ./hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What went wrong? Remember that we are in a <em>development</em> shell. Since
+<code>flake.nix</code> didn’t define the <code>devShells</code> variable, the development
+shell only includes the Nix standard environment. In particular, the
+<code>cowsay</code> command is not available.</p>
+</div>
+<div class="paragraph">
+<p>To fix the problem, we can modify <code>flake.nix</code>. We don’t need to add
+<code>cowsay</code> to the <code>inputs</code> section because it’s included in <code>nixpkgs</code>,
+which is already an input. However, we do need to indicate that we want
+it available in a develoment shell. Add the following lines before the
+<code>packages = rec {</code> line.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">        devShells = rec {
+          default = pkgs.mkShell {
+            packages = [ pkgs.cowsay ];
+          };
+        };</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is a <code>`diff'' showing the changes in `flake.nix</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# sed -i '15i\\ \ \ \ \ \ \ \ devShells = rec {\n\ \ \ \ \ \ \ \ \ \ default = pkgs.mkShell {\n\ \ \ \ \ \ \ \ \ \ \ \ packages = [ pkgs.cowsay ];\n\ \ \ \ \ \ \ \ \ \ };\n\ \ \ \ \ \ \ \ };\n' flake.nix
+$ git diff flake.nix</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We restart the development shell and see that the <code>cowsay</code> command is
+now available and the script works. Because we’ve updated source files
+but haven’t `git commit`ed the new version, we get a warning message
+about it being ``dirty''. It’s just a warning, though; the script runs
+correctly.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# echo '$ nix develop'
+$# nix develop --command sh
+$ which cowsay # is it available now?
+$ ./hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, we could use <code>nix run</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note, however, that <code>nix run</code> rebuilt the package in the Nix store and
+ran <em>that</em>. It did not alter the copy in the <code>result</code> directory, as
+we’ll see next.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ cat result/bin/hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we want to update the version in <code>result</code>, we need <code>nix build</code> again.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix build
+$ cat result/bin/hello-flake</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s <code>git commit</code> the changes and verify that the warning goes away. We
+don’t need to <code>git push</code> the changes until we’re ready to share them.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
+$ nix run</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_workflows">7.1. Development workflows</h3>
+<div class="paragraph">
+<p>If you’re getting confused about when to use the different commands,
+it’s because there’s more than one way to use Nix. I tend to think of it
+as two different development workflows.</p>
+</div>
+<div class="paragraph">
+<p>My usual, <em>high-level workflow</em> is quite simple.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>nix run</code> to re-build (if necessary) and run the executable.</p>
+</li>
+<li>
+<p>Fix any problems in <code>flake.nix</code> or the source code.</p>
+</li>
+<li>
+<p>Repeat until the package works properly.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In the high-level workflow, I don’t use a development shell because I
+don’t need to directly invoke development tools such as compilers and
+linkers. Nix invokes them for me according to the output definition in
+<code>flake.nix</code>.</p>
+</div>
+<div class="paragraph">
+<p>Occasionally I want to work at a lower level, and invoke compiler,
+linkers, etc. directly. Perhaps want to work on one component without
+rebuilding the entire package. Or perhaps I’m confused by some error
+message, so I want to temporarily bypass Nix and ``talk'' directly to
+the compiler. In this case I temporarily switch to a <em>low-level
+workflow</em>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>nix develop</code> to enter a development shell with any development tools
+I need (e.g. compilers, linkers, documentation generators).</p>
+</li>
+<li>
+<p>Directly invoke tools such as compilers.</p>
+</li>
+<li>
+<p>Fix any problems in <code>flake.nix</code> or the source code.</p>
+</li>
+<li>
+<p>Directly invoke the executable. Note that the location of the
+executable depends on the development tools – It probably isn’t
+<code>result</code>!</p>
+</li>
+<li>
+<p>Repeat until the package works properly.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>I generally only use <code>nix build</code> if I just want to build the package but
+not execute anything (perhaps it’s just a library).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_this_all_seems_like_a_hassle">7.2. This all seems like a hassle!</h3>
+<div class="paragraph">
+<p>It is a bit annoying to modify <code>flake.nix</code> and ether rebuild or reload
+the development environment every time you need another tool. However,
+this Nix way of doing things ensures that all of your dependencies, down
+to the exact versions, are captured in <code>flake.lock</code>, and that anyone
+else will be able to reproduce the development environment.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_a_new_flake_from_scratch_python">8. A new flake from scratch (Python)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>At last we are ready to create a flake from scratch! Start with an empty
+directory and create a git repository.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ cd ~/tutorial-practice
+$ mkdir hello-python
+$ cd hello-python
+$ git init</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, we’ll create a simple Python program.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/hello.py --silent --output hello.py
+$ cat hello.py</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Before we pachage the program, let’s verify that it runs. We’re going to
+need Python. By now you’ve probably figured out that we can write a
+<code>flake.nix</code> and define a development shell that includes Python. We’ll
+do that shortly, but first I want to show you a handy shortcut. We can
+lauch a <em>temporary</em> shell with any Nix packages we want. This is
+convenient when you just want to try out some new software and you’re
+not sure if you’ll use it again. It’s also convenient when you’re not
+ready to write <code>flake.nix</code> (perhaps you’re not sure what tools and
+packages you need), and you want to experiment a bit first.</p>
+</div>
+<div class="paragraph">
+<p>The command to enter a temporary shell is</p>
+</div>
+<div class="paragraph">
+<p><code>nix-shell -p</code> <em>packages</em></p>
+</div>
+<div class="paragraph">
+<p>If there are multiple packages, they should be separated by spaces. Note
+that the command used here is <code>nix-shell</code> with a hyphen, not <code>nix shell</code>
+with a space; those are two different commands. In fact there are
+hyphenated and non-hyphenated versions of many Nix commands, and yes,
+it’s confusing. The non-hyphenated commands were introduced when support
+for flakes was added to Nix. I predict that eventually all hyphenated
+commands will be replaced with non-hyphenated versions. Until then, a
+useful rule of thumb is that non-hyphenated commands are for for working
+directly with flakes; hyphenated commands are for everything else.</p>
+</div>
+<div class="paragraph">
+<p>Let’s enter a shell with Python so we can test the program.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# echo '$ nix-shell -p python3'
+$# nix-shell -p python3 --command sh
+$ python hello.py</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, create a Python script to build the package. We’ll use Python’s
+setuptools, but you can use other build tools. For more information on
+setuptools, see the
+<a href="https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/">Python
+Packaging User Guide</a>, especially the section on
+<a href="https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#setup-args">setup
+args</a>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/setup.py --silent --output setup.py
+$ cat setup.py</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We won’t write <code>flake.nix</code> just yet. First we’ll try building the
+package manually.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ python -m build</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The missing module error happens because we don’t have <code>build</code> available
+in the temporary shell. We can fix that by adding <code>`build'' to the
+temporary shell. When you need support for both a language and some of
+its packages, it’s best to use one of the Nix functions that are
+specific to the programming language and build system. For Python, we
+can use the `withPackages</code> function.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# echo '$ nix-shell -p "python3.withPackages (ps: with ps; [ build ])"'
+$# nix-shell -p "python3.withPackages (ps: with ps; [ build ])" --command sh</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that we’re now inside a temporary shell inside the previous
+temporary shell! To get back to the original shell, we have to <code>exit</code>
+twice. Alternatively, we could have done <code>exit</code> followed by the
+<code>nix-shell</code> command.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# echo '$ python -m build'
+$# python -m build &gt; /dev/null 2&gt;&amp;1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After a lot of output messages, the build succeeds.</p>
+</div>
+<div class="paragraph">
+<p>Now we should write <code>flake.nix</code>. We already know how to write most of
+the flake from the examples we did earlier. The two parts that will be
+different are the development shell and the package builder.</p>
+</div>
+<div class="paragraph">
+<p>Let’s start with the development shell. It seems logical to write
+something like the following.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">        devShells = rec {
+          default = pkgs.mkShell {
+            packages = [ (python.withPackages (ps: with ps; [ build ])) ];
+          };
+        };</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that we need the parentheses to prevent <code>python.withPackages</code> and
+the argument from being processed as two separate tokens. Suppose we
+wanted to work with <code>virtualenv</code> and <code>pip</code> instead of <code>build</code>. We could
+write something like the following.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">        devShells = rec {
+          default = pkgs.mkShell {
+            packages = [
+              # Python plus helper tools
+              (python.withPackages (ps: with ps; [
+                virtualenv # Virtualenv
+                pip # The pip installer
+              ]))
+            ];
+          };
+        };</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the package builder, we can use the <code>buildPythonApplication</code>
+function.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">        packages = rec {
+          hello = python.pkgs.buildPythonApplication {
+            name = "hello-flake-python";
+            buildInputs = with python.pkgs; [ pip ];
+            src = ./.;
+          };
+          default = hello;
+        };</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you put all the pieces together, your <code>flake.nix</code> should look
+something like this.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/flake.nix --silent --output flake.nix
+$ cat flake.nix</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s try out the new flake.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Why can’t it find <code>flake.nix</code>? Nix flakes only ``see'' files that are
+part of the repository. We need to add all of the important files to the
+repo before building or running the flake.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ git add flake.nix setup.py hello.py
+$ nix run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We’d like to share this package with others, but first we should do some
+cleanup. When the package was built (automatically by the <code>nix run</code>
+command), it created a <code>flake.lock</code> file. We need to add this to the
+repo, and commit all important files.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ git add flake.lock
+$ git commit -a -m 'initial commit'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can test that your package is properly configured by going to
+another directory and running it from there.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ cd ~
+$ nix run ~/tutorial-practice/hello-python</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you move the project to a public repo, anyone can run it. Recall from
+the beginning of the tutorial that you were able to run <code>hello-flake</code>
+directly from my repo with the following command.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">nix run "git+https://codeberg.org/mhwombat/hello-flake"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Modify the URL accordingly and invite someone else to run your new
+Python flake.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_nix_shell_recipes">9. Nix shell recipes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_shell_with_access_to_a_package_from_the_nixpkgsnixos_repo">9.1. Shell with access to a package from the Nixpkgs/NixOS repo</h3>
+<div class="paragraph">
+<p>This shell provides access to two packages from nixpkgs: hello and
+cowsay.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
+    hello
+    cowsay
+  <span class="tok-p">];</span>
+<span class="tok-p">}</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here’s a demonstration using the shell.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix-shell
+$ hello
+Hello, world!
+$ cowsay "moo"
+ _____
+&lt; moo &gt;
+ -----
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The command-line equivalent would be <code>nix-shell -p hello cowsay</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shell_with_access_to_a_package_defined_in_a_remote_git_repo">9.2. Shell with access to a package defined in a remote git repo</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+<span class="tok-k">let</span>
+  <span class="tok-ss">hello =</span> <span class="tok-nb">import</span> <span class="tok-p">(</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>fetchGit <span class="tok-p">{</span>
+                                           <span class="tok-ss">url =</span> <span class="tok-s2">&quot;https://codeberg.org/mhwombat/hello-nix&quot;</span><span class="tok-p">;</span>
+                                           <span class="tok-ss">rev =</span> <span class="tok-s2">&quot;aa2c87f8b89578b069b09fdb2be30a0c9d8a77d8&quot;</span><span class="tok-p">;</span>
+                                         <span class="tok-p">});</span>
+<span class="tok-k">in</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span> hello <span class="tok-p">];</span>
+<span class="tok-p">}</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here’s a demonstration using the shell.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix-shell
+$ hello-nix
+Hello from your nix package!</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shell_with_access_to_a_flake">9.3. Shell with access to a flake</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+<span class="tok-k">let</span>
+   <span class="tok-ss">hello =</span> <span class="tok-p">(</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>getFlake <span class="tok-l">git+https://codeberg.org/mhwombat/hello-flake</span><span class="tok-p">)</span><span class="tok-o">.</span>packages<span class="tok-o">.</span><span class="tok-err">$</span><span class="tok-p">{</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>currentSystem<span class="tok-p">}</span><span class="tok-o">.</span>default<span class="tok-p">;</span>
+   <span class="tok-c1"># For older flakes, you might need an expression like this...</span>
+   <span class="tok-c1"># hello = (builtins.getFlake git+https://codeberg.org/mhwombat/hello-flake).defaultPackage.${builtins.currentSystem};</span>
+<span class="tok-k">in</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
+    hello
+  <span class="tok-p">];</span>
+<span class="tok-p">}</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here’s a demonstration using the shell.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix-shell
+$ hello-flake
+Hello from your flake!</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shell_with_access_to_a_specific_revision_of_a_flake">9.4. Shell with access to a specific revision of a flake</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+<span class="tok-k">let</span>
+   <span class="tok-ss">hello =</span> <span class="tok-p">(</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>getFlake <span class="tok-l">git+https://codeberg.org/mhwombat/hello-flake?ref=main&amp;rev=3aa43dbe7be878dde7b2bdcbe992fe1705da3150</span><span class="tok-p">)</span><span class="tok-o">.</span>packages<span class="tok-o">.</span><span class="tok-err">$</span><span class="tok-p">{</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>currentSystem<span class="tok-p">}</span><span class="tok-o">.</span>default<span class="tok-p">;</span>
+<span class="tok-k">in</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
+    hello
+  <span class="tok-p">];</span>
+<span class="tok-p">}</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here’s a demonstration using the shell.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix-shell
+$ hello-flake
+Hello from your flake!</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shell_with_access_to_a_haskell_package_on_your_local_computer">9.5. Shell with access to a Haskell package on your local computer</h3>
+<div class="paragraph">
+<p>This shell provides access to three Haskell packages that are on my hard
+drive.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+<span class="tok-k">let</span>
+  <span class="tok-ss">pandoc-linear-table =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-linear-table&quot;</span> <span class="tok-l">/home/amy/github/pandoc-linear-table</span> <span class="tok-p">{};</span>
+  <span class="tok-ss">pandoc-logic-proof =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-logic-proof&quot;</span> <span class="tok-l">/home/amy/github/pandoc-logic-proof</span> <span class="tok-p">{};</span>
+  <span class="tok-ss">pandoc-columns =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-columns&quot;</span> <span class="tok-l">/home/amy/github/pandoc-columns</span> <span class="tok-p">{};</span>
+<span class="tok-k">in</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
+                  pandoc
+                  pandoc-linear-table
+                  pandoc-logic-proof
+                  pandoc-columns
+                <span class="tok-p">];</span>
+<span class="tok-p">}</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shell_with_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.6. Shell with access to a Haskell package on your local computer, with interdependencies</h3>
+<div class="paragraph">
+<p>This shell provides access to four Haskell packages that are on my hard
+drive. The fourth package depends on the first three to build.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+<span class="tok-k">let</span>
+  <span class="tok-ss">pandoc-linear-table =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-linear-table&quot;</span> <span class="tok-l">/home/amy/github/pandoc-linear-table</span> <span class="tok-p">{};</span>
+  <span class="tok-ss">pandoc-logic-proof =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-logic-proof&quot;</span> <span class="tok-l">/home/amy/github/pandoc-logic-proof</span> <span class="tok-p">{};</span>
+  <span class="tok-ss">pandoc-columns =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-columns&quot;</span> <span class="tok-l">/home/amy/github/pandoc-columns</span> <span class="tok-p">{};</span>
+  <span class="tok-ss">pandoc-maths-web =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-maths-web&quot;</span> <span class="tok-l">/home/amy/github/pandoc-maths-web</span>
+                       <span class="tok-p">{</span>
+                         <span class="tok-k">inherit</span> pandoc-linear-table pandoc-logic-proof pandoc-columns<span class="tok-p">;</span>
+                       <span class="tok-p">};</span>
+<span class="tok-k">in</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
+                  pandoc
+                  pandoc-linear-table
+                  pandoc-logic-proof
+                  pandoc-columns
+                  pandoc-maths-web
+                <span class="tok-p">];</span>
+<span class="tok-p">}</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shell_with_an_environment_variable_set">9.7. Shell with an environment variable set</h3>
+<div class="paragraph">
+<p>This shell has the environment variable FOO set to ``bar''</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">shellHook =</span> <span class="tok-s1">&#39;&#39;</span>
+<span class="tok-s1">    export FOO=&quot;bar&quot;</span>
+<span class="tok-s1">  &#39;&#39;</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here’s a demonstration using the shell.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix-shell
+$ echo $FOO
+bar</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_nix_shell_shebangs">10. Nix-shell shebangs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can use <code>nix-shell</code> to run scripts in arbitrary languages, providing
+the necessary dependencies. This is particularly convenient for
+standalone scripts because you don’t need to create a repo and write a
+separate <code>flake.nix</code>.</p>
+</div>
+<div class="paragraph">
+<p>The script should start with two <code>`shebang'' (</code>#!<code>) commands. The first
+should invoke `nix-shell</code>. The second should declares the scrpt
+interpreter and any dependencies. Here are some examples.</p>
+</div>
+<div class="sect2">
+<h3 id="_a_bash_script_depending_on_a_package_in_the_nixpkgs_repo">10.1. A Bash script depending on a package in the nixpkgs repo.</h3>
+<div class="paragraph">
+<p>Script:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="bash"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><pre><span></span><span class="tok-ch">#! /usr/bin/env nix-shell</span>
+<span class="tok-c1">#! nix-shell -i bash -p cowsay</span>
+cowsay <span class="tok-s2">&quot;Pretty cool, huh?&quot;</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Output:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# shebangs/bash-with-nixpkg.sh</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_python_script_depending_on_a_package_in_the_nixpkgs_repo">10.2. A Python script depending on a package in the nixpkgs repo.</h3>
+<div class="paragraph">
+<p>Script:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="bash"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><pre><span></span><span class="tok-ch">#! /usr/bin/env nix-shell</span>
+<span class="tok-c1">#! nix-shell -i python3 -p python3Packages.html-sanitizer</span>
+
+from html_sanitizer import Sanitizer
+<span class="tok-nv">sanitizer</span> <span class="tok-o">=</span> Sanitizer<span class="tok-o">()</span>  <span class="tok-c1"># default configuration</span>
+
+<span class="tok-nv">original</span><span class="tok-o">=</span><span class="tok-s1">&#39;&lt;span style=&quot;font-weight:bold&quot;&gt;some text&lt;/span&gt;&#39;</span>
+print<span class="tok-o">(</span><span class="tok-s1">&#39;original: &#39;</span>, original<span class="tok-o">)</span>
+
+<span class="tok-nv">sanitized</span><span class="tok-o">=</span>sanitizer.sanitize<span class="tok-o">(</span>original<span class="tok-o">)</span>
+print<span class="tok-o">(</span><span class="tok-s1">&#39;sanitized: &#39;</span>, sanitized<span class="tok-o">)</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Output:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$# shebangs/python-with-nixpkg.sh</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. For an introduction to the Nix language, see <a href="https://nixos.org/guides/nix-language.html">Nix language basics</a>.
+</div>
+<div class="footnote" id="_footnotedef_2">
+<a href="#_footnoteref_2">2</a>. For more information on the standard environment, see the <a href="https://nixos.org/manual/nixpkgs/stable/#sec-tools-of-stdenv">Nixpkgs manual</a>
 </div>
 </div>
 <div id="footer">
