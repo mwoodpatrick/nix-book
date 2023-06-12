@@ -9,6 +9,7 @@ may take a few minutes. Subsequent invocations should be instantaneous.
 
 ....
 $ nix run "git+https://codeberg.org/mhwombat/hello-flake"
+Hello from your flake!
 ....
 
 That’s a lot to type every time we want to use this package. Instead, we
@@ -24,6 +25,7 @@ command by name.
 
 ....
 $ hello-flake
+Hello from your flake!
 ....
 
 Nix didn’t _install_ the package; it merely built and placed it in a
@@ -33,14 +35,15 @@ location of the executable, if we’re curious.
 
 ....
 $ which hello-flake
+/nix/store/qskl8ajlgnl654fhgsmv74yv8x9r3kzg-hello-flake/bin/hello-flake
 ....
 
 Once we exit that shell, the `hello-flake` command is no longer
 available.
 
 ....
-$# echo '$ exit'
-$# echo '$ hello-flake'
+$ exit
+$ hello-flake
 sh: line 3: hello-flake: command not found
 ....
 
