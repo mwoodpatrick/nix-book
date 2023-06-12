@@ -21,7 +21,7 @@ include::bash-with-nixpkg.sh[]
 Output:
 
 ....
-$# shebangs/bash-with-nixpkg.sh
+$# ./bash-with-nixpkg.sh
 ....
 
 === A Python script depending on a package in the nixpkgs repo.
@@ -36,5 +36,5 @@ include::python-with-nixpkg.sh[]
 Output:
 
 ....
-$# shebangs/python-with-nixpkg.sh
+$# ./python-with-nixpkg.sh
 ....
