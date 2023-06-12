@@ -6,7 +6,8 @@ opportunity to check your understanding of flakes.
 The first step is to enter a development shell.
 
 ....
-$ cd ~/tutorial-practice/hello-flake
+$# git clone https://codeberg.org/mhwombat/hello-flake
+$# cd hello-flake
 $ nix develop
 ....
 

@@ -4,7 +4,6 @@ At last we are ready to create a flake from scratch! Start with an empty
 directory and create a git repository.
 
 ....
-$ cd ~/tutorial-practice
 $ mkdir hello-python
 $ cd hello-python
 $ git init
@@ -180,6 +179,7 @@ another directory and running it from there.
 ....
 $ cd ~
 $ nix run ~/tutorial-practice/hello-python
+$# cd .. ; rm -rf hello-python # clean up
 ....
 
 If you move the project to a public repo, anyone can run it. Recall from
