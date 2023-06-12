@@ -11,7 +11,7 @@ include::intro.adoc[]
 
 include::hello-flake-generated.adoc[]
 
-include::hello-flake-repo.adoc[]
+include::hello-flake-repo-generated.adoc[]
 
 include::flake-structure.adoc[]
 

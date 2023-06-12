@@ -64,7 +64,6 @@ Finally, let’s look at `flake.lock`, or rather, just part of it.
 
 ....
 $ head -n 40 flake.lock
-$# cd .. ; rm -rf hello-flake # clean up
 ....
 
 If `flake.nix` seemed intimidating, then this file looks like an
@@ -78,3 +77,8 @@ environment that the original developer used._
 
 No more complaints of ``but it works on my machine!''. That is the
 benefit of using flakes.
+
+////
+Good adoc0 scripts clean up after themselves.
+$ cd .. ; rm -rf hello-flake # clean up
+////
