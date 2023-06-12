@@ -651,12 +651,13 @@ with flakes, while the hyphenated versions are for everything else.</p>
 created a simple example of a flake in this git
 <a href="https://codeberg.org/mhwombat/hello-flake">repository</a>. To run this
 flake, you don’t need to install anything; simply run the command below.
-The first time you use a package, Nix has to fetch and build it, which
-may take a few minutes. Subsequent invocations should be instantaneous.</p>
+The first time you use a flake, Nix has to fetch and build it, which
+may take time. Subsequent invocations should be instantaneous.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ nix run "git+https://codeberg.org/mhwombat/hello-flake"</pre>
+<pre class="nowrap">$ nix run "git+https://codeberg.org/mhwombat/hello-flake"
+Hello from your flake!</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -675,7 +676,8 @@ command by name.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ hello-flake</pre>
+<pre class="nowrap">$ hello-flake
+Hello from your flake!</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -686,22 +688,23 @@ location of the executable, if we’re curious.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ which hello-flake</pre>
+<pre class="nowrap">$ which hello-flake
+/nix/store/qskl8ajlgnl654fhgsmv74yv8x9r3kzg-hello-flake/bin/hello-flake</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Once we exit that shell, the <code>hello-flake</code> command is no longer
-available.</p>
+directly available.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# echo '$ exit'
-$# echo '$ hello-flake'
+<pre class="nowrap">$ exit
+$ hello-flake
 sh: line 3: hello-flake: command not found</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Actually, we can still access the command using the store path we found
+<p>However, we can still run the command using the store path we found
 earlier. That’s not particularly convenient, but it does demonstrate
 that the package remains in the store for future use.</p>
 </div>
@@ -1266,7 +1269,10 @@ opportunity to check your understanding of flakes.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ cd ~/tutorial-practice/hello-flake
-$ nix develop</pre>
+bash: line 10: cd: /home/amy/tutorial-practice/hello-flake: No such file or directory
+$ nix develop
+path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
+error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1284,7 +1290,8 @@ so can’t we just run it?</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ hello-flake</pre>
+<pre class="nowrap">$ hello-flake
+bash: line 28: hello-flake: command not found</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1297,7 +1304,8 @@ it by specifying the path to the script.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ ./hello-flake</pre>
+<pre class="nowrap">$ ./hello-flake
+bash: line 40: ./hello-flake: No such file or directory</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1307,7 +1315,10 @@ the build outputs in a directory called <code>result</code>.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix build
-$ result/bin/hello-flake</pre>
+path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
+error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)
+$ result/bin/hello-flake
+bash: line 50: result/bin/hello-flake: No such file or directory</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1316,7 +1327,9 @@ to use <code>nix run</code>.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ nix run</pre>
+<pre class="nowrap">$ nix run
+path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
+error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1366,7 +1379,9 @@ command. The <code>sed</code> command below will make the necessary changes.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ sed -i 's/echo/cowsay/' hello-flake
-$ cat hello-flake</pre>
+sed: can't read hello-flake: No such file or directory
+$ cat hello-flake
+cat: hello-flake: No such file or directory</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1374,7 +1389,8 @@ $ cat hello-flake</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ ./hello-flake</pre>
+<pre class="nowrap">$ ./hello-flake
+bash: line 96: ./hello-flake: No such file or directory</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1404,8 +1420,11 @@ it available in a develoment shell. Add the following lines before the
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# sed -i '15i\\ \ \ \ \ \ \ \ devShells = rec {\n\ \ \ \ \ \ \ \ \ \ default = pkgs.mkShell {\n\ \ \ \ \ \ \ \ \ \ \ \ packages = [ pkgs.cowsay ];\n\ \ \ \ \ \ \ \ \ \ };\n\ \ \ \ \ \ \ \ };\n' flake.nix
-$ git diff flake.nix</pre>
+<pre class="nowrap">sed: can't read flake.nix: No such file or directory
+$ git diff flake.nix
+fatal: ambiguous argument 'flake.nix': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git &lt;command&gt; [&lt;revision&gt;...] -- [&lt;file&gt;...]'</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1417,10 +1436,13 @@ correctly.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# echo '$ nix develop'
-$# nix develop --command sh
+<pre class="nowrap">$ nix develop
+path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
+error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)
 $ which cowsay # is it available now?
-$ ./hello-flake</pre>
+which: no cowsay in (/home/amy/github/wain-tools:/home/amy/github/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/nix/store/dsfcdjmymlc18wzk0hssycwifg4wznan-bash-interactive-5.1-p16/bin:/nix/store/4ccwc439gkpk91gflh6zsyx12fkfcggx-patchelf-0.15.0/bin:/nix/store/y372k7srz9jm7v9sv2cs84g3crz27z1s-gcc-wrapper-11.3.0/bin:/nix/store/wy4ywjsch9q2hj5lphqjdg9p2kf7w0ls-gcc-11.3.0/bin:/nix/store/fi1521530hy97gwjfdlgiqb4wad2g13d-glibc-2.35-224-bin/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/l5i2w0w446pqsnpdxrlsf3azy5aspfxq-binutils-wrapper-2.39/bin:/nix/store/9n9gjvzci75gp2sh1c4rh626dhizqynl-binutils-2.39/bin:/nix/store/gx0iyarrz7jcnac1yllhgzffi75y4gs8-asciidoctor-2.0.18/bin:/nix/store/bbi6z65bazdzmawxaxr1kvgbn41sv9g0-python3.11-pygments-2.13.0/bin:/nix/store/szz6i32n70m8pxidw5zj294rka4m0yrz-python3.11-docutils-0.19/bin:/nix/store/536aws8kkljng4ggdakk8i1nfdqb4f4x-python3-3.11.3/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/gn1s1s5z19cf0wiir2cd38jckcjc6kn6-findutils-4.9.0/bin:/nix/store/5l382qdhcyyjsyhfqqc0g15rmvs3rs4s-diffutils-3.8/bin:/nix/store/v0hg83sdv4v51c0prmdigry6wdmmpzmp-gnused-4.8/bin:/nix/store/pvb117r7fhwb08717ks21a6y9hlnp63b-gnugrep-3.7/bin:/nix/store/51sgpaxsi4sl46ii9fssvyp7n592if1m-gawk-5.1.1/bin:/nix/store/isycdamy5rsi0vq55fxz0438srx5z0hv-gnutar-1.34/bin:/nix/store/w9pbk66kf43wrpdcijjzc8vf8cymnaxy-gzip-1.12/bin:/nix/store/r84vlmw71jw2piv03n0jdhav2zsdvm6n-bzip2-1.0.8-bin/bin:/nix/store/cgbpv0vvz31qayvbf3bif2iznp46wcgl-gnumake-4.3/bin:/nix/store/kga2r02rmyxl14sg96nxbdhifq3rb8lc-bash-5.1-p16/bin:/nix/store/f1gvh42512gjf3378nmlw2vrx491yndq-patch-2.7.6/bin:/nix/store/y8z2dmbxdapyzpcrhfbdv875l5v7ddpi-xz-5.2.7-bin/bin:/nix/store/cmnq5bja0h0an1k3cyb36blkfci8nxaf-file-5.43/bin:/nix/store/dsfcdjmymlc18wzk0hssycwifg4wznan-bash-interactive-5.1-p16/bin:/nix/store/4ccwc439gkpk91gflh6zsyx12fkfcggx-patchelf-0.15.0/bin:/nix/store/y372k7srz9jm7v9sv2cs84g3crz27z1s-gcc-wrapper-11.3.0/bin:/nix/store/wy4ywjsch9q2hj5lphqjdg9p2kf7w0ls-gcc-11.3.0/bin:/nix/store/fi1521530hy97gwjfdlgiqb4wad2g13d-glibc-2.35-224-bin/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/l5i2w0w446pqsnpdxrlsf3azy5aspfxq-binutils-wrapper-2.39/bin:/nix/store/9n9gjvzci75gp2sh1c4rh626dhizqynl-binutils-2.39/bin:/nix/store/0dip0kcky3jnjsp60xvk1cjzhv4yvj2s-python3.10-pelican-4.8.0/bin:/nix/store/089zdkxl8bbif25dqv3sx4nc9jyz6bh5-python3.10-chardet-5.0.0/bin:/nix/store/rpri9nb8xpwwqakyrqbg8zdslkjs2hd3-python3-3.10.11/bin:/nix/store/01axgc9g662lk663h93z2bp8clyy3hqn-python3.10-docutils-0.19/bin:/nix/store/v20lm65xzlndbw2mbihqj4xiasrvgs9w-python3.10-babel-2.11.0/bin:/nix/store/aba7b45bjy0aawqlblag6k4vg5qf44kh-python3.10-pygments-2.13.0/bin:/nix/store/zvylkc7cnar7majappcww2z826ls3sb7-python3.10-commonmark-0.9.1/bin:/nix/store/hkyfwv0yqhmyv7qvxc4g9w3ia534x391-python3.10-future-0.18.3/bin:/nix/store/5ag6v19kxlfnk6qbrrwy8wiq9m4il310-python3.10-unidecode-1.3.4/bin:/nix/store/w3f9jkinz72jyklfsgwmrfmhm4czsmga-python3.10-markdown-3.4.1/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/gn1s1s5z19cf0wiir2cd38jckcjc6kn6-findutils-4.9.0/bin:/nix/store/5l382qdhcyyjsyhfqqc0g15rmvs3rs4s-diffutils-3.8/bin:/nix/store/v0hg83sdv4v51c0prmdigry6wdmmpzmp-gnused-4.8/bin:/nix/store/pvb117r7fhwb08717ks21a6y9hlnp63b-gnugrep-3.7/bin:/nix/store/51sgpaxsi4sl46ii9fssvyp7n592if1m-gawk-5.1.1/bin:/nix/store/isycdamy5rsi0vq55fxz0438srx5z0hv-gnutar-1.34/bin:/nix/store/w9pbk66kf43wrpdcijjzc8vf8cymnaxy-gzip-1.12/bin:/nix/store/r84vlmw71jw2piv03n0jdhav2zsdvm6n-bzip2-1.0.8-bin/bin:/nix/store/cgbpv0vvz31qayvbf3bif2iznp46wcgl-gnumake-4.3/bin:/nix/store/kga2r02rmyxl14sg96nxbdhifq3rb8lc-bash-5.1-p16/bin:/nix/store/f1gvh42512gjf3378nmlw2vrx491yndq-patch-2.7.6/bin:/nix/store/y8z2dmbxdapyzpcrhfbdv875l5v7ddpi-xz-5.2.7-bin/bin:/nix/store/cmnq5bja0h0an1k3cyb36blkfci8nxaf-file-5.43/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/run/wrappers/bin:/home/amy/.nix-profile/bin:/etc/profiles/per-user/amy/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin)
+$ ./hello-flake
+bash: line 138: ./hello-flake: No such file or directory</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1428,7 +1450,9 @@ $ ./hello-flake</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ nix run</pre>
+<pre class="nowrap">$ nix run
+path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
+error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1438,7 +1462,8 @@ we’ll see next.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ cat result/bin/hello-flake</pre>
+<pre class="nowrap">$ cat result/bin/hello-flake
+cat: result/bin/hello-flake: No such file or directory</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1447,7 +1472,10 @@ we’ll see next.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix build
-$ cat result/bin/hello-flake</pre>
+path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
+error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)
+$ cat result/bin/hello-flake
+cat: result/bin/hello-flake: No such file or directory</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1457,7 +1485,11 @@ don’t need to <code>git push</code> the changes until we’re ready to share t
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
-$ nix run</pre>
+error: pathspec 'hello-flake' did not match any file(s) known to git
+error: pathspec 'flake.nix' did not match any file(s) known to git
+$ nix run
+path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
+error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)</pre>
 </div>
 </div>
 <div class="sect2">
@@ -1546,9 +1578,12 @@ directory and create a git repository.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ cd ~/tutorial-practice
+bash: line 8: cd: /home/amy/tutorial-practice: No such file or directory
 $ mkdir hello-python
+mkdir: cannot create directory ‘hello-python’: File exists
 $ cd hello-python
-$ git init</pre>
+$ git init
+Reinitialized existing Git repository in /home/amy/codeberg/nix-book/source/hello-python/.git/</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1556,8 +1591,14 @@ $ git init</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/hello.py --silent --output hello.py
-$ cat hello.py</pre>
+<pre class="nowrap">$ cat hello.py
+#!/usr/bin/env python
+
+def main():
+    print("Hello from inside a Python program built with a Nix flake!")
+
+if __name__ == "__main__":
+    main()</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1593,9 +1634,9 @@ directly with flakes; hyphenated commands are for everything else.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# echo '$ nix-shell -p python3'
-$# nix-shell -p python3 --command sh
-$ python hello.py</pre>
+<pre class="nowrap">$ nix-shell -p python3
+$ python hello.py
+Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1609,8 +1650,19 @@ args</a>.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/setup.py --silent --output setup.py
-$ cat setup.py</pre>
+<pre class="nowrap">$ cat setup.py
+#!/usr/bin/env python
+
+from setuptools import setup
+
+setup(
+    name='hello-flake-python',
+    version='0.1.0',
+    py_modules=['hello'],
+    entry_points={
+        'console_scripts': ['hello-flake-python = hello:main']
+    },
+)</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1619,7 +1671,8 @@ package manually.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ python -m build</pre>
+<pre class="nowrap">$ python -m build
+/nix/store/rpri9nb8xpwwqakyrqbg8zdslkjs2hd3-python3-3.10.11/bin/python: No module named build</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1632,8 +1685,7 @@ can use the `withPackages</code> function.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# echo '$ nix-shell -p "python3.withPackages (ps: with ps; [ build ])"'
-$# nix-shell -p "python3.withPackages (ps: with ps; [ build ])" --command sh</pre>
+<pre class="nowrap">$ nix-shell -p "python3.withPackages (ps: with ps; [ build ])"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1644,8 +1696,7 @@ twice. Alternatively, we could have done <code>exit</code> followed by the
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# echo '$ python -m build'
-$# python -m build &gt; /dev/null 2&gt;&amp;1</pre>
+<pre class="nowrap">$ python -m build</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1712,8 +1763,55 @@ something like this.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/flake.nix --silent --output flake.nix
-$ cat flake.nix</pre>
+<pre class="nowrap">$ cat flake.nix
+{
+  # See https://github.com/mhwombat/nix-for-numbskulls/blob/main/flakes.md
+  # for a brief overview of what each section in a flake should or can contain.
+
+  description = "a very simple and friendly flake written in Python";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+        python = pkgs.python3;
+      in
+      {
+        devShells = rec {
+          default = pkgs.mkShell {
+            packages = [
+              # Python plus helper tools
+              (python.withPackages (ps: with ps; [
+                virtualenv # Virtualenv
+                pip # The pip installer
+              ]))
+            ];
+          };
+        };
+
+        packages = rec {
+          hello = python.pkgs.buildPythonApplication {
+            name = "hello-flake-python";
+
+            buildInputs = with python.pkgs; [ pip ];
+
+            src = ./.;
+          };
+          default = hello;
+        };
+
+        apps = rec {
+          hello = flake-utils.lib.mkApp { drv = self.packages.${system}.hello; };
+          default = hello;
+        };
+      }
+    );
+}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1721,7 +1819,8 @@ $ cat flake.nix</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ nix run</pre>
+<pre class="nowrap">$ nix run
+Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1732,7 +1831,8 @@ repo before building or running the flake.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git add flake.nix setup.py hello.py
-$ nix run</pre>
+$ nix run
+Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1744,7 +1844,14 @@ repo, and commit all important files.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
-$ git commit -a -m 'initial commit'</pre>
+$ git commit -a -m 'initial commit'
+On branch master
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+	dist/
+	hello_flake_python.egg-info/
+
+nothing added to commit but untracked files present (use "git add" to track)</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1754,7 +1861,9 @@ another directory and running it from there.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ cd ~
-$ nix run ~/tutorial-practice/hello-python</pre>
+$ nix run ~/tutorial-practice/hello-python
+path '/home/amy/tutorial-practice/hello-python' does not contain a 'flake.nix', searching up
+error: getting status of '/home/amy/tutorial-practice/hello-python': No such file or directory</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1806,9 +1915,12 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
+error: getting status of '/home/amy/codeberg/nix-book/source/shell-recipes/default.nix': No such file or directory
 $ hello
+bash: line 19: hello: command not found
 Hello, world!
 $ cowsay "moo"
+bash: line 22: cowsay: command not found
  _____
 &lt; moo &gt;
  -----
@@ -1855,7 +1967,9 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
+error: getting status of '/home/amy/codeberg/nix-book/source/shell-recipes/default.nix': No such file or directory
 $ hello-nix
+bash: line 48: hello-nix: command not found
 Hello from your nix package!</pre>
 </div>
 </div>
@@ -1894,7 +2008,9 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
+error: getting status of '/home/amy/codeberg/nix-book/source/shell-recipes/default.nix': No such file or directory
 $ hello-flake
+bash: line 65: hello-flake: command not found
 Hello from your flake!</pre>
 </div>
 </div>
@@ -1929,7 +2045,9 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
+error: getting status of '/home/amy/codeberg/nix-book/source/shell-recipes/default.nix': No such file or directory
 $ hello-flake
+bash: line 82: hello-flake: command not found
 Hello from your flake!</pre>
 </div>
 </div>
@@ -2049,7 +2167,9 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
+error: getting status of '/home/amy/codeberg/nix-book/source/shell-recipes/default.nix': No such file or directory
 $ echo $FOO
+
 bar</pre>
 </div>
 </div>
@@ -2090,7 +2210,14 @@ cowsay <span class="tok-s2">&quot;Pretty cool, huh?&quot;</span>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# shebangs/bash-with-nixpkg.sh</pre>
+<pre class="nowrap"> ___________________
+&lt; Pretty cool, huh? &gt;
+ -------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||</pre>
 </div>
 </div>
 </div>
@@ -2130,7 +2257,8 @@ print<span class="tok-o">(</span><span class="tok-s1">&#39;sanitized: &#39;</spa
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$# shebangs/python-with-nixpkg.sh</pre>
+<pre class="nowrap">original:  &lt;span style="font-weight:bold"&gt;some text&lt;/span&gt;
+sanitized:  &lt;strong&gt;some text&lt;/strong&gt;</pre>
 </div>
 </div>
 </div>
