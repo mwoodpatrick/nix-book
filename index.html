@@ -613,7 +613,7 @@ and use flakes; and this seems to be the general consensus.</p>
 <div class="sect2">
 <h3 id="_prerequisites">1.3. Prerequisites</h3>
 <div class="paragraph">
-<p>To follow along with this tutorial, you will need access to a computer
+<p>To follow along with the examples in this book, you will need access to a computer
 or (virtual machine) with Nix installed and <em>flakes enabled</em>.</p>
 </div>
 <div class="paragraph">
@@ -723,10 +723,15 @@ that the package remains in the store for future use.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ cd ~/tutorial-practice
-$ git clone https://codeberg.org/mhwombat/hello-flake
+<pre class="nowrap">$ git clone https://codeberg.org/mhwombat/hello-flake
+fatal: destination path 'hello-flake' already exists and is not an empty directory.
 $ cd hello-flake
-$ ls</pre>
+$ ls
+flake.lock
+flake.nix
+hello-flake
+LICENSE
+README.md</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -741,7 +746,10 @@ extremly simple script with just two lines.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ cat hello-flake</pre>
+<pre class="nowrap">$ cat hello-flake
+#!/usr/bin/env sh
+
+echo "Hello from your flake!"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -750,7 +758,8 @@ directly.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ ./hello-flake</pre>
+<pre class="nowrap">$ ./hello-flake
+Hello from your flake!</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -764,7 +773,51 @@ is always called <code>flake.nix</code>.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ cat flake.nix</pre>
+<pre class="nowrap">$ cat flake.nix
+{
+  # See https://github.com/mhwombat/nix-for-numbskulls/blob/main/flakes.md
+  # for a brief overview of what each section in a flake should or can contain.
+
+  description = "a very simple and friendly flake";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        packages = rec {
+          hello = pkgs.stdenv.mkDerivation rec {
+            name = "hello-flake";
+
+            src = ./.;
+
+            unpackPhase = "true";
+
+            buildPhase = ":";
+
+            installPhase =
+              ''
+                mkdir -p $out/bin
+                cp $src/hello-flake $out/bin/hello-flake
+                chmod +x $out/bin/hello-flake
+              '';
+          };
+          default = hello;
+        };
+
+        apps = rec {
+          hello = flake-utils.lib.mkApp { drv = self.packages.${system}.hello; };
+          default = hello;
+        };
+      }
+    );
+}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -796,7 +849,47 @@ flakes. The important thing to note is that the <code>hello-flake</code> package
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ head -n 40 flake.lock</pre>
+<pre class="nowrap">$ head -n 40 flake.lock
+{
+  "nodes": {
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1681202837,
+        "narHash": "sha256-H+Rh19JDwRtpVPAWp64F+rlEtxUWBAQW28eAi3SRSzg=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "cfacdce06f30d2b68473a46042957675eebb3401",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1681665000,
+        "narHash": "sha256-hDGTR59wC3qrQZFxVi2U3vTY+r02+Okbq080hO1C4Nk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3a6205d9f79fe526be03d8c465403b118ca4cf37",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs"
+      }</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1268,11 +1361,18 @@ opportunity to check your understanding of flakes.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ cd ~/tutorial-practice/hello-flake
-bash: line 10: cd: /home/amy/tutorial-practice/hello-flake: No such file or directory
+<pre class="nowrap">fatal: destination path 'hello-flake' already exists and is not an empty directory.
 $ nix develop
-path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
-error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)</pre>
+building '/nix/store/2fmfckcb2vhx21jgicjgcwiasz0iw43x-hello-flake-env.drv'...
+these 4 paths will be fetched (1.80 MiB download, 11.01 MiB unpacked):
+  /nix/store/33lnr4ji9f4d2cdigrwc1d4pbkjy4vq9-bash-interactive-5.2-p15-man
+  /nix/store/pk3kkaafln68gzxawk57qp9m5h5285va-bash-interactive-5.2-p15
+  /nix/store/q5mhssfls6iych80439511vz7539gd95-ncurses-6.4
+  /nix/store/s8axd2sknp45d2jmxkasmq8zxd1mv068-readline-8.2p1
+copying path '/nix/store/33lnr4ji9f4d2cdigrwc1d4pbkjy4vq9-bash-interactive-5.2-p15-man' from 'https://cache.nixos.org'...
+copying path '/nix/store/q5mhssfls6iych80439511vz7539gd95-ncurses-6.4' from 'https://cache.nixos.org'...
+copying path '/nix/store/s8axd2sknp45d2jmxkasmq8zxd1mv068-readline-8.2p1' from 'https://cache.nixos.org'...
+copying path '/nix/store/pk3kkaafln68gzxawk57qp9m5h5285va-bash-interactive-5.2-p15' from 'https://cache.nixos.org'...</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1291,7 +1391,7 @@ so can’t we just run it?</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ hello-flake
-bash: line 28: hello-flake: command not found</pre>
+bash: line 16: hello-flake: command not found</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1305,7 +1405,7 @@ it by specifying the path to the script.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ ./hello-flake
-bash: line 40: ./hello-flake: No such file or directory</pre>
+Hello from your flake!</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1315,10 +1415,8 @@ the build outputs in a directory called <code>result</code>.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix build
-path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
-error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)
 $ result/bin/hello-flake
-bash: line 50: result/bin/hello-flake: No such file or directory</pre>
+Hello from your flake!</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1328,8 +1426,7 @@ to use <code>nix run</code>.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix run
-path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
-error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)</pre>
+Hello from your flake!</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1379,9 +1476,10 @@ command. The <code>sed</code> command below will make the necessary changes.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ sed -i 's/echo/cowsay/' hello-flake
-sed: can't read hello-flake: No such file or directory
 $ cat hello-flake
-cat: hello-flake: No such file or directory</pre>
+#!/usr/bin/env sh
+
+cowsay "Hello from your flake!"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1390,7 +1488,7 @@ cat: hello-flake: No such file or directory</pre>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ ./hello-flake
-bash: line 96: ./hello-flake: No such file or directory</pre>
+./hello-flake: line 3: cowsay: command not found</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1420,11 +1518,24 @@ it available in a develoment shell. Add the following lines before the
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">sed: can't read flake.nix: No such file or directory
-$ git diff flake.nix
-fatal: ambiguous argument 'flake.nix': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git &lt;command&gt; [&lt;revision&gt;...] -- [&lt;file&gt;...]'</pre>
+<pre class="nowrap">$ git diff flake.nix
+diff --git a/flake.nix b/flake.nix
+index d4654c8..9065f4f 100644
+--- a/flake.nix
++++ b/flake.nix
+@@ -12,6 +12,12 @@
+   outputs = { self, nixpkgs, flake-utils }:
+     flake-utils.lib.eachDefaultSystem (system:
+       let
++        devShells = rec {
++          default = pkgs.mkShell {
++            packages = [ pkgs.cowsay ];
++          };
++        };
++
+         pkgs = import nixpkgs { inherit system; };
+       in
+       {</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1437,12 +1548,12 @@ correctly.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix develop
-path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
-error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)
+warning: Git tree '/home/amy/codeberg/nix-book/source/hello-flake' is dirty
+building '/nix/store/9al266fwb9cbyk95ysv2xpplnad75lia-hello-flake-env.drv'...
 $ which cowsay # is it available now?
-which: no cowsay in (/home/amy/github/wain-tools:/home/amy/github/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/nix/store/dsfcdjmymlc18wzk0hssycwifg4wznan-bash-interactive-5.1-p16/bin:/nix/store/4ccwc439gkpk91gflh6zsyx12fkfcggx-patchelf-0.15.0/bin:/nix/store/y372k7srz9jm7v9sv2cs84g3crz27z1s-gcc-wrapper-11.3.0/bin:/nix/store/wy4ywjsch9q2hj5lphqjdg9p2kf7w0ls-gcc-11.3.0/bin:/nix/store/fi1521530hy97gwjfdlgiqb4wad2g13d-glibc-2.35-224-bin/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/l5i2w0w446pqsnpdxrlsf3azy5aspfxq-binutils-wrapper-2.39/bin:/nix/store/9n9gjvzci75gp2sh1c4rh626dhizqynl-binutils-2.39/bin:/nix/store/gx0iyarrz7jcnac1yllhgzffi75y4gs8-asciidoctor-2.0.18/bin:/nix/store/bbi6z65bazdzmawxaxr1kvgbn41sv9g0-python3.11-pygments-2.13.0/bin:/nix/store/szz6i32n70m8pxidw5zj294rka4m0yrz-python3.11-docutils-0.19/bin:/nix/store/536aws8kkljng4ggdakk8i1nfdqb4f4x-python3-3.11.3/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/gn1s1s5z19cf0wiir2cd38jckcjc6kn6-findutils-4.9.0/bin:/nix/store/5l382qdhcyyjsyhfqqc0g15rmvs3rs4s-diffutils-3.8/bin:/nix/store/v0hg83sdv4v51c0prmdigry6wdmmpzmp-gnused-4.8/bin:/nix/store/pvb117r7fhwb08717ks21a6y9hlnp63b-gnugrep-3.7/bin:/nix/store/51sgpaxsi4sl46ii9fssvyp7n592if1m-gawk-5.1.1/bin:/nix/store/isycdamy5rsi0vq55fxz0438srx5z0hv-gnutar-1.34/bin:/nix/store/w9pbk66kf43wrpdcijjzc8vf8cymnaxy-gzip-1.12/bin:/nix/store/r84vlmw71jw2piv03n0jdhav2zsdvm6n-bzip2-1.0.8-bin/bin:/nix/store/cgbpv0vvz31qayvbf3bif2iznp46wcgl-gnumake-4.3/bin:/nix/store/kga2r02rmyxl14sg96nxbdhifq3rb8lc-bash-5.1-p16/bin:/nix/store/f1gvh42512gjf3378nmlw2vrx491yndq-patch-2.7.6/bin:/nix/store/y8z2dmbxdapyzpcrhfbdv875l5v7ddpi-xz-5.2.7-bin/bin:/nix/store/cmnq5bja0h0an1k3cyb36blkfci8nxaf-file-5.43/bin:/nix/store/dsfcdjmymlc18wzk0hssycwifg4wznan-bash-interactive-5.1-p16/bin:/nix/store/4ccwc439gkpk91gflh6zsyx12fkfcggx-patchelf-0.15.0/bin:/nix/store/y372k7srz9jm7v9sv2cs84g3crz27z1s-gcc-wrapper-11.3.0/bin:/nix/store/wy4ywjsch9q2hj5lphqjdg9p2kf7w0ls-gcc-11.3.0/bin:/nix/store/fi1521530hy97gwjfdlgiqb4wad2g13d-glibc-2.35-224-bin/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/l5i2w0w446pqsnpdxrlsf3azy5aspfxq-binutils-wrapper-2.39/bin:/nix/store/9n9gjvzci75gp2sh1c4rh626dhizqynl-binutils-2.39/bin:/nix/store/0dip0kcky3jnjsp60xvk1cjzhv4yvj2s-python3.10-pelican-4.8.0/bin:/nix/store/089zdkxl8bbif25dqv3sx4nc9jyz6bh5-python3.10-chardet-5.0.0/bin:/nix/store/rpri9nb8xpwwqakyrqbg8zdslkjs2hd3-python3-3.10.11/bin:/nix/store/01axgc9g662lk663h93z2bp8clyy3hqn-python3.10-docutils-0.19/bin:/nix/store/v20lm65xzlndbw2mbihqj4xiasrvgs9w-python3.10-babel-2.11.0/bin:/nix/store/aba7b45bjy0aawqlblag6k4vg5qf44kh-python3.10-pygments-2.13.0/bin:/nix/store/zvylkc7cnar7majappcww2z826ls3sb7-python3.10-commonmark-0.9.1/bin:/nix/store/hkyfwv0yqhmyv7qvxc4g9w3ia534x391-python3.10-future-0.18.3/bin:/nix/store/5ag6v19kxlfnk6qbrrwy8wiq9m4il310-python3.10-unidecode-1.3.4/bin:/nix/store/w3f9jkinz72jyklfsgwmrfmhm4czsmga-python3.10-markdown-3.4.1/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/gn1s1s5z19cf0wiir2cd38jckcjc6kn6-findutils-4.9.0/bin:/nix/store/5l382qdhcyyjsyhfqqc0g15rmvs3rs4s-diffutils-3.8/bin:/nix/store/v0hg83sdv4v51c0prmdigry6wdmmpzmp-gnused-4.8/bin:/nix/store/pvb117r7fhwb08717ks21a6y9hlnp63b-gnugrep-3.7/bin:/nix/store/51sgpaxsi4sl46ii9fssvyp7n592if1m-gawk-5.1.1/bin:/nix/store/isycdamy5rsi0vq55fxz0438srx5z0hv-gnutar-1.34/bin:/nix/store/w9pbk66kf43wrpdcijjzc8vf8cymnaxy-gzip-1.12/bin:/nix/store/r84vlmw71jw2piv03n0jdhav2zsdvm6n-bzip2-1.0.8-bin/bin:/nix/store/cgbpv0vvz31qayvbf3bif2iznp46wcgl-gnumake-4.3/bin:/nix/store/kga2r02rmyxl14sg96nxbdhifq3rb8lc-bash-5.1-p16/bin:/nix/store/f1gvh42512gjf3378nmlw2vrx491yndq-patch-2.7.6/bin:/nix/store/y8z2dmbxdapyzpcrhfbdv875l5v7ddpi-xz-5.2.7-bin/bin:/nix/store/cmnq5bja0h0an1k3cyb36blkfci8nxaf-file-5.43/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/run/wrappers/bin:/home/amy/.nix-profile/bin:/etc/profiles/per-user/amy/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin)
+which: no cowsay in (/nix/store/2y0q33dmn7846bpqcnfch4a0q2q6dmya-patchelf-0.15.0/bin:/nix/store/nlgyw2fv0cm8rkz8qm1jyw78vyif1bl9-gcc-wrapper-12.2.0/bin:/nix/store/aafdki1nf49k5vxq6gx2yabiybk2bjmw-gcc-12.2.0/bin:/nix/store/v1nar35045dqwf8yy572yvbbcg2w2678-glibc-2.37-8-bin/bin:/nix/store/arbxkmcgv9h8pjgj95c6d7r86yb77rl5-coreutils-9.1/bin:/nix/store/f83wjm5wpcxxbzwmr56q9iclsn0simph-binutils-wrapper-2.40/bin:/nix/store/f4qnwzv6y0nq8lix33jr5ykkyybs6fxf-binutils-2.40/bin:/nix/store/arbxkmcgv9h8pjgj95c6d7r86yb77rl5-coreutils-9.1/bin:/nix/store/j5wraaxv16fcl10x11566a3807nr4nlr-findutils-4.9.0/bin:/nix/store/q951w69v8kbdrw6shdpibnl594yfr0by-diffutils-3.9/bin:/nix/store/93z4n7zy5hwpn06279jlmak75jmq1db1-gnused-4.9/bin:/nix/store/c01b2gmx1fjjkpnvj6bxy9q49g8qkpka-gnugrep-3.7/bin:/nix/store/4rwqxm67y0zkbxjg14zl9fdxf30cpgvy-gawk-5.2.1/bin:/nix/store/lcfhnr6wrj9ssd3dxs39sprvz6qrxlj5-gnutar-1.34/bin:/nix/store/2nprqmdmjmy5i2sii7j21fznmkwimqcr-gzip-1.12/bin:/nix/store/gz0kx5v2asvlbf7gzr4v24h7dpza70zf-bzip2-1.0.8-bin/bin:/nix/store/vg9f8pmd2g0x3gb53nxwkw3yxizl3jpk-gnumake-4.4.1/bin:/nix/store/zlf0f88vj30sc7567b80l52d19pbdmy2-bash-5.2-p15/bin:/nix/store/swf1dckghdx7nza1lxz6s462pafwd7wa-patch-2.7.6/bin:/nix/store/z5818pmhspx5772s4cp6ckhwhbin2f09-xz-5.4.2-bin/bin:/nix/store/0xpv4lac3ybc6hm9gg7ywkdazs4vsj8l-file-5.44/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/nix/store/dsfcdjmymlc18wzk0hssycwifg4wznan-bash-interactive-5.1-p16/bin:/nix/store/4ccwc439gkpk91gflh6zsyx12fkfcggx-patchelf-0.15.0/bin:/nix/store/y372k7srz9jm7v9sv2cs84g3crz27z1s-gcc-wrapper-11.3.0/bin:/nix/store/wy4ywjsch9q2hj5lphqjdg9p2kf7w0ls-gcc-11.3.0/bin:/nix/store/fi1521530hy97gwjfdlgiqb4wad2g13d-glibc-2.35-224-bin/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/l5i2w0w446pqsnpdxrlsf3azy5aspfxq-binutils-wrapper-2.39/bin:/nix/store/9n9gjvzci75gp2sh1c4rh626dhizqynl-binutils-2.39/bin:/nix/store/gx0iyarrz7jcnac1yllhgzffi75y4gs8-asciidoctor-2.0.18/bin:/nix/store/bbi6z65bazdzmawxaxr1kvgbn41sv9g0-python3.11-pygments-2.13.0/bin:/nix/store/szz6i32n70m8pxidw5zj294rka4m0yrz-python3.11-docutils-0.19/bin:/nix/store/536aws8kkljng4ggdakk8i1nfdqb4f4x-python3-3.11.3/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/gn1s1s5z19cf0wiir2cd38jckcjc6kn6-findutils-4.9.0/bin:/nix/store/5l382qdhcyyjsyhfqqc0g15rmvs3rs4s-diffutils-3.8/bin:/nix/store/v0hg83sdv4v51c0prmdigry6wdmmpzmp-gnused-4.8/bin:/nix/store/pvb117r7fhwb08717ks21a6y9hlnp63b-gnugrep-3.7/bin:/nix/store/51sgpaxsi4sl46ii9fssvyp7n592if1m-gawk-5.1.1/bin:/nix/store/isycdamy5rsi0vq55fxz0438srx5z0hv-gnutar-1.34/bin:/nix/store/w9pbk66kf43wrpdcijjzc8vf8cymnaxy-gzip-1.12/bin:/nix/store/r84vlmw71jw2piv03n0jdhav2zsdvm6n-bzip2-1.0.8-bin/bin:/nix/store/cgbpv0vvz31qayvbf3bif2iznp46wcgl-gnumake-4.3/bin:/nix/store/kga2r02rmyxl14sg96nxbdhifq3rb8lc-bash-5.1-p16/bin:/nix/store/f1gvh42512gjf3378nmlw2vrx491yndq-patch-2.7.6/bin:/nix/store/y8z2dmbxdapyzpcrhfbdv875l5v7ddpi-xz-5.2.7-bin/bin:/nix/store/cmnq5bja0h0an1k3cyb36blkfci8nxaf-file-5.43/bin:/nix/store/dsfcdjmymlc18wzk0hssycwifg4wznan-bash-interactive-5.1-p16/bin:/nix/store/4ccwc439gkpk91gflh6zsyx12fkfcggx-patchelf-0.15.0/bin:/nix/store/y372k7srz9jm7v9sv2cs84g3crz27z1s-gcc-wrapper-11.3.0/bin:/nix/store/wy4ywjsch9q2hj5lphqjdg9p2kf7w0ls-gcc-11.3.0/bin:/nix/store/fi1521530hy97gwjfdlgiqb4wad2g13d-glibc-2.35-224-bin/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/l5i2w0w446pqsnpdxrlsf3azy5aspfxq-binutils-wrapper-2.39/bin:/nix/store/9n9gjvzci75gp2sh1c4rh626dhizqynl-binutils-2.39/bin:/nix/store/0dip0kcky3jnjsp60xvk1cjzhv4yvj2s-python3.10-pelican-4.8.0/bin:/nix/store/089zdkxl8bbif25dqv3sx4nc9jyz6bh5-python3.10-chardet-5.0.0/bin:/nix/store/rpri9nb8xpwwqakyrqbg8zdslkjs2hd3-python3-3.10.11/bin:/nix/store/01axgc9g662lk663h93z2bp8clyy3hqn-python3.10-docutils-0.19/bin:/nix/store/v20lm65xzlndbw2mbihqj4xiasrvgs9w-python3.10-babel-2.11.0/bin:/nix/store/aba7b45bjy0aawqlblag6k4vg5qf44kh-python3.10-pygments-2.13.0/bin:/nix/store/zvylkc7cnar7majappcww2z826ls3sb7-python3.10-commonmark-0.9.1/bin:/nix/store/hkyfwv0yqhmyv7qvxc4g9w3ia534x391-python3.10-future-0.18.3/bin:/nix/store/5ag6v19kxlfnk6qbrrwy8wiq9m4il310-python3.10-unidecode-1.3.4/bin:/nix/store/w3f9jkinz72jyklfsgwmrfmhm4czsmga-python3.10-markdown-3.4.1/bin:/nix/store/l6jgwxkc3jhr029vfzfwzcy28iyckwsj-coreutils-9.1/bin:/nix/store/gn1s1s5z19cf0wiir2cd38jckcjc6kn6-findutils-4.9.0/bin:/nix/store/5l382qdhcyyjsyhfqqc0g15rmvs3rs4s-diffutils-3.8/bin:/nix/store/v0hg83sdv4v51c0prmdigry6wdmmpzmp-gnused-4.8/bin:/nix/store/pvb117r7fhwb08717ks21a6y9hlnp63b-gnugrep-3.7/bin:/nix/store/51sgpaxsi4sl46ii9fssvyp7n592if1m-gawk-5.1.1/bin:/nix/store/isycdamy5rsi0vq55fxz0438srx5z0hv-gnutar-1.34/bin:/nix/store/w9pbk66kf43wrpdcijjzc8vf8cymnaxy-gzip-1.12/bin:/nix/store/r84vlmw71jw2piv03n0jdhav2zsdvm6n-bzip2-1.0.8-bin/bin:/nix/store/cgbpv0vvz31qayvbf3bif2iznp46wcgl-gnumake-4.3/bin:/nix/store/kga2r02rmyxl14sg96nxbdhifq3rb8lc-bash-5.1-p16/bin:/nix/store/f1gvh42512gjf3378nmlw2vrx491yndq-patch-2.7.6/bin:/nix/store/y8z2dmbxdapyzpcrhfbdv875l5v7ddpi-xz-5.2.7-bin/bin:/nix/store/cmnq5bja0h0an1k3cyb36blkfci8nxaf-file-5.43/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/home/amy/github/wain-tools:/home/amy/github/bin:/run/wrappers/bin:/home/amy/.nix-profile/bin:/etc/profiles/per-user/amy/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin)
 $ ./hello-flake
-bash: line 138: ./hello-flake: No such file or directory</pre>
+./hello-flake: line 3: cowsay: command not found</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1451,8 +1562,11 @@ bash: line 138: ./hello-flake: No such file or directory</pre>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix run
-path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
-error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)</pre>
+warning: Git tree '/home/amy/codeberg/nix-book/source/hello-flake' is dirty
+this derivation will be built:
+  /nix/store/bd1vzfl035i4lf28p0bzksb9gc8l9x2p-hello-flake.drv
+building '/nix/store/bd1vzfl035i4lf28p0bzksb9gc8l9x2p-hello-flake.drv'...
+/nix/store/kds93y2fq5mwaca3d60rywz4c5xj0wqq-hello-flake/bin/hello-flake: line 3: cowsay: command not found</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1463,7 +1577,9 @@ we’ll see next.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ cat result/bin/hello-flake
-cat: result/bin/hello-flake: No such file or directory</pre>
+#!/nix/store/zlf0f88vj30sc7567b80l52d19pbdmy2-bash-5.2-p15/bin/sh
+
+echo "Hello from your flake!"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1472,10 +1588,11 @@ cat: result/bin/hello-flake: No such file or directory</pre>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix build
-path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
-error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)
+warning: Git tree '/home/amy/codeberg/nix-book/source/hello-flake' is dirty
 $ cat result/bin/hello-flake
-cat: result/bin/hello-flake: No such file or directory</pre>
+#!/nix/store/zlf0f88vj30sc7567b80l52d19pbdmy2-bash-5.2-p15/bin/sh
+
+cowsay "Hello from your flake!"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1485,11 +1602,10 @@ don’t need to <code>git push</code> the changes until we’re ready to share t
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
-error: pathspec 'hello-flake' did not match any file(s) known to git
-error: pathspec 'flake.nix' did not match any file(s) known to git
+[main 8572547] added bovine feature
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 $ nix run
-path '/home/amy/codeberg/nix-book/source' does not contain a 'flake.nix', searching up
-error: path '/home/amy/codeberg/nix-book' is not part of a flake (neither it nor its parent directories contain a 'flake.nix' file)</pre>
+/nix/store/kds93y2fq5mwaca3d60rywz4c5xj0wqq-hello-flake/bin/hello-flake: line 3: cowsay: command not found</pre>
 </div>
 </div>
 <div class="sect2">
@@ -1577,9 +1693,7 @@ directory and create a git repository.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ cd ~/tutorial-practice
-bash: line 8: cd: /home/amy/tutorial-practice: No such file or directory
-$ mkdir hello-python
+<pre class="nowrap">$ mkdir hello-python
 mkdir: cannot create directory ‘hello-python’: File exists
 $ cd hello-python
 $ git init

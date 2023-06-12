@@ -29,4 +29,4 @@ index.html : $(ADOC_FILES)
 
 .PHONY: clean
 clean :
-> rm -rf $(GENERATED_ADOC_FILES) hello-python
+> rm -rf $(GENERATED_ADOC_FILES) $(WORKDIR)
