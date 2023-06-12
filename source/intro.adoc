@@ -39,7 +39,7 @@ and use flakes; and this seems to be the general consensus.
 
 === Prerequisites
 
-To follow along with this tutorial, you will need access to a computer
+To follow along with the examples in this book, you will need access to a computer
 or (virtual machine) with Nix installed and _flakes enabled_.
 
 I recommend the installer from
