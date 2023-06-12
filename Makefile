@@ -1,3 +1,4 @@
+# Tab characters are invisible evil. Use a different prefix in recipes.
 .RECIPEPREFIX = >
 
 # The operator ‘!=’ is not negation; it executes a shell script and sets a variable to its output.
@@ -16,10 +17,14 @@ debug :
 .PHONY: html
 html : index.html
 
+# Files with the "adoc0" extension contain code that must be executed and included in order to generate asciidoc files.
+# My "run-code-inline" script is available at https://github.com/mhwombat/bin/blob/master/run-code-inline.
+# We want to treat any paths in commands as relative to the adoc0 file, so we cd to its directory.
+# The "dir" and "notdir" functions extract the directory and base filename from a path, respectively.
 %.adoc : %.adoc0
-> run-code-inline < $< 2>&1 | tee $@
+> cd $(dir $@); run-code-inline < $(notdir $<) 2>&1 | tee $(notdir $@)
 
-index.html : source/book.adoc $(ADOC_FILES)
+index.html : $(ADOC_FILES)
 > asciidoctor -b html5 -d book -o $(MAIN_ADOC_FILE) $<
 
 .PHONY: clean
