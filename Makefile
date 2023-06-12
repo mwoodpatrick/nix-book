@@ -24,4 +24,4 @@ index.html : source/book.adoc $(ADOC_FILES)
 
 .PHONY: clean
 clean :
-> echo removing $(GENERATED_ADOC_FILES)
+> rm -rf $(GENERATED_ADOC_FILES)
