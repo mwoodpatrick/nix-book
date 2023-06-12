@@ -7,6 +7,7 @@ GENERATED_ADOC_FILES != find source -name '*.adoc0' | sed 's/\.adoc0/-generated.
 ADOC_FILES = $(STATIC_ADOC_FILES) $(GENERATED_ADOC_FILES)
 
 MAIN_ADOC_FILE = source/book.adoc
+HTML_FILE = index.html
 
 .PHONY: debug
 debug :
@@ -15,7 +16,7 @@ debug :
 > @echo "ADOC_FILES=$(ADOC_FILES)"
 
 .PHONY: html
-html : index.html
+html : $(HTML_FILE)
 
 # Files with the "adoc0" extension contain code that must be executed and included in order to generate asciidoc files.
 # My "run-code-inline" script is available at https://github.com/mhwombat/bin/blob/master/run-code-inline.
@@ -24,9 +25,9 @@ html : index.html
 %-generated.adoc : %.adoc0
 > cd $(dir $@); run-code-inline < $(notdir $<) 2>&1 | tee $(notdir $@)
 
-index.html : $(ADOC_FILES)
+$(HTML_FILE) : $(ADOC_FILES)
 > asciidoctor -b html5 -d book -o $@ $(MAIN_ADOC_FILE)
 
 .PHONY: clean
 clean :
-> rm -rf $(GENERATED_ADOC_FILES) $(WORKDIR)
+> rm -rf $(HTML_FILE) $(GENERATED_ADOC_FILES)
