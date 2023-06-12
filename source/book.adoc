@@ -9,7 +9,7 @@
 
 include::intro.adoc[]
 
-include::hello-flake.adoc[]
+include::hello-flake-generated.adoc[]
 
 include::hello-flake-repo.adoc[]
 
@@ -19,10 +19,10 @@ include::generic-flake.adoc[]
 
 include::hello-flake-return.adoc[]
 
-include::modify-hello-flake.adoc[]
+include::modify-hello-flake-generated.adoc[]
 
-include::python-flake.adoc[]
+include::python-flake-generated.adoc[]
 
-include::shell-recipes/_include.adoc[]
+include::shell-recipes/_include-generated.adoc[]
 
-include::shebangs/_include.adoc[]
+include::shebangs/_include-generated.adoc[]
