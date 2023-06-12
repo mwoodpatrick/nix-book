@@ -200,3 +200,8 @@ the development environment every time you need another tool. However,
 this Nix way of doing things ensures that all of your dependencies, down
 to the exact versions, are captured in `flake.lock`, and that anyone
 else will be able to reproduce the development environment.
+
+////
+Good adoc0 scripts clean up after themselves.
+$ cd .. ; rm -rf hello-flake # clean up
+////
