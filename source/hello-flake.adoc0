@@ -4,8 +4,8 @@ Before learning to write Nix flakes, let’s learn how to use them. I’ve
 created a simple example of a flake in this git
 https://codeberg.org/mhwombat/hello-flake[repository]. To run this
 flake, you don’t need to install anything; simply run the command below.
-The first time you use a package, Nix has to fetch and build it, which
-may take a few minutes. Subsequent invocations should be instantaneous.
+The first time you use a flake, Nix has to fetch and build it, which
+may take time. Subsequent invocations should be instantaneous.
 
 ....
 $ nix run "git+https://codeberg.org/mhwombat/hello-flake"
