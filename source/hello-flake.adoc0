@@ -36,7 +36,7 @@ $ which hello-flake
 ....
 
 Once we exit that shell, the `hello-flake` command is no longer
-available.
+directly available.
 
 ....
 $# echo '$ exit'
@@ -44,7 +44,7 @@ $# echo '$ hello-flake'
 sh: line 3: hello-flake: command not found
 ....
 
-Actually, we can still access the command using the store path we found
+However, we can still run the command using the store path we found
 earlier. That’s not particularly convenient, but it does demonstrate
 that the package remains in the store for future use.
 
