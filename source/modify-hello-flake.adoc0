@@ -5,9 +5,14 @@ opportunity to check your understanding of flakes.
 
 The first step is to enter a development shell.
 
+////
+The user would have done this in an earlier section.
+However, my adoc0 scripts clean up after themselves, so we need to do it again.
+$ git clone https://codeberg.org/mhwombat/hello-flake
+$ cd hello-flake
+////
+
 ....
-$# git clone https://codeberg.org/mhwombat/hello-flake
-$# cd hello-flake
 $ nix develop
 ....
 

@@ -177,8 +177,8 @@ You can test that your package is properly configured by going to
 another directory and running it from there.
 
 ....
-$ cd ~
-$ nix run ~/tutorial-practice/hello-python
+$ cd ..
+$ nix run ./hello-python
 ....
 
 If you move the project to a public repo, anyone can run it. Recall from
@@ -194,5 +194,5 @@ Python flake.
 
 ////
 Good adoc0 scripts clean up after themselves.
-$ cd .. ; rm -rf hello-python # clean up
+$ rm -rf hello-python # clean up
 ////
