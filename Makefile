@@ -25,7 +25,7 @@ html : index.html
 > cd $(dir $@); run-code-inline < $(notdir $<) 2>&1 | tee $(notdir $@)
 
 index.html : $(ADOC_FILES)
-> asciidoctor -b html5 -d book -o $(MAIN_ADOC_FILE) $<
+> asciidoctor -b html5 -d book -o $@ $(MAIN_ADOC_FILE)
 
 .PHONY: clean
 clean :
