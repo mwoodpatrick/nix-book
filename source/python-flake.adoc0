@@ -179,7 +179,6 @@ another directory and running it from there.
 ....
 $ cd ~
 $ nix run ~/tutorial-practice/hello-python
-$# cd .. ; rm -rf hello-python # clean up
 ....
 
 If you move the project to a public repo, anyone can run it. Recall from
@@ -192,3 +191,8 @@ nix run "git+https://codeberg.org/mhwombat/hello-flake"
 
 Modify the URL accordingly and invite someone else to run your new
 Python flake.
+
+////
+Good adoc0 scripts clean up after themselves.
+$ cd .. ; rm -rf hello-python # clean up
+////
