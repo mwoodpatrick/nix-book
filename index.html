@@ -898,7 +898,7 @@ see what it does.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">        packages = rec {
-          hello = pkgs.stdenv.mkDerivation rec {  ❶
+          hello = pkgs.stdenv.mkDerivation rec { ❶
             name = "hello-flake";
 
             src = ./.; ❷
@@ -917,7 +917,7 @@ see what it does.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This flake uses <code>mkDerivation</code> (<code>❶</code>) which is a very useful
+<p>This flake uses <code>mkDerivation</code> <code>❶</code> which is a very useful
 general-purpose package builder provided by the Nix standard
 environment. It’s especially useful for the typical
 <code>./configure; make; make install</code> scenario, but for this flake we don’t
@@ -926,7 +926,7 @@ even need that.</p>
 <div class="paragraph">
 <p>The <code>name</code> variable is the name of the flake, as it would appear in a
 package listing if we were to add it to Nixpkgs or another package
-collection. The <code>src</code> variable (<code>❷</code>) supplies the location of the source
+collection. The <code>src</code> variable <code>❷</code> supplies the location of the source
 files, relative to <code>flake.nix</code>. When a flake is accessed for the first
 time, the repository contents are fetched in the form of a tarball. The
 <code>unpackPhase</code> variable indicates that we do want the tarball to be
@@ -941,10 +941,10 @@ which is a no-op or &#8220;do nothing&#8221; command.</p>
 </div>
 <div class="paragraph">
 <p>The <code>installPhase</code> variable is a sequence of Linux commands that will do
-the actual installation. In this case, we create a directory (<code>❸</code>) for the
-installation, copy the <code>hello-flake</code> script there (<code>❹</code>), and make the
-script executable (<code>❺</code>). The environment variable <code>$src</code> refers to the
-source directory, which we specified earlier (<code>❷</code>).</p>
+the actual installation. In this case, we create a directory <code>❸</code> for the
+installation, copy the <code>hello-flake</code> script there <code>❹</code>, and make the
+script executable <code>❺</code>. The environment variable <code>$src</code> refers to the
+source directory, which we specified earlier <code>❷</code>.</p>
 </div>
 <div class="paragraph">
 <p>Earlier we said that the build step runs in a pure environment to ensure
