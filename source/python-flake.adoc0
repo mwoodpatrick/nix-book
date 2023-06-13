@@ -16,7 +16,7 @@ $# curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/hello.p
 $ cat hello.py
 ....
 
-Before we pachage the program, let’s verify that it runs. We’re going to
+Before we package the program, let’s verify that it runs. We’re going to
 need Python. By now you’ve probably figured out that we can write a
 `flake.nix` and define a development shell that includes Python. We’ll
 do that shortly, but first I want to show you a handy shortcut. We can
@@ -69,7 +69,7 @@ $ python -m build
 ....
 
 The missing module error happens because we don’t have `build` available
-in the temporary shell. We can fix that by adding ``build'' to the
+in the temporary shell. We can fix that by adding "`build`" to the
 temporary shell. When you need support for both a language and some of
 its packages, it’s best to use one of the Nix functions that are
 specific to the programming language and build system. For Python, we
@@ -154,7 +154,7 @@ Let’s try out the new flake.
 $ nix run
 ....
 
-Why can’t it find `flake.nix`? Nix flakes only ``see'' files that are
+Why can’t it find `flake.nix`? Nix flakes only "`see`" files that are
 part of the repository. We need to add all of the important files to the
 repo before building or running the flake.
 
