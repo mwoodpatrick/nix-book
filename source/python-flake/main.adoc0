@@ -11,9 +11,14 @@ $ git init
 
 Next, we’ll create a simple Python program.
 
+////
+$ curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/hello.py --silent --output hello.py
+////
+
+[source,python,linenums]
+.hello.py
 ....
-$# curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/hello.py --silent --output hello.py
-$ cat hello.py
+$# cat hello.py
 ....
 
 Before we package the program, let’s verify that it runs. We’re going to
@@ -28,10 +33,13 @@ packages you need), and you want to experiment a bit first.
 
 The command to enter a temporary shell is
 
-`nix-shell -p` _packages_
+`nix-shell -p __packages__`
 
-If there are multiple packages, they should be separated by spaces. Note
-that the command used here is `nix-shell` with a hyphen, not `nix shell`
+If there are multiple packages, they should be separated by spaces.
+
+[NOTE]
+====
+The command used here is `nix-shell` with a hyphen, not `nix shell`
 with a space; those are two different commands. In fact there are
 hyphenated and non-hyphenated versions of many Nix commands, and yes,
 it’s confusing. The non-hyphenated commands were introduced when support
@@ -39,6 +47,7 @@ for flakes was added to Nix. I predict that eventually all hyphenated
 commands will be replaced with non-hyphenated versions. Until then, a
 useful rule of thumb is that non-hyphenated commands are for for working
 directly with flakes; hyphenated commands are for everything else.
+====
 
 Let’s enter a shell with Python so we can test the program.
 
@@ -56,9 +65,14 @@ Packaging User Guide], especially the section on
 https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#setup-args[setup
 args].
 
+////
+$ curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/setup.py --silent --output setup.py
+////
+
+[source,python,linenums]
+.setup.py
 ....
-$# curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/setup.py --silent --output setup.py
-$ cat setup.py
+$# cat setup.py
 ....
 
 We won’t write `flake.nix` just yet. First we’ll try building the
@@ -143,9 +157,14 @@ function.
 If you put all the pieces together, your `flake.nix` should look
 something like this.
 
+////
+$ curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/flake.nix --silent --output flake.nix
+////
+
+[source,nix,linenums]
+.flake.nix
 ....
-$# curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/flake.nix --silent --output flake.nix
-$ cat flake.nix
+$# cat flake.nix
 ....
 
 Let’s try out the new flake.

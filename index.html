@@ -1154,12 +1154,11 @@ command.
 Here&#8217;s the <code>hello-flake</code> file, with the modified line highlighted.</p>
 </div>
 <div class="listingblock">
+<div class="title">hello-flake</div>
 <div class="content">
-<pre class="pygments highlight nowrap"><code data-lang="nix"><span></span><span class="tok-err">$</span> cat hello-flake
-<span class="tok-c1">#!/usr/bin/env sh</span>
+<pre class="pygments highlight nowrap"><code data-lang="nix"><span></span><span class="tok-c1">#!/usr/bin/env sh</span>
 
-<span class="hll">cowsay <span class="tok-s2">&quot;Hello from your flake!&quot;</span>
-</span></code></pre>
+cowsay <span class="tok-s2">&quot;Hello from your flake!&quot;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1185,6 +1184,7 @@ However, we also want it to be available in a develoment shell.
 The highlighted modifications below will accomplish that.</p>
 </div>
 <div class="listingblock">
+<div class="title">flake.nix</div>
 <div class="content">
 <pre class="pygments highlight nowrap"><code data-lang="nix"><span></span><span class="tok-p">{</span>
   <span class="tok-c1"># See https://github.com/mhwombat/nix-for-numbskulls/blob/main/flakes.md</span>
@@ -1239,9 +1239,9 @@ The highlighted modifications below will accomplish that.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We restart the development shell and see that the <code>cowsay</code> command is
-now available and the script works. Because we’ve updated source files
-but haven’t `git commit`ed the new version, we get a warning message
+<p>Now we restart the development shell and see that the <code>cowsay</code> command is
+available and the script works. Because we’ve updated source files
+but haven’t <code>git commit</code>ed the new version, we get a warning message
 about it being &#8220;dirty&#8221;. It’s just a warning, though; the script runs
 correctly.</p>
 </div>
@@ -1312,7 +1312,7 @@ don’t need to <code>git push</code> the changes until we’re ready to share t
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
-[main 481542e] added bovine feature
+[main 8c8f6c7] added bovine feature
  2 files changed, 7 insertions(+), 1 deletion(-)
 $ nix run
  ________________________
@@ -1420,16 +1420,23 @@ Initialized empty Git repository in /home/amy/codeberg/nix-book/source/python-fl
 <div class="paragraph">
 <p>Next, we’ll create a simple Python program.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
+<div class="title">hello.py</div>
 <div class="content">
-<pre class="nowrap">$ cat hello.py
-#!/usr/bin/env python
+<pre class="pygments highlight nowrap"><code data-lang="python"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><pre><span></span><span class="tok-ch">#!/usr/bin/env python</span>
 
-def main():
-    print("Hello from inside a Python program built with a Nix flake!")
+<span class="tok-k">def</span> <span class="tok-nf">main</span><span class="tok-p">():</span>
+    <span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hello from inside a Python program built with a Nix flake!&quot;</span><span class="tok-p">)</span>
 
-if __name__ == "__main__":
-    main()</pre>
+<span class="tok-k">if</span> <span class="tok-vm">__name__</span> <span class="tok-o">==</span> <span class="tok-s2">&quot;__main__&quot;</span><span class="tok-p">:</span>
+    <span class="tok-n">main</span><span class="tok-p">()</span>
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1447,11 +1454,20 @@ packages you need), and you want to experiment a bit first.</p>
 <p>The command to enter a temporary shell is</p>
 </div>
 <div class="paragraph">
-<p><code>nix-shell -p</code> <em>packages</em></p>
+<p><code>nix-shell -p <em>packages</em></code></p>
 </div>
 <div class="paragraph">
-<p>If there are multiple packages, they should be separated by spaces. Note
-that the command used here is <code>nix-shell</code> with a hyphen, not <code>nix shell</code>
+<p>If there are multiple packages, they should be separated by spaces.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The command used here is <code>nix-shell</code> with a hyphen, not <code>nix shell</code>
 with a space; those are two different commands. In fact there are
 hyphenated and non-hyphenated versions of many Nix commands, and yes,
 it’s confusing. The non-hyphenated commands were introduced when support
@@ -1459,6 +1475,10 @@ for flakes was added to Nix. I predict that eventually all hyphenated
 commands will be replaced with non-hyphenated versions. Until then, a
 useful rule of thumb is that non-hyphenated commands are for for working
 directly with flakes; hyphenated commands are for everything else.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Let’s enter a shell with Python so we can test the program.</p>
@@ -1479,21 +1499,33 @@ Packaging User Guide</a>, especially the section on
 <a href="https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#setup-args">setup
 args</a>.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
+<div class="title">setup.py</div>
 <div class="content">
-<pre class="nowrap">$ cat setup.py
-#!/usr/bin/env python
+<pre class="pygments highlight nowrap"><code data-lang="python"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><pre><span></span><span class="tok-ch">#!/usr/bin/env python</span>
 
-from setuptools import setup
+<span class="tok-kn">from</span> <span class="tok-nn">setuptools</span> <span class="tok-kn">import</span> <span class="tok-n">setup</span>
 
-setup(
-    name='hello-flake-python',
-    version='0.1.0',
-    py_modules=['hello'],
-    entry_points={
-        'console_scripts': ['hello-flake-python = hello:main']
-    },
-)</pre>
+<span class="tok-n">setup</span><span class="tok-p">(</span>
+    <span class="tok-n">name</span><span class="tok-o">=</span><span class="tok-s1">&#39;hello-flake-python&#39;</span><span class="tok-p">,</span>
+    <span class="tok-n">version</span><span class="tok-o">=</span><span class="tok-s1">&#39;0.1.0&#39;</span><span class="tok-p">,</span>
+    <span class="tok-n">py_modules</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-s1">&#39;hello&#39;</span><span class="tok-p">],</span>
+    <span class="tok-n">entry_points</span><span class="tok-o">=</span><span class="tok-p">{</span>
+        <span class="tok-s1">&#39;console_scripts&#39;</span><span class="tok-p">:</span> <span class="tok-p">[</span><span class="tok-s1">&#39;hello-flake-python = hello:main&#39;</span><span class="tok-p">]</span>
+    <span class="tok-p">},</span>
+<span class="tok-p">)</span>
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1592,57 +1624,105 @@ function.</p>
 <p>If you put all the pieces together, your <code>flake.nix</code> should look
 something like this.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
+<div class="title">flake.nix</div>
 <div class="content">
-<pre class="nowrap">$ cat flake.nix
-{
-  # See https://github.com/mhwombat/nix-for-numbskulls/blob/main/flakes.md
-  # for a brief overview of what each section in a flake should or can contain.
+<pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><pre><span></span><span class="tok-p">{</span>
+  <span class="tok-c1"># See https://github.com/mhwombat/nix-for-numbskulls/blob/main/flakes.md</span>
+  <span class="tok-c1"># for a brief overview of what each section in a flake should or can contain.</span>
 
-  description = "a very simple and friendly flake written in Python";
+  <span class="tok-ss">description =</span> <span class="tok-s2">&quot;a very simple and friendly flake written in Python&quot;</span><span class="tok-p">;</span>
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
-  };
+  <span class="tok-ss">inputs =</span> <span class="tok-p">{</span>
+    nixpkgs<span class="tok-o">.</span><span class="tok-ss">url =</span> <span class="tok-s2">&quot;github:NixOS/nixpkgs&quot;</span><span class="tok-p">;</span>
+    flake-utils<span class="tok-o">.</span><span class="tok-ss">url =</span> <span class="tok-s2">&quot;github:numtide/flake-utils&quot;</span><span class="tok-p">;</span>
+  <span class="tok-p">};</span>
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        python = pkgs.python3;
-      in
-      {
-        devShells = rec {
-          default = pkgs.mkShell {
-            packages = [
-              # Python plus helper tools
-              (python.withPackages (ps: with ps; [
-                virtualenv # Virtualenv
-                pip # The pip installer
-              ]))
-            ];
-          };
-        };
+  <span class="tok-ss">outputs =</span> <span class="tok-p">{</span> self<span class="tok-p">,</span> nixpkgs<span class="tok-p">,</span> flake-utils <span class="tok-p">}:</span>
+    flake-utils<span class="tok-o">.</span>lib<span class="tok-o">.</span>eachDefaultSystem <span class="tok-p">(</span>system<span class="tok-p">:</span>
+      <span class="tok-k">let</span>
+        <span class="tok-ss">pkgs =</span> <span class="tok-nb">import</span> nixpkgs <span class="tok-p">{</span> <span class="tok-k">inherit</span> system<span class="tok-p">;</span> <span class="tok-p">};</span>
+        <span class="tok-ss">python =</span> pkgs<span class="tok-o">.</span>python3<span class="tok-p">;</span>
+      <span class="tok-k">in</span>
+      <span class="tok-p">{</span>
+        <span class="tok-ss">devShells =</span> <span class="tok-k">rec</span> <span class="tok-p">{</span>
+          <span class="tok-ss">default =</span> pkgs<span class="tok-o">.</span>mkShell <span class="tok-p">{</span>
+            <span class="tok-ss">packages =</span> <span class="tok-p">[</span>
+              <span class="tok-c1"># Python plus helper tools</span>
+              <span class="tok-p">(</span>python<span class="tok-o">.</span>withPackages <span class="tok-p">(</span>ps<span class="tok-p">:</span> <span class="tok-k">with</span> ps<span class="tok-p">;</span> <span class="tok-p">[</span>
+                virtualenv <span class="tok-c1"># Virtualenv</span>
+                pip <span class="tok-c1"># The pip installer</span>
+              <span class="tok-p">]))</span>
+            <span class="tok-p">];</span>
+          <span class="tok-p">};</span>
+        <span class="tok-p">};</span>
 
-        packages = rec {
-          hello = python.pkgs.buildPythonApplication {
-            name = "hello-flake-python";
+        <span class="tok-ss">packages =</span> <span class="tok-k">rec</span> <span class="tok-p">{</span>
+          <span class="tok-ss">hello =</span> python<span class="tok-o">.</span>pkgs<span class="tok-o">.</span>buildPythonApplication <span class="tok-p">{</span>
+            <span class="tok-ss">name =</span> <span class="tok-s2">&quot;hello-flake-python&quot;</span><span class="tok-p">;</span>
 
-            buildInputs = with python.pkgs; [ pip ];
+            <span class="tok-ss">buildInputs =</span> <span class="tok-k">with</span> python<span class="tok-o">.</span>pkgs<span class="tok-p">;</span> <span class="tok-p">[</span> pip <span class="tok-p">];</span>
 
-            src = ./.;
-          };
-          default = hello;
-        };
+            <span class="tok-ss">src =</span> <span class="tok-o">.</span><span class="tok-l">/.</span><span class="tok-p">;</span>
+          <span class="tok-p">};</span>
+          <span class="tok-ss">default =</span> hello<span class="tok-p">;</span>
+        <span class="tok-p">};</span>
 
-        apps = rec {
-          hello = flake-utils.lib.mkApp { drv = self.packages.${system}.hello; };
-          default = hello;
-        };
-      }
-    );
-}</pre>
+        <span class="tok-ss">apps =</span> <span class="tok-k">rec</span> <span class="tok-p">{</span>
+          <span class="tok-ss">hello =</span> flake-utils<span class="tok-o">.</span>lib<span class="tok-o">.</span>mkApp <span class="tok-p">{</span> <span class="tok-ss">drv =</span> self<span class="tok-o">.</span>packages<span class="tok-o">.</span><span class="tok-err">$</span><span class="tok-p">{</span>system<span class="tok-p">}</span><span class="tok-o">.</span>hello<span class="tok-p">;</span> <span class="tok-p">};</span>
+          <span class="tok-ss">default =</span> hello<span class="tok-p">;</span>
+        <span class="tok-p">};</span>
+      <span class="tok-p">}</span>
+    <span class="tok-p">);</span>
+<span class="tok-p">}</span>
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1667,9 +1747,6 @@ $ nix run
 warning: Git tree '/home/amy/codeberg/nix-book/source/python-flake/hello-python' is dirty
 warning: creating lock file '/home/amy/codeberg/nix-book/source/python-flake/hello-python/flake.lock'
 warning: Git tree '/home/amy/codeberg/nix-book/source/python-flake/hello-python' is dirty
-this derivation will be built:
-  /nix/store/ad7ajqx55bfqgj9527ibmkqflbmf29bi-hello-flake-python.drv
-building '/nix/store/ad7ajqx55bfqgj9527ibmkqflbmf29bi-hello-flake-python.drv'...
 Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
@@ -1683,7 +1760,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) 1c4a0d6] initial commit
+[master (root-commit) a98ed14] initial commit
  4 files changed, 127 insertions(+)
  create mode 100644 flake.lock
  create mode 100644 flake.nix

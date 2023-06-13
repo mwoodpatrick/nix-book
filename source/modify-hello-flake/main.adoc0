@@ -91,8 +91,9 @@ $ sed -i 's/echo/cowsay/' hello-flake
 ////
 
 [source,nix,highlight=4]
+.hello-flake
 ....
-$ cat hello-flake
+$# cat hello-flake
 ....
 
 Let’s test the modified script.
@@ -117,13 +118,14 @@ $ cp ../flake.nix.new flake.nix
 ////
 
 [source,nix,highlight=18..22]
+.flake.nix
 ....
 $# cat flake.nix
 ....
 
-We restart the development shell and see that the `cowsay` command is
-now available and the script works. Because we’ve updated source files
-but haven’t `git commit`ed the new version, we get a warning message
+Now we restart the development shell and see that the `cowsay` command is
+available and the script works. Because we’ve updated source files
+but haven’t ``git commit``ed the new version, we get a warning message
 about it being "`dirty`". It’s just a warning, though; the script runs
 correctly.
 
