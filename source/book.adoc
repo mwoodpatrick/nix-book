@@ -8,6 +8,11 @@
 :!prewrap:
 :icons: font
 
+This book is available
+https://mhwombat.codeberg.page/nix-book/[online]
+and as a downloadable
+https://codeberg.org/mhwombat/nix-book/src/branch/pages/wombats-book-of-nix.pdf[PDF].
+
 include::intro/main.adoc[leveloffset=+1]
 
 include::hello-flake/main-generated.adoc[leveloffset=+1]
