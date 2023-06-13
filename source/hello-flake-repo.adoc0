@@ -12,12 +12,14 @@ This is a simple repo with just a few files. Like most git repos, it
 includes `LICENSE`, which contains the software license, and `README.md`
 which provides information about the repo.
 
-The `hello-flake` file is the command we were executing earlier. This
-particular executable is just a shell script, so we can view it. It’s an
-extremly simple script with just two lines.
+The `hello-flake` file is the executable we ran earlier.
+This particular executable is just a shell script, so we can view it.
+It’s an extremly simple script with just two lines.
 
+[source,bash,linenums]
+.hello-flake
 ....
-$ cat hello-flake
+$# cat hello-flake
 ....
 
 Now that we have a copy of the repo, we can execute this script
@@ -34,15 +36,17 @@ in the details. We’ll make this script a little more interesting later.
 Let’s look at another file. The file that defines how to package a flake
 is always called `flake.nix`.
 
+[source,nix,linenums]
+.flake.nix
 ....
-$ cat flake.nix
+$# cat flake.nix
 ....
 
 If this is your first time seeing a flake definition, it probably looks
 intimidating. Flakes are written in a functional language called
 Nixfootnote:[For an introduction to the Nix language, see
 https://nixos.org/guides/nix-language.html[Nix language basics].]. Yes,
-``Nix'' is the name of both the package manager and the language it
+"`Nix`" is the name of both the package manager and the language it
 uses. We’ll look at this in more detail shortly. For now, I’d like to
 focus on the inputs section.
 
@@ -62,8 +66,10 @@ _depends_ on `nixpkgs` and `flake-utils`.
 
 Finally, let’s look at `flake.lock`, or rather, just part of it.
 
+[source,linenums]
+.flake.lock
 ....
-$ head -n 40 flake.lock
+$# head -n 40 flake.lock
 ....
 
 If `flake.nix` seemed intimidating, then this file looks like an
@@ -75,7 +81,7 @@ flake dependencies, (e.g., version number, branch, revision, hash), so
 that _anyone, anywhere, any time, can re-create the exact same
 environment that the original developer used._
 
-No more complaints of ``but it works on my machine!''. That is the
+No more complaints of "`but it works on my machine!`". That is the
 benefit of using flakes.
 
 ////
