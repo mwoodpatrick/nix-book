@@ -1,0 +1,14 @@
+= Shell with access to a package defined in a remote git repo
+
+[source,nix,linenums]
+.shell.nix
+....
+include::shell.nix[]
+....
+
+Here’s a demonstration using the shell.
+
+....
+$ nix-shell
+$ hello
+....

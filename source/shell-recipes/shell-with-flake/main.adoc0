@@ -1,0 +1,15 @@
+= Shell with access to a flake
+
+[source,nix,linenums]
+.shell.nix
+....
+include::shell.nix[]
+....
+
+Here’s a demonstration using the shell.
+
+....
+$ nix-shell
+$ hello-flake
+....
+
