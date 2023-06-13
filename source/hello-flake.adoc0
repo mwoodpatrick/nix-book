@@ -27,7 +27,7 @@ $ hello-flake
 ....
 
 Nix didn’t _install_ the package; it merely built and placed it in a
-directory called the ``Nix store''. Thus we can have multiple versions
+directory called the "`Nix store`". Thus we can have multiple versions
 of a package without worrying about conflicts. We can find out the
 location of the executable, if we’re curious.
 
