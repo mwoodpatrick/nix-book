@@ -6,6 +6,7 @@
 :pygments-style: manni
 :pygments-linenums-mode: table
 :!prewrap:
+:icons: font
 
 include::intro.adoc[]
 
@@ -19,10 +20,10 @@ include::generic-flake.adoc[]
 
 include::hello-flake-return.adoc[]
 
-include::modify-hello-flake-generated.adoc[]
+include::modify-hello-flake/main-generated.adoc[]
 
 include::python-flake-generated.adoc[]
 
-include::shell-recipes/_include-generated.adoc[]
+include::shell-recipes/main-generated.adoc[]
 
-include::shebangs/_include-generated.adoc[]
+include::shebangs/main-generated.adoc[]
