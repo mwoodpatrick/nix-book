@@ -1,4 +1,4 @@
-== Nix-shell shebangs
+= Nix-shell shebangs
 
 You can use `nix-shell` to run scripts in arbitrary languages, providing
 the necessary dependencies. This is particularly convenient for
@@ -9,32 +9,6 @@ The script should start with two "`shebang`" (`#!`) commands. The first
 should invoke `nix-shell`. The second should declares the scrpt
 interpreter and any dependencies. Here are some examples.
 
-=== A Bash script depending on a package in the nixpkgs repo.
+include::bash-with-nix-pkg/main-generated.adoc[leveloffset=+1]
 
-Script:
-
-[source,bash,linenums]
-....
-include::bash-with-nixpkg.sh[]
-....
-
-Output:
-
-....
-$# ./bash-with-nixpkg.sh
-....
-
-=== A Python script depending on a package in the nixpkgs repo.
-
-Script:
-
-[source,bash,linenums]
-....
-include::python-with-nixpkg.sh[]
-....
-
-Output:
-
-....
-$# ./python-with-nixpkg.sh
-....
+include::python-with-nix-pkg/main-generated.adoc[leveloffset=+1]

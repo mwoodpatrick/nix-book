@@ -1,6 +1,6 @@
-== Modifying the flake
+= Modifying the flake
 
-=== The Nix development shell
+== The Nix development shell
 
 Let’s make a simple modification to the script. This will give you an
 opportunity to check your understanding of flakes.
@@ -79,7 +79,7 @@ first if needed. Specifically, it runs the version in the Nix store, not
 the version in `result`.
 |===
 
-=== Introducing a dependency
+== Introducing a dependency
 
 Now we’re ready to make the flake a little more interesting.
 Instead of using the `echo` command in the script, we can use the Linux `cowsay`
@@ -165,7 +165,7 @@ $ git commit hello-flake flake.nix -m 'added bovine feature'
 $ nix run
 ....
 
-=== Development workflows
+== Development workflows
 
 If you’re getting confused about when to use the different commands,
 it’s because there’s more than one way to use Nix. I tend to think of it
@@ -203,7 +203,7 @@ executable depends on the development tools – It probably isn’t
 I generally only use `nix build` if I just want to build the package but
 not execute anything (perhaps it’s just a library).
 
-=== This all seems like a hassle!
+== This all seems like a hassle!
 
 It is a bit annoying to modify `flake.nix` and ether rebuild or reload
 the development environment every time you need another tool. However,

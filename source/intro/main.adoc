@@ -1,6 +1,6 @@
-== Introduction
+= Introduction
 
-=== Why Nix?
+== Why Nix?
 
 If you’ve opened this PDF, you already have your own motivation for
 learning Nix. Here’s how it helps me. As a researcher, I tend to work on
@@ -28,7 +28,7 @@ any dependencies. It automatically tracks the version of each dependency
 so that it can replicate the environment wherever and whenever it’s
 needed.
 
-=== Why _flakes_?
+== Why _flakes_?
 
 Flakes are labeled as an experimental feature, so it might seem safer to
 avoid them. However, they have been in use for years, and there is
@@ -37,7 +37,7 @@ easier to understand, and offer more features than the traditional Nix
 approach. After weighing the pros and cons, I feel it’s better to learn
 and use flakes; and this seems to be the general consensus.
 
-=== Prerequisites
+== Prerequisites
 
 To follow along with the examples in this book, you will need access to a computer
 or (virtual machine) with Nix installed and _flakes enabled_.

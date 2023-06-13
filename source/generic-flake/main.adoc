@@ -1,4 +1,4 @@
-== A generic flake
+= A generic flake
 
 The previous section presented a very high-level view of flakes,
 focusing on the basic structure. In this section, we will add a bit more
@@ -9,7 +9,7 @@ functional language. As with most programming languages, there are many
 ways to achieve the same result. Below is an example you can follow when
 writing your own flakes. I’ll explain the example in some detail.
 
-[subs=quotes]
+[source,subs=quotes]
 ----
 {
   description = "#_brief package description_#";

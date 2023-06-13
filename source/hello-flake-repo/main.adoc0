@@ -1,4 +1,4 @@
-== The hello-flake repo
+= The hello-flake repo
 
 Let’s clone the repository and see how the flake is defined.
 
@@ -50,6 +50,7 @@ https://nixos.org/guides/nix-language.html[Nix language basics].]. Yes,
 uses. We’ll look at this in more detail shortly. For now, I’d like to
 focus on the inputs section.
 
+[source,nix]
 ....
 inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
@@ -70,6 +71,7 @@ Finally, let’s look at `flake.lock`, or rather, just part of it.
 .flake.lock
 ....
 $# head -n 40 flake.lock
+. . .
 ....
 
 If `flake.nix` seemed intimidating, then this file looks like an

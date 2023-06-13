@@ -1,0 +1,13 @@
+= Nix shell recipes
+
+include::shell-with-nixpkgs/main-generated.adoc[leveloffset=+1]
+
+include::shell-with-git-nix-pkg/main-generated.adoc[leveloffset=+1]
+
+include::shell-with-flake-rev/main-generated.adoc[leveloffset=+1]
+
+include::shell-haskell-local/main-generated.adoc[leveloffset=+1]
+
+include::shell-haskell-local-deps/main-generated.adoc[leveloffset=+1]
+
+include::shell-with-env-var/main-generated.adoc[leveloffset=+1]

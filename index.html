@@ -110,8 +110,9 @@ pre.pygments .tok-il { color: #FF6600 } /* Literal.Number.Integer.Long */
 <li><a href="#_the_hello_flake_repo">3. The hello-flake repo</a></li>
 <li><a href="#_flake_structure">4. Flake structure</a>
 <ul class="sectlevel2">
-<li><a href="#_inputs">4.1. Inputs</a></li>
-<li><a href="#_outputs">4.2. Outputs</a></li>
+<li><a href="#_description">4.1. Description</a></li>
+<li><a href="#_inputs">4.2. Inputs</a></li>
+<li><a href="#_outputs">4.3. Outputs</a></li>
 </ul>
 </li>
 <li><a href="#_a_generic_flake">5. A generic flake</a></li>
@@ -124,22 +125,27 @@ pre.pygments .tok-il { color: #FF6600 } /* Literal.Number.Integer.Long */
 <li><a href="#_this_all_seems_like_a_hassle">7.4. This all seems like a hassle!</a></li>
 </ul>
 </li>
-<li><a href="#_a_new_flake_from_scratch_python">8. A new flake from scratch (Python)</a></li>
+<li><a href="#_a_new_flake_from_scratch_python">8. A new flake from scratch (Python)</a>
+<ul class="sectlevel2">
+<li><a href="#_a_simple_python_program">8.1. A simple Python program</a></li>
+<li><a href="#_a_python_builder">8.2. A Python builder</a></li>
+<li><a href="#_the_nix_flake">8.3. The Nix flake</a></li>
+</ul>
+</li>
 <li><a href="#_nix_shell_recipes">9. Nix shell recipes</a>
 <ul class="sectlevel2">
 <li><a href="#_shell_with_access_to_a_package_from_the_nixpkgsnixos_repo">9.1. Shell with access to a package from the Nixpkgs/NixOS repo</a></li>
 <li><a href="#_shell_with_access_to_a_package_defined_in_a_remote_git_repo">9.2. Shell with access to a package defined in a remote git repo</a></li>
-<li><a href="#_shell_with_access_to_a_flake">9.3. Shell with access to a flake</a></li>
-<li><a href="#_shell_with_access_to_a_specific_revision_of_a_flake">9.4. Shell with access to a specific revision of a flake</a></li>
-<li><a href="#_shell_with_access_to_a_haskell_package_on_your_local_computer">9.5. Shell with access to a Haskell package on your local computer</a></li>
-<li><a href="#_shell_with_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.6. Shell with access to a Haskell package on your local computer, with interdependencies</a></li>
-<li><a href="#_shell_with_an_environment_variable_set">9.7. Shell with an environment variable set</a></li>
+<li><a href="#_shell_with_access_to_a_specific_revision_of_a_flake">9.3. Shell with access to a specific revision of a flake</a></li>
+<li><a href="#_shell_with_access_to_a_haskell_package_on_your_local_computer">9.4. Shell with access to a Haskell package on your local computer</a></li>
+<li><a href="#_shell_with_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.5. Shell with access to a Haskell package on your local computer, with interdependencies</a></li>
+<li><a href="#_shell_with_an_environment_variable_set">9.6. Shell with an environment variable set</a></li>
 </ul>
 </li>
 <li><a href="#_nix_shell_shebangs">10. Nix-shell shebangs</a>
 <ul class="sectlevel2">
 <li><a href="#_a_bash_script_depending_on_a_package_in_the_nixpkgs_repo">10.1. A Bash script depending on a package in the nixpkgs repo.</a></li>
-<li><a href="#_a_python_script_depending_on_a_package_in_the_nixpkgs_repo">10.2. A Python script depending on a package in the nixpkgs repo.</a></li>
+<li><a href="#_a_bash_script_depending_on_a_package_in_the_nixpkgs_repo_2">10.2. A Bash script depending on a package in the nixpkgs repo.</a></li>
 </ul>
 </li>
 </ul>
@@ -467,12 +473,12 @@ Nix<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footno
 uses. We’ll look at this in more detail shortly. For now, I’d like to
 focus on the inputs section.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre class="nowrap">inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
-  };</pre>
+<pre class="pygments highlight nowrap"><code data-lang="nix"><span></span><span class="tok-ss">inputs =</span> <span class="tok-p">{</span>
+    nixpkgs<span class="tok-o">.</span><span class="tok-ss">url =</span> <span class="tok-s2">&quot;github:NixOS/nixpkgs&quot;</span><span class="tok-p">;</span>
+    flake-utils<span class="tok-o">.</span><span class="tok-ss">url =</span> <span class="tok-s2">&quot;github:numtide/flake-utils&quot;</span><span class="tok-p">;</span>
+  <span class="tok-p">};</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -528,7 +534,8 @@ flakes. The important thing to note is that the <code>hello-flake</code> package
       &quot;inputs&quot;: {
         &quot;flake-utils&quot;: &quot;flake-utils&quot;,
         &quot;nixpkgs&quot;: &quot;nixpkgs&quot;
-      }</code></pre>
+      }
+. . .</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -553,24 +560,27 @@ benefit of using flakes.</p>
 <div class="paragraph">
 <p>The basic structure of a flake is shown below.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre class="nowrap">{
-  description = ... # package description
-  inputs = ... # dependencies
-  outputs = ... # what the flake producesgo
-  nixConfig = ... # advanced configuration options
-}</pre>
+<pre class="pygments highlight nowrap"><code data-lang="nix">{
+  description = <em>package description</em>
+  inputs = <em>dependencies</em>
+  outputs = <em>what the flake produces</em>
+  nixConfig = <em>advanced configuration options</em>
+}</code></pre>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_description">4.1. Description</h3>
 <div class="paragraph">
 <p>The <code>description</code> part is self-explanatory; it’s just a string. You
 probably won’t need <code>nixConfig</code> unless you’re doing something fancy. I’m
 going to focus on what goes into the <code>inputs</code> and <code>outputs</code> sections,
 and highlight some of the things I found confusing when I began using flakes.</p>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_inputs">4.1. Inputs</h3>
+<h3 id="_inputs">4.2. Inputs</h3>
 <div class="paragraph">
 <p>This section specifies the dependencies of a flake. It’s an <em>attribute
 set</em>; it maps keys to values.</p>
@@ -595,28 +605,28 @@ This commonly takes the following form.</p>
 which is a large Git repository of programs and libraries that are
 pre-packaged for Nix. We can write that as</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre class="nowrap">nixpkgs.url = "github:NixOS/nixpkgs/nixos-VERSION";</pre>
+<pre class="pygments highlight nowrap"><code data-lang="nix">nixpkgs.url = "github:NixOS/nixpkgs/nixos-<em>version</em>";</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>where <code>NN.MM</code> is replaced with the version number that you used to build
+<p>where <em>version</em> is replaced with the version number that you used to build
 the package, e.g. <code>22.11</code>. Information about the latest nixpkgs releases
 is available at <a href="https://status.nixos.org/" class="bare">https://status.nixos.org/</a>. You can also write the entry
 without the version number</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre class="nowrap">nixpkgs.url = "github:NixOS/nixpkgs/nixos-VERSION";</pre>
+<pre class="pygments highlight nowrap"><code data-lang="nix"><span></span>nixpkgs<span class="tok-o">.</span><span class="tok-ss">url =</span> <span class="tok-s2">&quot;github:NixOS/nixpkgs/nixos&quot;</span><span class="tok-p">;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>or more simply,</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre class="nowrap">nixpkgs.url = "nixpkgs";</pre>
+<pre class="pygments highlight nowrap"><code data-lang="nix"><span></span>nixpkgs<span class="tok-o">.</span><span class="tok-ss">url =</span> <span class="tok-s2">&quot;nixpkgs&quot;</span><span class="tok-p">;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -666,21 +676,21 @@ Reference Manual</a>.</p>
 <p>Although you probably won’t need to use it, there is another syntax for
 flake references that you might encounter. This example</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre class="nowrap">inputs.import-cargo = {
-  type = "github";
-  owner = "edolstra";
-  repo = "import-cargo";
-};</pre>
+<pre class="pygments highlight nowrap"><code data-lang="nix"><span></span>inputs<span class="tok-o">.</span><span class="tok-nb">import</span><span class="tok-ss">-cargo =</span> <span class="tok-p">{</span>
+  <span class="tok-ss">type =</span> <span class="tok-s2">&quot;github&quot;</span><span class="tok-p">;</span>
+  <span class="tok-ss">owner =</span> <span class="tok-s2">&quot;edolstra&quot;</span><span class="tok-p">;</span>
+  <span class="tok-ss">repo =</span> <span class="tok-s2">&quot;import-cargo&quot;</span><span class="tok-p">;</span>
+<span class="tok-p">};</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>is equivalent to</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre class="nowrap">inputs.import-cargo.url = "github:edolstra/import-cargo";</pre>
+<pre class="pygments highlight nowrap"><code data-lang="nix"><span></span>inputs<span class="tok-o">.</span><span class="tok-nb">import</span><span class="tok-err">-</span>cargo<span class="tok-o">.</span><span class="tok-ss">url =</span> <span class="tok-s2">&quot;github:edolstra/import-cargo&quot;</span><span class="tok-p">;</span></code></pre>
 </div>
 </div>
 </td>
@@ -694,7 +704,7 @@ input.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_outputs">4.2. Outputs</h3>
+<h3 id="_outputs">4.3. Outputs</h3>
 <div class="paragraph">
 <p>This section is a function that essentially returns the recipe for
 building the flake.</p>
@@ -704,11 +714,11 @@ building the flake.</p>
 list them as parameters. This example references the <code>import-cargo</code>
 dependency defined in the previous example.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre class="nowrap">outputs = { self, nixpkgs, import-cargo }: {
-  <mark>... outputs ...</mark>
-};</pre>
+<pre class="pygments highlight nowrap"><code data-lang="nix">outputs = { self, nixpkgs, import-cargo }: {
+  <mark><em>definitions for outputs</em></mark>
+};</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -737,7 +747,7 @@ writing your own flakes. I’ll explain the example in some detail.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">{
+<pre class="pygments highlight nowrap"><code>{
   description = "<mark><em>brief package description</em></mark>";
 
   inputs = {
@@ -770,7 +780,7 @@ writing your own flakes. I’ll explain the example in some detail.</p>
         };
       }
     );
-}</pre>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -852,6 +862,7 @@ If you compare this flake definition to the colour-coded template
 presented in the previous section, most of it should look familiar.</p>
 </div>
 <div class="literalblock">
+<div class="title">flake.nix</div>
 <div class="content">
 <pre class="nowrap">{
   description = "a very simple and friendly flake";
@@ -1167,7 +1178,14 @@ cowsay <span class="tok-s2">&quot;Hello from your flake!&quot;</span></code></pr
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ ./hello-flake
-./hello-flake: line 3: cowsay: command not found</pre>
+ ________________________
+&lt; Hello from your flake! &gt;
+ ------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1312,7 +1330,7 @@ don’t need to <code>git push</code> the changes until we’re ready to share t
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
-[main 8c8f6c7] added bovine feature
+[main 746a121] added bovine feature
  2 files changed, 7 insertions(+), 1 deletion(-)
 $ nix run
  ________________________
@@ -1417,6 +1435,8 @@ $ git init
 Initialized empty Git repository in /home/amy/codeberg/nix-book/source/python-flake/hello-python/.git/</pre>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_a_simple_python_program">8.1. A simple Python program</h3>
 <div class="paragraph">
 <p>Next, we’ll create a simple Python program.</p>
 </div>
@@ -1490,6 +1510,9 @@ $ python hello.py
 Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_a_python_builder">8.2. A Python builder</h3>
 <div class="paragraph">
 <p>Next, create a Python script to build the package. We’ll use Python’s
 setuptools, but you can use other build tools. For more information on
@@ -1565,6 +1588,9 @@ twice. Alternatively, we could have done <code>exit</code> followed by the
 <div class="paragraph">
 <p>After a lot of output messages, the build succeeds.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_the_nix_flake">8.3. The Nix flake</h3>
 <div class="paragraph">
 <p>Now we should write <code>flake.nix</code>. We already know how to write most of
 the flake from the examples we did earlier. The two parts that will be
@@ -1760,7 +1786,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) a98ed14] initial commit
+[master (root-commit) b139782] initial commit
  4 files changed, 127 insertions(+)
  create mode 100644 flake.lock
  create mode 100644 flake.nix
@@ -1795,6 +1821,7 @@ Python flake.</p>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
 <h2 id="_nix_shell_recipes">9. Nix shell recipes</h2>
 <div class="sectionbody">
@@ -1805,6 +1832,7 @@ Python flake.</p>
 cowsay.</p>
 </div>
 <div class="listingblock">
+<div class="title">shell.nix</div>
 <div class="content">
 <pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1828,12 +1856,9 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
-error: getting status of '/home/amy/codeberg/nix-book/source/shell-recipes/default.nix': No such file or directory
 $ hello
-bash: line 19: hello: command not found
 Hello, world!
 $ cowsay "moo"
-bash: line 22: cowsay: command not found
  _____
 &lt; moo &gt;
  -----
@@ -1851,6 +1876,7 @@ bash: line 22: cowsay: command not found
 <div class="sect2">
 <h3 id="_shell_with_access_to_a_package_defined_in_a_remote_git_repo">9.2. Shell with access to a package defined in a remote git repo</h3>
 <div class="listingblock">
+<div class="title">shell.nix</div>
 <div class="content">
 <pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
@@ -1880,57 +1906,15 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
-error: getting status of '/home/amy/codeberg/nix-book/source/shell-recipes/default.nix': No such file or directory
-$ hello-nix
-bash: line 48: hello-nix: command not found
-Hello from your nix package!</pre>
+$ hello
+Hello, world!</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_shell_with_access_to_a_flake">9.3. Shell with access to a flake</h3>
+<h3 id="_shell_with_access_to_a_specific_revision_of_a_flake">9.3. Shell with access to a specific revision of a flake</h3>
 <div class="listingblock">
-<div class="content">
-<pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
-<span class="tok-k">let</span>
-   <span class="tok-ss">hello =</span> <span class="tok-p">(</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>getFlake <span class="tok-l">git+https://codeberg.org/mhwombat/hello-flake</span><span class="tok-p">)</span><span class="tok-o">.</span>packages<span class="tok-o">.</span><span class="tok-err">$</span><span class="tok-p">{</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>currentSystem<span class="tok-p">}</span><span class="tok-o">.</span>default<span class="tok-p">;</span>
-   <span class="tok-c1"># For older flakes, you might need an expression like this...</span>
-   <span class="tok-c1"># hello = (builtins.getFlake git+https://codeberg.org/mhwombat/hello-flake).defaultPackage.${builtins.currentSystem};</span>
-<span class="tok-k">in</span>
-mkShell <span class="tok-p">{</span>
-  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
-    hello
-  <span class="tok-p">];</span>
-<span class="tok-p">}</span>
-</pre></td></tr></table></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Here’s a demonstration using the shell.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre class="nowrap">$ nix-shell
-error: getting status of '/home/amy/codeberg/nix-book/source/shell-recipes/default.nix': No such file or directory
-$ hello-flake
-bash: line 65: hello-flake: command not found
-Hello from your flake!</pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_shell_with_access_to_a_specific_revision_of_a_flake">9.4. Shell with access to a specific revision of a flake</h3>
-<div class="listingblock">
+<div class="title">shell.nix</div>
 <div class="content">
 <pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1958,20 +1942,19 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
-error: getting status of '/home/amy/codeberg/nix-book/source/shell-recipes/default.nix': No such file or directory
-$ hello-flake
-bash: line 82: hello-flake: command not found
-Hello from your flake!</pre>
+$ hello
+Hello, world!</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_shell_with_access_to_a_haskell_package_on_your_local_computer">9.5. Shell with access to a Haskell package on your local computer</h3>
+<h3 id="_shell_with_access_to_a_haskell_package_on_your_local_computer">9.4. Shell with access to a Haskell package on your local computer</h3>
 <div class="paragraph">
 <p>This shell provides access to three Haskell packages that are on my hard
 drive.</p>
 </div>
 <div class="listingblock">
+<div class="title">shell.nix</div>
 <div class="content">
 <pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
@@ -2005,12 +1988,13 @@ mkShell <span class="tok-p">{</span>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_shell_with_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.6. Shell with access to a Haskell package on your local computer, with interdependencies</h3>
+<h3 id="_shell_with_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.5. Shell with access to a Haskell package on your local computer, with interdependencies</h3>
 <div class="paragraph">
 <p>This shell provides access to four Haskell packages that are on my hard
 drive. The fourth package depends on the first three to build.</p>
 </div>
 <div class="listingblock">
+<div class="title">shell.nix</div>
 <div class="content">
 <pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
@@ -2054,11 +2038,12 @@ mkShell <span class="tok-p">{</span>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_shell_with_an_environment_variable_set">9.7. Shell with an environment variable set</h3>
+<h3 id="_shell_with_an_environment_variable_set">9.6. Shell with an environment variable set</h3>
 <div class="paragraph">
 <p>This shell has the environment variable FOO set to &#8220;bar&#8221;</p>
 </div>
 <div class="listingblock">
+<div class="title">shell.nix</div>
 <div class="content">
 <pre class="pygments highlight nowrap"><code data-lang="nix"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
@@ -2080,10 +2065,8 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
-error: getting status of '/home/amy/codeberg/nix-book/source/shell-recipes/default.nix': No such file or directory
-$ echo $FOO
-
-bar</pre>
+$ echo "FOO=$FOO"
+FOO=bar</pre>
 </div>
 </div>
 </div>
@@ -2105,10 +2088,8 @@ interpreter and any dependencies. Here are some examples.</p>
 </div>
 <div class="sect2">
 <h3 id="_a_bash_script_depending_on_a_package_in_the_nixpkgs_repo">10.1. A Bash script depending on a package in the nixpkgs repo.</h3>
-<div class="paragraph">
-<p>Script:</p>
-</div>
 <div class="listingblock">
+<div class="title">Script</div>
 <div class="content">
 <pre class="pygments highlight nowrap"><code data-lang="bash"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
@@ -2118,10 +2099,8 @@ cowsay <span class="tok-s2">&quot;Pretty cool, huh?&quot;</span>
 </pre></td></tr></table></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Output:</p>
-</div>
 <div class="literalblock">
+<div class="title">Output</div>
 <div class="content">
 <pre class="nowrap"> ___________________
 &lt; Pretty cool, huh? &gt;
@@ -2135,11 +2114,9 @@ cowsay <span class="tok-s2">&quot;Pretty cool, huh?&quot;</span>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_a_python_script_depending_on_a_package_in_the_nixpkgs_repo">10.2. A Python script depending on a package in the nixpkgs repo.</h3>
-<div class="paragraph">
-<p>Script:</p>
-</div>
+<h3 id="_a_bash_script_depending_on_a_package_in_the_nixpkgs_repo_2">10.2. A Bash script depending on a package in the nixpkgs repo.</h3>
 <div class="listingblock">
+<div class="title">Script</div>
 <div class="content">
 <pre class="pygments highlight nowrap"><code data-lang="bash"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
@@ -2165,10 +2142,8 @@ print<span class="tok-o">(</span><span class="tok-s1">&#39;sanitized: &#39;</spa
 </pre></td></tr></table></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Output:</p>
-</div>
 <div class="literalblock">
+<div class="title">Output</div>
 <div class="content">
 <pre class="nowrap">original:  &lt;span style="font-weight:bold"&gt;some text&lt;/span&gt;
 sanitized:  &lt;strong&gt;some text&lt;/strong&gt;</pre>

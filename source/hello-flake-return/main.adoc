@@ -1,4 +1,4 @@
-== Another look at hello-flake
+= Another look at hello-flake
 
 Now that we have a better understanding of the structure of `flake.nix`,
 let’s have a look at the one we saw earlier, in the `hello-flake` repo.
@@ -6,6 +6,7 @@ If you compare this flake definition to the colour-coded template
 presented in the previous section, most of it should look familiar.
 
 [subs=quotes]
+.flake.nix
 ....
 {
   description = "a very simple and friendly flake";
@@ -47,6 +48,7 @@ additional development tools.
 Now let’s look at the section I labeled `SOME UNFAMILIAR STUFF` and
 see what it does.
 
+[subs=quotes]
 ....
         packages = rec {
           hello = pkgs.stdenv.mkDerivation rec { ❶

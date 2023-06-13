@@ -1,4 +1,4 @@
-== Hello, flake!
+= Hello, flake!
 
 Before learning to write Nix flakes, let’s learn how to use them. I’ve
 created a simple example of a flake in this git

@@ -1,22 +1,25 @@
-== Flake structure
+= Flake structure
 
 The basic structure of a flake is shown below.
 
+[source,nix,subs=quotes]
 ....
 {
-  description = ... # package description
-  inputs = ... # dependencies
-  outputs = ... # what the flake producesgo
-  nixConfig = ... # advanced configuration options
+  description = _package description_
+  inputs = _dependencies_
+  outputs = _what the flake produces_
+  nixConfig = _advanced configuration options_
 }
 ....
+
+== Description
 
 The `description` part is self-explanatory; it’s just a string. You
 probably won’t need `nixConfig` unless you’re doing something fancy. I’m
 going to focus on what goes into the `inputs` and `outputs` sections,
 and highlight some of the things I found confusing when I began using flakes.
 
-=== Inputs
+== Inputs
 
 This section specifies the dependencies of a flake. It’s an _attribute
 set_; it maps keys to values.
@@ -37,21 +40,24 @@ As a first example of a flake reference, all (almost all?) flakes depend on "`ni
 which is a large Git repository of programs and libraries that are
 pre-packaged for Nix. We can write that as
 
+[source,nix,subs=quotes]
 ....
-nixpkgs.url = "github:NixOS/nixpkgs/nixos-VERSION";
+nixpkgs.url = "github:NixOS/nixpkgs/nixos-__version__";
 ....
 
-where `NN.MM` is replaced with the version number that you used to build
+where _version_ is replaced with the version number that you used to build
 the package, e.g. `22.11`. Information about the latest nixpkgs releases
 is available at https://status.nixos.org/. You can also write the entry
 without the version number
 
+[source,nix]
 ....
-nixpkgs.url = "github:NixOS/nixpkgs/nixos-VERSION";
+nixpkgs.url = "github:NixOS/nixpkgs/nixos";
 ....
 
 or more simply,
 
+[source,nix]
 ....
 nixpkgs.url = "nixpkgs";
 ....
@@ -83,6 +89,7 @@ Reference Manual].
 Although you probably won’t need to use it, there is another syntax for
 flake references that you might encounter. This example
 
+[source,nix]
 ....
 inputs.import-cargo = {
   type = "github";
@@ -93,6 +100,7 @@ inputs.import-cargo = {
 
 is equivalent to
 
+[source,nix]
 ....
 inputs.import-cargo.url = "github:edolstra/import-cargo";
 ....
@@ -102,7 +110,7 @@ Each of the `inputs` is fetched, evaluated and passed to the `outputs`
 function as a set of attributes with the same name as the corresponding
 input.
 
-=== Outputs
+== Outputs
 
 This section is a function that essentially returns the recipe for
 building the flake.
@@ -111,10 +119,10 @@ We said above that `inputs` are passed to the `outputs`, so we need to
 list them as parameters. This example references the `import-cargo`
 dependency defined in the previous example.
 
-[subs=quotes]
+[source,nix,subs=quotes]
 ....
 outputs = { self, nixpkgs, import-cargo }: {
-  #... outputs ...#
+  #_definitions for outputs_#
 };
 ....
 

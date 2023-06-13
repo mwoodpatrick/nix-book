@@ -8,22 +8,22 @@
 :!prewrap:
 :icons: font
 
-include::intro/main.adoc[]
+include::intro/main.adoc[leveloffset=+1]
 
-include::hello-flake/main-generated.adoc[]
+include::hello-flake/main-generated.adoc[leveloffset=+1]
 
-include::hello-flake-repo/main-generated.adoc[]
+include::hello-flake-repo/main-generated.adoc[leveloffset=+1]
 
-include::flake-structure/main.adoc[]
+include::flake-structure/main.adoc[leveloffset=+1]
 
-include::generic-flake/main.adoc[]
+include::generic-flake/main.adoc[leveloffset=+1]
 
-include::hello-flake-return/main.adoc[]
+include::hello-flake-return/main.adoc[leveloffset=+1]
 
-include::modify-hello-flake/main-generated.adoc[]
+include::modify-hello-flake/main-generated.adoc[leveloffset=+1]
 
-include::python-flake/main-generated.adoc[]
+include::python-flake/main-generated.adoc[leveloffset=+1]
 
-include::shell-recipes/main-generated.adoc[]
+include::shell-recipes/main.adoc[leveloffset=+1]
 
-include::shebangs/main-generated.adoc[]
+include::shebangs/main.adoc[leveloffset=+1]
