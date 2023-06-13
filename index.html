@@ -818,7 +818,7 @@ In particular, it identifies the default executable ❻ that <code>nix run</code
 will run if you don’t specify an app.</p>
 </div>
 <div class="paragraph">
-<p>The list below contains are a few functions that are commonly used in
+<p>Below is a list of some functions that are commonly used in
 this section.</p>
 </div>
 <div class="dlist">
@@ -870,7 +870,7 @@ presented in the previous section, most of it should look familiar.</p>
         packages = rec {
           hello =
             . . .
-            SOME UNFAMILIAR STUFF
+            <em>SOME UNFAMILIAR STUFF</em>
             . . .
           };
           default = hello;
@@ -898,10 +898,10 @@ see what it does.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">        packages = rec {
-          hello = pkgs.stdenv.mkDerivation rec {           # See (1) in text
+          hello = pkgs.stdenv.mkDerivation rec {  ❶
             name = "hello-flake";
 
-            src = ./.;                                     # See (2) in text
+            src = ./.; ❷
 
             unpackPhase = "true";
 
@@ -909,15 +909,15 @@ see what it does.</p>
 
             installPhase =
               ''
-                mkdir -p $out/bin                          # See (3) in text
-                cp $src/hello-flake $out/bin/hello-flake   # See (4) in text
-                chmod +x $out/bin/hello-flake              # See (5) in text
+                mkdir -p $out/bin ❸
+                cp $src/hello-flake $out/bin/hello-flake ❹
+                chmod +x $out/bin/hello-flake ❺
               '';
           };</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This flake uses <code>mkDerivation</code> (1) which is a very useful
+<p>This flake uses <code>mkDerivation</code> (<code>❶</code>) which is a very useful
 general-purpose package builder provided by the Nix standard
 environment. It’s especially useful for the typical
 <code>./configure; make; make install</code> scenario, but for this flake we don’t
@@ -926,7 +926,7 @@ even need that.</p>
 <div class="paragraph">
 <p>The <code>name</code> variable is the name of the flake, as it would appear in a
 package listing if we were to add it to Nixpkgs or another package
-collection. The <code>src</code> variable (2) supplies the location of the source
+collection. The <code>src</code> variable (<code>❷</code>) supplies the location of the source
 files, relative to <code>flake.nix</code>. When a flake is accessed for the first
 time, the repository contents are fetched in the form of a tarball. The
 <code>unpackPhase</code> variable indicates that we do want the tarball to be
@@ -941,10 +941,10 @@ which is a no-op or &#8220;do nothing&#8221; command.</p>
 </div>
 <div class="paragraph">
 <p>The <code>installPhase</code> variable is a sequence of Linux commands that will do
-the actual installation. In this case, we create a directory (3) for the
-installation, copy the <code>hello-flake</code> script (4) there, and make the
-script executable (5). The environment variable <code>$src</code> refers to the
-source directory, which we specified earlier (2).</p>
+the actual installation. In this case, we create a directory (<code>❸</code>) for the
+installation, copy the <code>hello-flake</code> script there (<code>❹</code>), and make the
+script executable (<code>❺</code>). The environment variable <code>$src</code> refers to the
+source directory, which we specified earlier (<code>❷</code>).</p>
 </div>
 <div class="paragraph">
 <p>Earlier we said that the build step runs in a pure environment to ensure
@@ -1312,7 +1312,7 @@ don’t need to <code>git push</code> the changes until we’re ready to share t
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
-[main 8f78c1d] added bovine feature
+[main 481542e] added bovine feature
  2 files changed, 7 insertions(+), 1 deletion(-)
 $ nix run
  ________________________
@@ -1414,7 +1414,7 @@ directory and create a git repository.</p>
 <pre class="nowrap">$ mkdir hello-python
 $ cd hello-python
 $ git init
-Initialized empty Git repository in /home/amy/codeberg/nix-book/source/hello-python/.git/</pre>
+Initialized empty Git repository in /home/amy/codeberg/nix-book/source/python-flake/hello-python/.git/</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1651,7 +1651,7 @@ something like this.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix run
-warning: Git tree '/home/amy/codeberg/nix-book/source/hello-python' is dirty
+warning: Git tree '/home/amy/codeberg/nix-book/source/python-flake/hello-python' is dirty
 error: getting status of '/nix/store/0ccnxa25whszw7mgbgyzdm4nqc0zwnm8-source/flake.nix': No such file or directory</pre>
 </div>
 </div>
@@ -1664,9 +1664,12 @@ repo before building or running the flake.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.nix setup.py hello.py
 $ nix run
-warning: Git tree '/home/amy/codeberg/nix-book/source/hello-python' is dirty
-warning: creating lock file '/home/amy/codeberg/nix-book/source/hello-python/flake.lock'
-warning: Git tree '/home/amy/codeberg/nix-book/source/hello-python' is dirty
+warning: Git tree '/home/amy/codeberg/nix-book/source/python-flake/hello-python' is dirty
+warning: creating lock file '/home/amy/codeberg/nix-book/source/python-flake/hello-python/flake.lock'
+warning: Git tree '/home/amy/codeberg/nix-book/source/python-flake/hello-python' is dirty
+this derivation will be built:
+  /nix/store/ad7ajqx55bfqgj9527ibmkqflbmf29bi-hello-flake-python.drv
+building '/nix/store/ad7ajqx55bfqgj9527ibmkqflbmf29bi-hello-flake-python.drv'...
 Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
@@ -1680,7 +1683,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) 7bee790] initial commit
+[master (root-commit) 1c4a0d6] initial commit
  4 files changed, 127 insertions(+)
  create mode 100644 flake.lock
  create mode 100644 flake.nix

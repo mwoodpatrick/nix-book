@@ -8,21 +8,21 @@
 :!prewrap:
 :icons: font
 
-include::intro.adoc[]
+include::intro/main.adoc[]
 
-include::hello-flake-generated.adoc[]
+include::hello-flake/main-generated.adoc[]
 
-include::hello-flake-repo-generated.adoc[]
+include::hello-flake-repo/main-generated.adoc[]
 
-include::flake-structure.adoc[]
+include::flake-structure/main.adoc[]
 
-include::generic-flake.adoc[]
+include::generic-flake/main.adoc[]
 
-include::hello-flake-return.adoc[]
+include::hello-flake-return/main.adoc[]
 
 include::modify-hello-flake/main-generated.adoc[]
 
-include::python-flake-generated.adoc[]
+include::python-flake/main-generated.adoc[]
 
 include::shell-recipes/main-generated.adoc[]
 
