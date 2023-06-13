@@ -5,7 +5,7 @@ the necessary dependencies. This is particularly convenient for
 standalone scripts because you don’t need to create a repo and write a
 separate `flake.nix`.
 
-The script should start with two ``shebang'' (`#!`) commands. The first
+The script should start with two "`shebang`" (`#!`) commands. The first
 should invoke `nix-shell`. The second should declares the scrpt
 interpreter and any dependencies. Here are some examples.
 

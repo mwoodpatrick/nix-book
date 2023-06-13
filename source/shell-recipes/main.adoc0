@@ -96,7 +96,7 @@ include::0350-shell-haskell-local-deps.nix[]
 
 === Shell with an environment variable set
 
-This shell has the environment variable FOO set to ``bar''
+This shell has the environment variable FOO set to "`bar`"
 
 [source,nix,linenums]
 ....
