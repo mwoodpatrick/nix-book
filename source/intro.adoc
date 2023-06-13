@@ -52,10 +52,12 @@ https://nixos.org/[nixos.org].
 To enable flakes on an existing installation, see the instructions in
 the https://nixos.wiki/wiki/Flakes[NixOS wiki].
 
-=== Tip: Pay attention to those hyphens
-
-There are hyphenated and unhyphenated versions of many Nix commands. For
-example, `nix-shell` and `nix shell` are two different commands.
+[IMPORTANT]
+====
+There are hyphenated and unhyphenated versions of many Nix commands.
+For example, `nix-shell` and `nix shell` are two different commands.
+Don't confuse them!
 
 Generally speaking, the unhyphenated versions are for working directly
 with flakes, while the hyphenated versions are for everything else.
+====
