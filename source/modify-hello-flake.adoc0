@@ -111,17 +111,22 @@ it available in a develoment shell. Add the following lines before the
         };
 ....
 
-Here is a ``diff'' showing the changes in `flake.nix`.
+Here is a "`diff`" showing the changes in `flake.nix`.
 
 ....
 $# sed -i '15i\\ \ \ \ \ \ \ \ devShells = rec {\n\ \ \ \ \ \ \ \ \ \ default = pkgs.mkShell {\n\ \ \ \ \ \ \ \ \ \ \ \ packages = [ pkgs.cowsay ];\n\ \ \ \ \ \ \ \ \ \ };\n\ \ \ \ \ \ \ \ };\n' flake.nix
 $ git diff flake.nix
 ....
 
+[source,nix,highlight=15..17]
+....
+$# cat flake.nix
+....
+
 We restart the development shell and see that the `cowsay` command is
 now available and the script works. Because we’ve updated source files
 but haven’t `git commit`ed the new version, we get a warning message
-about it being ``dirty''. It’s just a warning, though; the script runs
+about it being "`dirty`". It’s just a warning, though; the script runs
 correctly.
 
 ....
@@ -181,7 +186,7 @@ linkers. Nix invokes them for me according to the output definition in
 Occasionally I want to work at a lower level, and invoke compiler,
 linkers, etc. directly. Perhaps want to work on one component without
 rebuilding the entire package. Or perhaps I’m confused by some error
-message, so I want to temporarily bypass Nix and ``talk'' directly to
+message, so I want to temporarily bypass Nix and work directly with
 the compiler. In this case I temporarily switch to a _low-level
 workflow_.
 
