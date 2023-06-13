@@ -1,0 +1,11 @@
+extends: default
+
+role:
+  highlight01:
+    background-color: #66ffff
+  highlight02:
+    background-color: #b3ff66
+  highlight03:
+    background-color: #ffd966
+  highlight04:
+    background-color: #b366ff
