@@ -3,7 +3,7 @@
 :sectnums:
 :toc: left
 :source-highlighter: pygments
-:pygments-style: manni
+:pygments-style: default
 :pygments-linenums-mode: table
 :!prewrap:
 :icons: font
