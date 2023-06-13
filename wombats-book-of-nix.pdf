@@ -1695,7 +1695,7 @@ endobj
 << /Border [0 0 0]
 /A << /Type /Action
 /S /URI
-/URI (https://codeberg.org/mhwombat/nix-book/src/branch/pages/wombats-book-of-nix.pdf)
+/URI (https://codeberg.org/mhwombat/nix-book/raw/branch/pages/wombats-book-of-nix.pdf)
 >>
 /Subtype /Link
 /Rect [373.552 787.28143 398.512 804.96143]
