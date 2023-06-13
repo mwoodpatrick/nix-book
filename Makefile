@@ -5,9 +5,17 @@
 STATIC_ADOC_FILES != find source -name '*.adoc'
 GENERATED_ADOC_FILES != find source -name '*.adoc0' | sed 's/\.adoc0/-generated.adoc/'
 ADOC_FILES = $(STATIC_ADOC_FILES) $(GENERATED_ADOC_FILES)
+DATE != date +%F
 
 MAIN_ADOC_FILE = source/book.adoc
 HTML_FILE = index.html
+PDF_FILE = wombats-book-of-nix.pdf
+
+ADOC_ATTR_DATE = -a build_date=$(DATE)
+ADOC_ATTR_AUTHORS = -a authors="Amy de Buitléir"
+ADOC_ATTRIBUTES = $(ADOC_ATTR_DATE) $(ADOC_ATTR_AUTHORS)
+ADOC_HTML_ATTRIBUTES = -a stylesheet=../themes/html.css
+ADOC_PDF_ATTRIBUTES = -a pdf-themesdir=themes -a pdf-theme=pdf
 
 .PHONY: debug
 debug :
@@ -15,8 +23,14 @@ debug :
 > @echo "GENERATED_ADOC_FILES=$(GENERATED_ADOC_FILES)"
 > @echo "ADOC_FILES=$(ADOC_FILES)"
 
+.PHONY: all
+all : html pdf
+
 .PHONY: html
 html : $(HTML_FILE)
+
+.PHONY: pdf
+pdf : $(PDF_FILE)
 
 # Files with the "adoc0" extension contain code that must be executed and included in order to generate asciidoc files.
 # My "run-code-inline" script is available at https://github.com/mhwombat/bin/blob/master/run-code-inline.
@@ -26,8 +40,12 @@ html : $(HTML_FILE)
 > cd $(dir $@); run-code-inline < $(notdir $<) 2>&1 | tee $(notdir $@)
 
 $(HTML_FILE) : $(ADOC_FILES)
-> asciidoctor -b html5 -d book -o $@ $(MAIN_ADOC_FILE)
+> asciidoctor -b html5 -d book $(ADOC_ATTRIBUTES) $(ADOC_HTML_ATTRIBUTES) -o $@ $(MAIN_ADOC_FILE)
+
+$(PDF_FILE) : $(ADOC_FILES)
+> asciidoctor-pdf -d book $(ADOC_ATTRIBUTES) $(ADOC_PDF_ATTRIBUTES) -o $@ $(MAIN_ADOC_FILE)
 
 .PHONY: clean
 clean :
-> rm -rf $(HTML_FILE) $(GENERATED_ADOC_FILES)
+> rm -rf $(HTML_FILE) $(PDF_FILE)
+> find source -name '*-generated.adoc' -delete
