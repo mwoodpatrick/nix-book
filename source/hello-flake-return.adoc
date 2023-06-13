@@ -39,11 +39,11 @@ presented in the previous section, most of it should look familiar.
 ....
 
 This `flake.nix` doesn’t have a `devShells` section, because development
-on the current version doesn’t require anything beyond the ``bare
-bones'' linux commands. Later we will add a feature that requires
+on the current version doesn’t require anything beyond
+the "`bare bones`" linux commands. Later we will add a feature that requires
 additional development tools.
 
-Now let’s look at the section I labeled ```SOME UNFAMILIAR STUFF`'' and
+Now let’s look at the section I labeled `SOME UNFAMILIAR STUFF` and
 see what it does.
 
 ....
@@ -83,8 +83,8 @@ unpacked.
 The `buildPhase` variable is a sequence of Linux commands to build the
 package. Typically, building a package requires compiling the source
 code. However, that’s not required for a simple shell script. So
-`buildPhase` consists of a single command, `:`, which is a no-op or ``do
-nothing'' command.
+`buildPhase` consists of a single command, `:`,
+which is a no-op or "`do nothing`" command.
 
 The `installPhase` variable is a sequence of Linux commands that will do
 the actual installation. In this case, we create a directory (3) for the
