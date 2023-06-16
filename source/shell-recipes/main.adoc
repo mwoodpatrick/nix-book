@@ -1,4 +1,10 @@
-= Nix shell recipes
+= nix-shell recipes
+
+There may be times where all you need is a shell.
+Perhaps you're doing a quick, one-off task.
+In this situation, the older, non-flake way of using Nix
+may be more convenient.
+The examples in this chapter will illustrate the process.
 
 include::shell-with-nixpkgs/main-generated.adoc[leveloffset=+1]
 

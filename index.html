@@ -94,7 +94,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <div id="header">
 <h1>Wombat&#8217;s Book of Nix</h1>
 <div class="details">
-<span id="author" class="author">Amy de Buitléir, 2023-06-13</span><br>
+<span id="author" class="author">Amy de Buitléir, 2023-06-16</span><br>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -132,7 +132,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_the_nix_flake">8.3. The Nix flake</a></li>
 </ul>
 </li>
-<li><a href="#_nix_shell_recipes">9. Nix shell recipes</a>
+<li><a href="#_nix_shell_recipes">9. nix-shell recipes</a>
 <ul class="sectlevel2">
 <li><a href="#_shell_with_access_to_a_package_from_the_nixpkgsnixos_repo">9.1. Shell with access to a package from the Nixpkgs/NixOS repo</a></li>
 <li><a href="#_shell_with_access_to_a_package_defined_in_a_remote_git_repo">9.2. Shell with access to a package defined in a remote git repo</a></li>
@@ -1333,7 +1333,7 @@ don’t need to <code>git push</code> the changes until we’re ready to share t
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
-[main c713da7] added bovine feature
+[main c887dd0] added bovine feature
  2 files changed, 7 insertions(+), 1 deletion(-)
 $ nix run
  ________________________
@@ -1776,6 +1776,9 @@ $ nix run
 warning: Git tree '/home/amy/codeberg/nix-book/source/python-flake/hello-python' is dirty
 warning: creating lock file '/home/amy/codeberg/nix-book/source/python-flake/hello-python/flake.lock'
 warning: Git tree '/home/amy/codeberg/nix-book/source/python-flake/hello-python' is dirty
+this derivation will be built:
+  /nix/store/v6gfmxih111xaffz9jrn35msbpfqd2vs-hello-flake-python.drv
+building '/nix/store/v6gfmxih111xaffz9jrn35msbpfqd2vs-hello-flake-python.drv'...
 Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
@@ -1789,7 +1792,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) 100f574] initial commit
+[master (root-commit) 3ce1881] initial commit
  4 files changed, 127 insertions(+)
  create mode 100644 flake.lock
  create mode 100644 flake.nix
@@ -1826,8 +1829,15 @@ Python flake.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_nix_shell_recipes">9. Nix shell recipes</h2>
+<h2 id="_nix_shell_recipes">9. nix-shell recipes</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>There may be times where all you need is a shell.
+Perhaps you&#8217;re doing a quick, one-off task.
+In this situation, the older, non-flake way of using Nix
+may be more convenient.
+The examples in this chapter will illustrate the process.</p>
+</div>
 <div class="sect2">
 <h3 id="_shell_with_access_to_a_package_from_the_nixpkgsnixos_repo">9.1. Shell with access to a package from the Nixpkgs/NixOS repo</h3>
 <div class="paragraph">
@@ -1860,9 +1870,16 @@ mkShell <span class="tok-p">{</span>
 <div class="content">
 <pre class="nowrap">$ nix-shell
 $ hello
-bash: line 18: hello: command not found
+Hello, world!
 $ cowsay "moo"
-bash: line 20: cowsay: command not found</pre>
+ _____
+&lt; moo &gt;
+ -----
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1903,7 +1920,7 @@ mkShell <span class="tok-p">{</span>
 <div class="content">
 <pre class="nowrap">$ nix-shell
 $ hello
-bash: line 15: hello: command not found</pre>
+bash: line 2: hello: command not found</pre>
 </div>
 </div>
 </div>
@@ -1939,7 +1956,7 @@ mkShell <span class="tok-p">{</span>
 <div class="content">
 <pre class="nowrap">$ nix-shell
 $ hello
-bash: line 15: hello: command not found</pre>
+bash: line 2: hello: command not found</pre>
 </div>
 </div>
 </div>
@@ -2062,7 +2079,7 @@ mkShell <span class="tok-p">{</span>
 <div class="content">
 <pre class="nowrap">$ nix-shell
 $ echo "FOO=$FOO"
-FOO=bar</pre>
+FOO=</pre>
 </div>
 </div>
 </div>

@@ -9,6 +9,8 @@ include::shell.nix[]
 Here’s a demonstration using the shell.
 
 ....
-$ nix-shell
+$# echo '$ nix-shell'
+$# nix-shell --run bash <<EOL
 $ hello
+$# EOL
 ....
