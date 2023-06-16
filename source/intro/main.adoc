@@ -40,7 +40,7 @@ and use flakes; and this seems to be the general consensus.
 == Prerequisites
 
 To follow along with the examples in this book, you will need access to a computer
-or (virtual machine) with Nix installed and _flakes enabled_.
+or (virtual machine) with Nix (or NixOS) installed and _flakes enabled_.
 
 I recommend the installer from
 https://zero-to-nix.com/start/install[zero-to-nix.com]. This installer
@@ -49,8 +49,8 @@ automatically enables flakes.
 More documentation (and another installer) available at
 https://nixos.org/[nixos.org].
 
-To enable flakes on an existing installation, see the instructions in
-the https://nixos.wiki/wiki/Flakes[NixOS wiki].
+To _enable flakes on an existing Nix or NixOS installation_,
+see the instructions in the https://nixos.wiki/wiki/Flakes[NixOS wiki].
 
 [IMPORTANT]
 ====
