@@ -1,4 +1,4 @@
-= A Bash script depending on a package in the nixpkgs repo.
+= A Python script depending on a package in the nixpkgs repo.
 
 [source,bash,linenums]
 .Script
@@ -10,3 +10,4 @@ include::my-script.sh[]
 ....
 $# ./my-script.sh
 ....
+

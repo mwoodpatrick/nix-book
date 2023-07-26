@@ -14,8 +14,8 @@ PDF_FILE = wombats-book-of-nix.pdf
 ADOC_ATTR_DATE = -a build_date=$(DATE)
 ADOC_ATTR_AUTHORS = -a authors="Amy de Buitléir"
 ADOC_ATTRIBUTES = $(ADOC_ATTR_DATE) $(ADOC_ATTR_AUTHORS)
-ADOC_HTML_ATTRIBUTES = -a stylesheet=../themes/html.css
-ADOC_PDF_ATTRIBUTES = -a pdf-themesdir=themes -a pdf-theme=pdf
+ADOC_HTML_ATTRIBUTES = -a stylesheet=../themes/html.css -a imagesdir=images
+ADOC_PDF_ATTRIBUTES = -a pdf-themesdir=themes -a pdf-theme=pdf -a imagesdir=../images
 
 .PHONY: debug
 debug :

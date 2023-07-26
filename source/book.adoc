@@ -7,6 +7,9 @@
 :pygments-linenums-mode: table
 :!prewrap:
 :icons: font
+:title-logo-image: image::wombat.svg["wombat reclining against a lambda"]
+
+image::wombat.svg["wombat reclining against a lambda"]
 
 This book is available
 https://mhwombat.codeberg.page/nix-book/[online]
