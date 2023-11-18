@@ -61,3 +61,8 @@ Don't confuse them!
 Generally speaking, the unhyphenated versions are for working directly
 with flakes, while the hyphenated versions are for everything else.
 ====
+
+== See an error? Or want more?
+
+If notice an error, or you're interested in an area that isn't covered in this book, feel free to open an
+https://codeberg.org/mhwombat/nix-book/issues[issue].

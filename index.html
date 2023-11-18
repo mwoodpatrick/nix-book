@@ -104,6 +104,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_why_nix">1.1. Why Nix?</a></li>
 <li><a href="#_why_flakes">1.2. Why <em>flakes</em>?</a></li>
 <li><a href="#_prerequisites">1.3. Prerequisites</a></li>
+<li><a href="#_see_an_error_or_want_more">1.4. See an error? Or want more?</a></li>
 </ul>
 </li>
 <li><a href="#_hello_flake">2. Hello, flake!</a></li>
@@ -125,11 +126,29 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_this_all_seems_like_a_hassle">7.4. This all seems like a hassle!</a></li>
 </ul>
 </li>
-<li><a href="#_a_new_flake_from_scratch_python">8. A new flake from scratch (Python)</a>
+<li><a href="#_a_new_flake_from_scratch">8. A new flake from scratch</a>
 <ul class="sectlevel2">
-<li><a href="#_a_simple_python_program">8.1. A simple Python program</a></li>
-<li><a href="#_a_python_builder">8.2. A Python builder</a></li>
-<li><a href="#_the_nix_flake">8.3. The Nix flake</a></li>
+<li><a href="#_haskell">8.1. Haskell</a>
+<ul class="sectlevel3">
+<li><a href="#_a_simple_haskell_program">8.1.1. A simple Haskell program</a></li>
+<li><a href="#_optional_testing_before_packaging">8.1.2. (Optional) Testing before packaging</a>
+<ul class="sectlevel4">
+<li><a href="#_some_unsuitable_shells">Some unsuitable shells</a></li>
+<li><a href="#_a_suitable_shell_for_a_quick_test">A suitable shell for a quick test</a></li>
+</ul>
+</li>
+<li><a href="#_the_cabal_file">8.1.3. The cabal file</a></li>
+<li><a href="#_optional_building_and_running_with_cabal_install">8.1.4. (Optional) Building and running with cabal-install</a></li>
+<li><a href="#_the_nix_flake">8.1.5. The Nix flake</a></li>
+</ul>
+</li>
+<li><a href="#_python">8.2. Python</a>
+<ul class="sectlevel3">
+<li><a href="#_a_simple_python_program">8.2.1. A simple Python program</a></li>
+<li><a href="#_a_python_builder">8.2.2. A Python builder</a></li>
+<li><a href="#_the_nix_flake_2">8.2.3. The Nix flake</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_nix_shell_recipes">9. nix-shell recipes</a>
@@ -254,6 +273,13 @@ with flakes, while the hyphenated versions are for everything else.</p>
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_see_an_error_or_want_more">1.4. See an error? Or want more?</h3>
+<div class="paragraph">
+<p>If notice an error, or you&#8217;re interested in an area that isn&#8217;t covered in this book, feel free to open an
+<a href="https://codeberg.org/mhwombat/nix-book/issues">issue</a>.</p>
 </div>
 </div>
 </div>
@@ -1076,7 +1102,60 @@ opportunity to check your understanding of flakes.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ nix develop</pre>
+<pre class="nowrap">$ nix develop
+copying path '/nix/store/wv33zvn4m0j6qlipy5ybfrixgipnfnyj-xgcc-12.2.0-libgcc' from 'https://cache.nixos.org'...
+copying path '/nix/store/5w5qpm9z3iyib615pdih6nvk9spv3jbv-gcc-12.2.0-libgcc' from 'https://cache.nixos.org'...
+copying path '/nix/store/jrid72i6ii9wx2ia6fyr2b1plri2m07l-libunistring-1.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/9j1pfpw69j4lqh24gvwksfqnbs1q70ww-linux-headers-6.2' from 'https://cache.nixos.org'...
+copying path '/nix/store/y382xj6bh8h4mmm22sw1a6q81rijrxl7-libidn2-2.3.4' from 'https://cache.nixos.org'...
+copying path '/nix/store/1n2l5law9g3b77hcfyp50vrhhssbrj5g-glibc-2.37-8' from 'https://cache.nixos.org'...
+copying path '/nix/store/qgjrd7fj77877x1w3qg0d619cqqd8wm8-attr-2.5.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/xl922qxqxr5f2wa4vgfmai2pd9sman12-expand-response-params' from 'https://cache.nixos.org'...
+copying path '/nix/store/ap4yi3pmi4vfblpijzgxssl96cy0icyp-gmp-6.2.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/nja07wpjdb6lyghi4izc30psw7j2kwxd-pcre-8.45' from 'https://cache.nixos.org'...
+copying path '/nix/store/5533i5qzsxysjf38p1nlza9g9wvh09wk-xz-5.4.2' from 'https://cache.nixos.org'...
+copying path '/nix/store/zlf0f88vj30sc7567b80l52d19pbdmy2-bash-5.2-p15' from 'https://cache.nixos.org'...
+copying path '/nix/store/hyh6hg6rzm77rs4nix61nfwnxx2aqn40-ed-1.19' from 'https://cache.nixos.org'...
+copying path '/nix/store/93z4n7zy5hwpn06279jlmak75jmq1db1-gnused-4.9' from 'https://cache.nixos.org'...
+copying path '/nix/store/by4gv37sharnf370ki60zam5s7qklqqh-bzip2-1.0.8' from 'https://cache.nixos.org'...
+copying path '/nix/store/vg9f8pmd2g0x3gb53nxwkw3yxizl3jpk-gnumake-4.4.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/4rwqxm67y0zkbxjg14zl9fdxf30cpgvy-gawk-5.2.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/g012c53brxmb0if3lpmkjwmxk74hjflh-gcc-12.2.0-lib' from 'https://cache.nixos.org'...
+copying path '/nix/store/v1nar35045dqwf8yy572yvbbcg2w2678-glibc-2.37-8-bin' from 'https://cache.nixos.org'...
+copying path '/nix/store/2ldgh1qis9p4zf8bgsdm7897gw8vv36g-zlib-1.2.13' from 'https://cache.nixos.org'...
+copying path '/nix/store/gz0kx5v2asvlbf7gzr4v24h7dpza70zf-bzip2-1.0.8-bin' from 'https://cache.nixos.org'...
+copying path '/nix/store/c01b2gmx1fjjkpnvj6bxy9q49g8qkpka-gnugrep-3.7' from 'https://cache.nixos.org'...
+copying path '/nix/store/swf1dckghdx7nza1lxz6s462pafwd7wa-patch-2.7.6' from 'https://cache.nixos.org'...
+copying path '/nix/store/ddygk5wqzmz69yqirrpcby2a28fam4g1-acl-2.3.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/z5818pmhspx5772s4cp6ckhwhbin2f09-xz-5.4.2-bin' from 'https://cache.nixos.org'...
+copying path '/nix/store/anzfrab5qhaz3xw53v6a934s8ypgfhix-binutils-2.40-lib' from 'https://cache.nixos.org'...
+copying path '/nix/store/0xpv4lac3ybc6hm9gg7ywkdazs4vsj8l-file-5.44' from 'https://cache.nixos.org'...
+copying path '/nix/store/wb2dlc8kpvrn960vq7j7c8822pi43n48-glibc-2.37-8-dev' from 'https://cache.nixos.org'...
+copying path '/nix/store/2nprqmdmjmy5i2sii7j21fznmkwimqcr-gzip-1.12' from 'https://cache.nixos.org'...
+copying path '/nix/store/clbzka4dzv2wym7971qsbbgx77g3p258-isl-0.20' from 'https://cache.nixos.org'...
+copying path '/nix/store/r0zb1rcf1q2lmyqvg5d0vwy1f57zk05h-mpfr-4.2.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/lcfhnr6wrj9ssd3dxs39sprvz6qrxlj5-gnutar-1.34' from 'https://cache.nixos.org'...
+copying path '/nix/store/f4qnwzv6y0nq8lix33jr5ykkyybs6fxf-binutils-2.40' from 'https://cache.nixos.org'...
+copying path '/nix/store/kdgk1mgka2xd4rkmnfmcv3k2gm9jid6n-gmp-with-cxx-6.2.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/2y0q33dmn7846bpqcnfch4a0q2q6dmya-patchelf-0.15.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/5din34jk6dvk0wrlfw0hg1wzxxaaypyj-libmpc-1.3.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/arbxkmcgv9h8pjgj95c6d7r86yb77rl5-coreutils-9.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/aafdki1nf49k5vxq6gx2yabiybk2bjmw-gcc-12.2.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/q951w69v8kbdrw6shdpibnl594yfr0by-diffutils-3.9' from 'https://cache.nixos.org'...
+copying path '/nix/store/j5wraaxv16fcl10x11566a3807nr4nlr-findutils-4.9.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/f83wjm5wpcxxbzwmr56q9iclsn0simph-binutils-wrapper-2.40' from 'https://cache.nixos.org'...
+copying path '/nix/store/nlgyw2fv0cm8rkz8qm1jyw78vyif1bl9-gcc-wrapper-12.2.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/5s1yg5l36wzgy1dj0vv1ibarc4g7vrdr-stdenv-linux' from 'https://cache.nixos.org'...
+building '/nix/store/llapcvnqicjlhmhll353498bdpcbxb2g-hello-flake-env.drv'...
+these 4 paths will be fetched (1.80 MiB download, 11.01 MiB unpacked):
+  /nix/store/pk3kkaafln68gzxawk57qp9m5h5285va-bash-interactive-5.2-p15
+  /nix/store/33lnr4ji9f4d2cdigrwc1d4pbkjy4vq9-bash-interactive-5.2-p15-man
+  /nix/store/q5mhssfls6iych80439511vz7539gd95-ncurses-6.4
+  /nix/store/s8axd2sknp45d2jmxkasmq8zxd1mv068-readline-8.2p1
+copying path '/nix/store/33lnr4ji9f4d2cdigrwc1d4pbkjy4vq9-bash-interactive-5.2-p15-man' from 'https://cache.nixos.org'...
+copying path '/nix/store/q5mhssfls6iych80439511vz7539gd95-ncurses-6.4' from 'https://cache.nixos.org'...
+copying path '/nix/store/s8axd2sknp45d2jmxkasmq8zxd1mv068-readline-8.2p1' from 'https://cache.nixos.org'...
+copying path '/nix/store/pk3kkaafln68gzxawk57qp9m5h5285va-bash-interactive-5.2-p15' from 'https://cache.nixos.org'...</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1119,6 +1198,9 @@ the build outputs in a directory called <code>result</code>.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix build
+this derivation will be built:
+  /nix/store/zncdnvnjwvz4dd2zfgcjizxlm5gvdf0x-hello-flake.drv
+building '/nix/store/zncdnvnjwvz4dd2zfgcjizxlm5gvdf0x-hello-flake.drv'...
 $ result/bin/hello-flake
 Hello from your flake!</pre>
 </div>
@@ -1277,6 +1359,10 @@ correctly.</p>
 <div class="content">
 <pre class="nowrap">$ nix develop
 warning: Git tree '/home/amy/codeberg/nix-book/source/modify-hello-flake/hello-flake' is dirty
+copying path '/nix/store/wy0incigsdz3nai26lxmn9ibchnb0qd6-libxcrypt-4.4.33' from 'https://cache.nixos.org'...
+copying path '/nix/store/m6kc0wg6zii4bcw0fqxmclgy27ph09va-perl-5.36.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/gfi27h4y5n4aralcxrc0377p8mjb1cvb-cowsay-3.7.0' from 'https://cache.nixos.org'...
+building '/nix/store/r6q8nnmkq8jf94w1xwv0d3fjig2ghs7m-nix-shell-env.drv'...
 $ which cowsay # is it available now?
 /nix/store/gfi27h4y5n4aralcxrc0377p8mjb1cvb-cowsay-3.7.0/bin/cowsay
 $ ./hello-flake
@@ -1297,6 +1383,9 @@ $ ./hello-flake
 <div class="content">
 <pre class="nowrap">$ nix run
 warning: Git tree '/home/amy/codeberg/nix-book/source/modify-hello-flake/hello-flake' is dirty
+this derivation will be built:
+  /nix/store/7p6j8as345vfsjg8hcb61m6c2a7bxi2v-hello-flake.drv
+building '/nix/store/7p6j8as345vfsjg8hcb61m6c2a7bxi2v-hello-flake.drv'...
  ________________________
 &lt; Hello from your flake! &gt;
  ------------------------
@@ -1340,7 +1429,7 @@ don’t need to <code>git push</code> the changes until we’re ready to share t
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
-[main 9e2fb59] added bovine feature
+[main f7b93da] added bovine feature
  2 files changed, 7 insertions(+), 1 deletion(-)
 $ nix run
  ________________________
@@ -1431,22 +1520,515 @@ else will be able to reproduce the development environment.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_a_new_flake_from_scratch_python">8. A new flake from scratch (Python)</h2>
+<h2 id="_a_new_flake_from_scratch">8. A new flake from scratch</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>At last we are ready to create a flake from scratch! Start with an empty
-directory and create a git repository.</p>
+<p>At last we are ready to create a flake from scratch!
+The sections in this chapter are very similar;
+read the one for your language of choice.
+If you&#8217;re interested in a language that I haven&#8217;t covered, feel free to suggest it by creating an
+<a href="https://codeberg.org/mhwombat/nix-book/issues">issue</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_haskell">8.1. Haskell</h3>
+<div class="paragraph">
+<p>Start with an empty directory and create a git repository.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ mkdir hello-haskell
+$ cd hello-haskell
+$ git init
+Initialized empty Git repository in /home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/.git/</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_a_simple_haskell_program">8.1.1. A simple Haskell program</h4>
+<div class="paragraph">
+<p>Next, we’ll create a simple Haskell program.</p>
+</div>
+<div class="listingblock">
+<div class="title">Main.hs</div>
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="haskell"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-kr">import</span><span class="tok-w"> </span><span class="tok-nn">Network.HostName</span>
+
+<span class="tok-nf">main</span><span class="tok-w"> </span><span class="tok-ow">::</span><span class="tok-w"> </span><span class="tok-kt">IO</span><span class="tok-w"> </span><span class="tok-nb">()</span>
+<span class="tok-nf">main</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-kr">do</span>
+<span class="tok-w">  </span><span class="tok-n">putStrLn</span><span class="tok-w"> </span><span class="tok-s">&quot;Hello from Haskell inside a Nix flake!&quot;</span>
+<span class="tok-w">  </span><span class="tok-n">h</span><span class="tok-w"> </span><span class="tok-ow">&lt;-</span><span class="tok-w"> </span><span class="tok-n">getHostName</span>
+<span class="tok-w">  </span><span class="tok-n">putStrLn</span><span class="tok-w"> </span><span class="tok-o">$</span><span class="tok-w"> </span><span class="tok-s">&quot;Your hostname is: &quot;</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-n">h</span>
+</pre></div></td></tr></table></div></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_optional_testing_before_packaging">8.1.2. (Optional) Testing before packaging</h4>
+<div class="paragraph">
+<p>Before we package the program, let’s verify that it runs. We’re going to
+need a Haskell compiler. By now you’ve probably figured out that we can write a
+<code>flake.nix</code> and define a development shell that includes Haskell. We’ll
+do that shortly, but first I want to show you a handy shortcut. We can
+lauch a <em>temporary</em> shell with any Nix packages we want. This is
+convenient when you just want to try out some new software and you’re
+not sure if you’ll use it again. It’s also convenient when you’re not
+ready to write <code>flake.nix</code> (perhaps you’re not sure what tools and
+packages you need), and you want to experiment a bit first.</p>
+</div>
+<div class="paragraph">
+<p>The command to enter a temporary shell is</p>
+</div>
+<div class="paragraph">
+<p><code>nix-shell -p <em>packages</em></code></p>
+</div>
+<div class="paragraph">
+<p>If there are multiple packages, they should be separated by spaces.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The command used here is <code>nix-shell</code> with a hyphen, not <code>nix shell</code>
+with a space; those are two different commands. In fact there are
+hyphenated and non-hyphenated versions of many Nix commands, and yes,
+it’s confusing. The non-hyphenated commands were introduced when support
+for flakes was added to Nix. I predict that eventually all hyphenated
+commands will be replaced with non-hyphenated versions. Until then, a
+useful rule of thumb is that non-hyphenated commands are for for working
+directly with flakes; hyphenated commands are for everything else.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_some_unsuitable_shells">Some unsuitable shells</h5>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In this section, we will try commands that fail in subtle ways.
+Examining these failures will give you a much better understanding of Haskell development with Nix,
+and help you avoid (or at least diagnose) similar problems in future.
+If you&#8217;re impatient, you can skip to the next section to see the right way to do it.
+You can come back to this section later to learn more.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let’s enter a shell with the Glasgow Haskell Compiler ("ghc") and try to run the program.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix-shell -p ghc
+$ runghc Main.hs
+
+Main.hs:1:1: error:
+    Could not find module ‘Network.HostName’
+    Use -v (or `:set -v` in ghci) to see a list of the files searched for.
+  |
+1 | import Network.HostName
+  | ^^^^^^^^^^^^^^^^^^^^^^^</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The error message tells us that we need the module <code>Network.HostName</code>.
+That module is provided by the Haskell package called <code>hostname</code>.
+Let&#8217;s exit that shell and try again, this time adding the <code>hostname</code> package.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ exit
+$ nix-shell -p "[ghc hostname]"
+$ runghc Main.hs
+
+Main.hs:1:1: error:
+    Could not find module ‘Network.HostName’
+    Use -v (or `:set -v` in ghci) to see a list of the files searched for.
+  |
+1 | import Network.HostName
+  | ^^^^^^^^^^^^^^^^^^^^^^^</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That reason that failed is that we asked for the wrong package.
+The Nix package <code>hostname</code> isn&#8217;t the Haskell package we wanted,
+it&#8217;s a different package entirely (an alias for <code>hostname-net-tools</code>.)
+The package we want is in the <em>package set</em> called <code>haskellPackages</code>, so we can refer to it as <code>haskellPackages.hostname</code>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s try that again, with the correct package.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ exit
+$ nix-shell -p "[ghc haskellPackages.hostname]"
+$ runghc Main.hs
+
+Main.hs:1:1: error:
+    Could not find module ‘Network.HostName’
+    Use -v (or `:set -v` in ghci) to see a list of the files searched for.
+  |
+1 | import Network.HostName
+  | ^^^^^^^^^^^^^^^^^^^^^^^</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now what&#8217;s wrong?
+The syntax we used in the <code>nix-shell</code> command above is fine, but it doesn&#8217;t make the package <em>available to GHC</em>!</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_a_suitable_shell_for_a_quick_test">A suitable shell for a quick test</h5>
+<div class="paragraph">
+<p>Consider the Haskell "pandoc" package, which provides both an executable (the Nix package <code>pandoc</code>)
+and a library (the Nix package <code>haskellPackages.pandoc</code>).
+There are several different shells we could create involving both Pandoc and GHC,
+and it&#8217;s important to understand the differences between them.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nix-shell -p "[ghc pandoc]"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Makes the Pandoc <em>executable</em> available at the command line, but the <em>library</em> won&#8217;t be visible to GHC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nix-shell -p "haskellPackages.ghcWithPackages (pkgs: with pkgs; [ pandoc ])"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Makes the Pandoc <em>library</em> visible to GHC, but we won&#8217;t be able to run the <em>executable</em>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nix-shell -p "[pandoc (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ pandoc ]))]"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Makes the Pandoc <em>executable</em> available at the command line, and the <em>library</em> visible to GHC.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Now we can create a shell that can run the program.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix-shell -p "haskellPackages.ghcWithPackages (pkgs: with pkgs; [ hostname ])"
+$ runghc Main.hs
+Hello from Haskell inside a Nix flake!
+Your hostname is: wombat11k</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Success! Now we know the program works.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_cabal_file">8.1.3. The cabal file</h4>
+<div class="paragraph">
+<p>It&#8217;s time to write a Cabal file for this program.
+This is just an ordinary Cabal file; we don&#8217;t need to do anything special for Nix.</p>
+</div>
+<div class="listingblock">
+<div class="title">hello-flake-haskell.cabal</div>
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="cabal"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span>cabal-version:   3.0
+name:            hello-flake-haskell
+version:         1.0.0
+synopsis:        A simple demonstration using a Nix flake to package a Haskell program that prints a greeting.
+description:
+  For more information and a tutorial on how to use this package,
+  please see the README at &lt;https://codeberg.org/mhwombat/hello-flake-haskell#readme&gt;.
+homepage:        https://codeberg.org/mhwombat/hello-flake-haskell
+bug-reports:     https://codeberg.org/mhwombat/hello-flake-haskell/issues
+license:         GPL-3.0-only
+license-file:    LICENSE
+author:          Amy de Buitléir
+maintainer:      amy@nualeargais.ie
+copyright:       (c) 2023 Amy de Buitléir
+category:        Text
+build-type:      Simple
+
+executable hello-flake-haskell
+  main-is:          Main.hs
+  build-depends:
+    base,
+    hostname
+-- NOTE: Best practice is to specify version constraints for the packages we depend on.
+-- However, I&#39;m confident that this package will only be used as a Nix flake.
+-- Nix will automatically ensure that anyone running this program is using the
+-- same library versions that I used to build it.
+</pre></div></td></tr></table></div></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_optional_building_and_running_with_cabal_install">8.1.4. (Optional) Building and running with cabal-install</h4>
+<div class="paragraph">
+<p>At this point, I would normally write <code>flake.nix</code> and use Nix to build the program.
+I&#8217;ll cover that in the next section.
+However, it&#8217;s useful to know how to build the package manually in a Nix envronment,
+without using a Nix flake.
+When you&#8217;re new to Nix, this can help you differentiate between problems in your flake definition
+and problems in your Cabal file.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ cabal build
+sh: line 35: cabal: command not found</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Aha! We need <code>cabal-install</code> in our shell.
+Rather than launch another shell-within-a-shell, let&#8217;s exit create a new one.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ exit
+$ nix-shell -p "[ cabal-install (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ hostname ]))]"
+$ cabal build
+Resolving dependencies...
+Build profile: -w ghc-9.4.7 -O1
+In order, the following will be built (use -v for more details):
+ - hello-flake-haskell-1.0.0 (exe:hello-flake-haskell) (first run)
+Configuring executable 'hello-flake-haskell' for hello-flake-haskell-1.0.0..
+Warning: Packages using 'cabal-version: &gt;= 1.10' and before 'cabal-version:
+3.4' must specify the 'default-language' field for each component (e.g.
+Haskell98 or Haskell2010). If a component uses different languages in
+different modules then list the other ones in the 'other-languages' field.
+Warning: The 'license-file' field refers to the file 'LICENSE' which does not
+exist.
+Preprocessing executable 'hello-flake-haskell' for hello-flake-haskell-1.0.0..
+Building executable 'hello-flake-haskell' for hello-flake-haskell-1.0.0..
+[1 of 1] Compiling Main             ( Main.hs, /home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/dist-newstyle/build/x86_64-linux/ghc-9.4.7/hello-flake-haskell-1.0.0/x/hello-flake-haskell/build/hello-flake-haskell/hello-flake-haskell-tmp/Main.o )
+[2 of 2] Linking /home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/dist-newstyle/build/x86_64-linux/ghc-9.4.7/hello-flake-haskell-1.0.0/x/hello-flake-haskell/build/hello-flake-haskell/hello-flake-haskell
+$ cabal run
+Hello from Haskell inside a Nix flake!
+Your hostname is: wombat11k
+$ exit</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After a lot of output messages, the build succeeds and the program runs.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_nix_flake">8.1.5. The Nix flake</h4>
+<div class="paragraph">
+<p>Now we should write <code>flake.nix</code>. We already know how to write most of
+the flake from the examples we did earlier. The two parts that would be
+different are the development shell and the package builder.</p>
+</div>
+<div class="paragraph">
+<p>However, there&#8217;s a simpler way, using <code>haskell-flake</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">flake.nix</div>
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-p">{</span>
+  <span class="tok-ss">description =</span> <span class="tok-s2">&quot;a flake using Haskell&quot;</span><span class="tok-p">;</span>
+
+  <span class="tok-c1"># This example uses haskell-flake to make things simpler.</span>
+  <span class="tok-c1"># See https://haskell.flake.page/ for more information and examples.</span>
+
+  <span class="tok-ss">inputs =</span> <span class="tok-p">{</span>
+    nixpkgs<span class="tok-o">.</span><span class="tok-ss">url =</span> <span class="tok-s2">&quot;github:nixos/nixpkgs/nixpkgs-unstable&quot;</span><span class="tok-p">;</span>
+    flake-parts<span class="tok-o">.</span><span class="tok-ss">url =</span> <span class="tok-s2">&quot;github:hercules-ci/flake-parts&quot;</span><span class="tok-p">;</span>
+    haskell-flake<span class="tok-o">.</span><span class="tok-ss">url =</span> <span class="tok-s2">&quot;github:srid/haskell-flake&quot;</span><span class="tok-p">;</span>
+  <span class="tok-p">};</span>
+  <span class="tok-ss">outputs =</span> inputs<span class="tok-p">@{</span> self<span class="tok-p">,</span> nixpkgs<span class="tok-p">,</span> flake-parts<span class="tok-p">,</span> <span class="tok-o">...</span> <span class="tok-p">}:</span>
+    flake-parts<span class="tok-o">.</span>lib<span class="tok-o">.</span>mkFlake <span class="tok-p">{</span> <span class="tok-k">inherit</span> inputs<span class="tok-p">;</span> <span class="tok-p">}</span> <span class="tok-p">{</span>
+      <span class="tok-ss">systems =</span> nixpkgs<span class="tok-o">.</span>lib<span class="tok-o">.</span>systems<span class="tok-o">.</span>flakeExposed<span class="tok-p">;</span>
+      <span class="tok-ss">imports =</span> <span class="tok-p">[</span> inputs<span class="tok-o">.</span>haskell-flake<span class="tok-o">.</span>flakeModule <span class="tok-p">];</span>
+
+      <span class="tok-ss">perSystem =</span> <span class="tok-p">{</span> self&#39;<span class="tok-p">,</span> pkgs<span class="tok-p">,</span> <span class="tok-o">...</span> <span class="tok-p">}:</span> <span class="tok-p">{</span>
+        haskellProjects<span class="tok-o">.</span><span class="tok-ss">default =</span> <span class="tok-p">{};</span>
+
+        <span class="tok-c1"># haskell-flake doesn&#39;t set the default package, but you can do it here.</span>
+        packages<span class="tok-o">.</span><span class="tok-ss">default =</span> self&#39;<span class="tok-o">.</span>packages<span class="tok-o">.</span>hello-flake-haskell<span class="tok-p">;</span>
+      <span class="tok-p">};</span>
+    <span class="tok-p">};</span>
+<span class="tok-p">}</span>
+</pre></div></td></tr></table></div></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above definition will work for most of your haskell projects;
+simply change the <code>description</code> and the package name in <code>packages.default</code>.
+Let’s try out the new flake.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix run
+warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell' is dirty
+error: getting status of '/nix/store/0ccnxa25whszw7mgbgyzdm4nqc0zwnm8-source/flake.nix': No such file or directory</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Why can’t it find <code>flake.nix</code>? Nix flakes only &#8220;see&#8221; files that are
+part of the repository. We need to add all of the important files to the
+repo before building or running the flake.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ git add flake.nix hello-flake-haskell.cabal Main.hs
+$ nix run
+warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell' is dirty
+warning: creating lock file '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/flake.lock'
+warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell' is dirty
+these 2 derivations will be built:
+  /nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv
+  /nix/store/czq5qmg6mxlzyy7zwxq84c3jg8njy6m9-hello-flake-haskell-1.0.0.drv
+building '/nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv'...
+error: builder for '/nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
+       last 7 log lines:
+       &gt; unpacking source archive /nix/store/hhgjzgy9ly522nl99y8h6m4kl6cknfin-source-hello-flake-haskell
+       &gt; source root is source-hello-flake-haskell
+       &gt; Config file path source is default config file.
+       &gt; Config file not found: /build/source-hello-flake-haskell/.config/cabal/config
+       &gt; Writing default configuration to
+       &gt; /build/source-hello-flake-haskell/.config/cabal/config
+       &gt; /build/source-hello-flake-haskell/./LICENSE: withBinaryFile: does not exist (No such file or directory)
+       For full logs, run 'nix log /nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv'.
+error: 1 dependencies of derivation '/nix/store/czq5qmg6mxlzyy7zwxq84c3jg8njy6m9-hello-flake-haskell-1.0.0.drv' failed to build</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We’d like to share this package with others, but first we should do some
+cleanup. When the package was built (automatically by the <code>nix run</code>
+command), it created a <code>flake.lock</code> file. We need to add this to the
+repo, and commit all important files.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ git add flake.lock
+$ git commit -a -m 'initial commit'
+[master (root-commit) 639cbc4] initial commit
+ 4 files changed, 137 insertions(+)
+ create mode 100644 Main.hs
+ create mode 100644 flake.lock
+ create mode 100644 flake.nix
+ create mode 100644 hello-flake-haskell.cabal</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can test that your package is properly configured by going to
+another directory and running it from there.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ cd ..
+$ nix run ./hello-haskell
+these 2 derivations will be built:
+  /nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv
+  /nix/store/czq5qmg6mxlzyy7zwxq84c3jg8njy6m9-hello-flake-haskell-1.0.0.drv
+building '/nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv'...
+error: builder for '/nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
+       last 7 log lines:
+       &gt; unpacking source archive /nix/store/hhgjzgy9ly522nl99y8h6m4kl6cknfin-source-hello-flake-haskell
+       &gt; source root is source-hello-flake-haskell
+       &gt; Config file path source is default config file.
+       &gt; Config file not found: /build/source-hello-flake-haskell/.config/cabal/config
+       &gt; Writing default configuration to
+       &gt; /build/source-hello-flake-haskell/.config/cabal/config
+       &gt; /build/source-hello-flake-haskell/./LICENSE: withBinaryFile: does not exist (No such file or directory)
+       For full logs, run 'nix log /nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv'.
+error: 1 dependencies of derivation '/nix/store/czq5qmg6mxlzyy7zwxq84c3jg8njy6m9-hello-flake-haskell-1.0.0.drv' failed to build</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you move the project to a public repo, anyone can run it. Recall from
+the beginning of the tutorial that you were able to run <code>hello-flake</code>
+directly from my repo with the following command.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">nix run "git+https://codeberg.org/mhwombat/hello-flake"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Modify the URL accordingly and invite someone else to run your new
+Haskell flake.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_python">8.2. Python</h3>
+<div class="paragraph">
+<p>Start with an empty directory and create a git repository.</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ mkdir hello-python
 $ cd hello-python
 $ git init
-Initialized empty Git repository in /home/amy/codeberg/nix-book/source/python-flake/hello-python/.git/</pre>
+Initialized empty Git repository in /home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python/.git/</pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_a_simple_python_program">8.1. A simple Python program</h3>
+<div class="sect3">
+<h4 id="_a_simple_python_program">8.2.1. A simple Python program</h4>
 <div class="paragraph">
 <p>Next, we’ll create a simple Python program.</p>
 </div>
@@ -1521,8 +2103,8 @@ Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_a_python_builder">8.2. A Python builder</h3>
+<div class="sect3">
+<h4 id="_a_python_builder">8.2.2. A Python builder</h4>
 <div class="paragraph">
 <p>Next, create a Python script to build the package. We’ll use Python’s
 setuptools, but you can use other build tools. For more information on
@@ -1568,7 +2150,7 @@ package manually.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ python -m build
-/nix/store/2c7sgx69p6mmp76cvmi5j6c72dj76jj8-python3-3.10.12/bin/python: No module named build</pre>
+/nix/store/qp5zys77biz7imbk6yy85q5pdv7qk84j-python3-3.11.6/bin/python: No module named build</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1581,7 +2163,16 @@ can use the <code>withPackages</code> function.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre class="nowrap">$ nix-shell -p "python3.withPackages (ps: with ps; [ build ])"</pre>
+<pre class="nowrap">$ nix-shell -p "python3.withPackages (ps: with ps; [ build ])"
+this derivation will be built:
+  /nix/store/xznwaaryp07z19xk658y8fckmsvawdlm-python3-3.11.6-env.drv
+these 2 paths will be fetched (0.05 MiB download, 0.29 MiB unpacked):
+  /nix/store/q2rdk0ir8a809cqiklpawyfwmw738fcf-python3.11-build-1.0.3
+  /nix/store/04kcg3xgy0vfjjrm8ykvx3vcp6mrgzx9-python3.11-pyproject-hooks-1.0.0
+copying path '/nix/store/04kcg3xgy0vfjjrm8ykvx3vcp6mrgzx9-python3.11-pyproject-hooks-1.0.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/q2rdk0ir8a809cqiklpawyfwmw738fcf-python3.11-build-1.0.3' from 'https://cache.nixos.org'...
+building '/nix/store/xznwaaryp07z19xk658y8fckmsvawdlm-python3-3.11.6-env.drv'...
+created 238 symlinks in user environment</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1599,8 +2190,8 @@ twice. Alternatively, we could have done <code>exit</code> followed by the
 <p>After a lot of output messages, the build succeeds.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_the_nix_flake">8.3. The Nix flake</h3>
+<div class="sect3">
+<h4 id="_the_nix_flake_2">8.2.3. The Nix flake</h4>
 <div class="paragraph">
 <p>Now we should write <code>flake.nix</code>. We already know how to write most of
 the flake from the examples we did earlier. The two parts that will be
@@ -1767,7 +2358,7 @@ something like this.</p>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix run
-warning: Git tree '/home/amy/codeberg/nix-book/source/python-flake/hello-python' is dirty
+warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python' is dirty
 error: getting status of '/nix/store/0ccnxa25whszw7mgbgyzdm4nqc0zwnm8-source/flake.nix': No such file or directory</pre>
 </div>
 </div>
@@ -1780,12 +2371,12 @@ repo before building or running the flake.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.nix setup.py hello.py
 $ nix run
-warning: Git tree '/home/amy/codeberg/nix-book/source/python-flake/hello-python' is dirty
-warning: creating lock file '/home/amy/codeberg/nix-book/source/python-flake/hello-python/flake.lock'
-warning: Git tree '/home/amy/codeberg/nix-book/source/python-flake/hello-python' is dirty
+warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python' is dirty
+warning: creating lock file '/home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python/flake.lock'
+warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python' is dirty
 this derivation will be built:
-  /nix/store/qpyvxm7r2savmcx7b5d6x55ggpvc2567-hello-flake-python.drv
-building '/nix/store/qpyvxm7r2savmcx7b5d6x55ggpvc2567-hello-flake-python.drv'...
+  /nix/store/3i7ypa818an6mqqmwz6jzrcsld1l15r0-hello-flake-python.drv
+building '/nix/store/3i7ypa818an6mqqmwz6jzrcsld1l15r0-hello-flake-python.drv'...
 Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
@@ -1799,7 +2390,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) d954bad] initial commit
+[master (root-commit) 15ba3bc] initial commit
  4 files changed, 127 insertions(+)
  create mode 100644 flake.lock
  create mode 100644 flake.nix
@@ -1831,6 +2422,7 @@ directly from my repo with the following command.</p>
 <div class="paragraph">
 <p>Modify the URL accordingly and invite someone else to run your new
 Python flake.</p>
+</div>
 </div>
 </div>
 </div>
@@ -1876,6 +2468,11 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
+these 2 paths will be fetched (0.06 MiB download, 0.27 MiB unpacked):
+  /nix/store/rc7kpqwb8z5ch37ysv5yk9yg5hl5bkdj-cowsay-3.7.0
+  /nix/store/sbldylj3clbkc0aqvjjzfa6slp4zdvlj-hello-2.12.1
+copying path '/nix/store/rc7kpqwb8z5ch37ysv5yk9yg5hl5bkdj-cowsay-3.7.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/sbldylj3clbkc0aqvjjzfa6slp4zdvlj-hello-2.12.1' from 'https://cache.nixos.org'...
 $ hello
 Hello, world!
 $ cowsay "moo"
@@ -1926,6 +2523,25 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
+this derivation will be built:
+  /nix/store/jk6140wbn2xpayxbcrq5qy1b8k5175kd-hello-nix-1.0.0.drv
+building '/nix/store/jk6140wbn2xpayxbcrq5qy1b8k5175kd-hello-nix-1.0.0.drv'...
+unpacking sources
+unpacking source archive /nix/store/3rag1cba3pldx04m5an67rkbcy3rq4db-zr9gki8f26247yzxrspcf4z7kv0vl5mf-source
+source root is zr9gki8f26247yzxrspcf4z7kv0vl5mf-source
+patching sources
+updateAutotoolsGnuConfigScriptsPhase
+configuring
+no configure script, doing nothing
+building
+no Makefile or custom buildPhase, doing nothing
+installing
+post-installation fixup
+shrinking RPATHs of ELF executables and libraries in /nix/store/9ysp78nycwzhzf4b2jmkz0qsc9w3mmp2-hello-nix-1.0.0
+checking for references to /build/ in /nix/store/9ysp78nycwzhzf4b2jmkz0qsc9w3mmp2-hello-nix-1.0.0...
+patching script interpreter paths in /nix/store/9ysp78nycwzhzf4b2jmkz0qsc9w3mmp2-hello-nix-1.0.0
+/nix/store/9ysp78nycwzhzf4b2jmkz0qsc9w3mmp2-hello-nix-1.0.0/bin/hello-nix: interpreter directive changed from "#!/usr/bin/env sh" to "/nix/store/q1c2flcykgr4wwg5a6h450hxbk4ch589-bash-5.2-p15/bin/sh"
+stripping (with command strip and flags -S -p) in  /nix/store/9ysp78nycwzhzf4b2jmkz0qsc9w3mmp2-hello-nix-1.0.0/bin
 $ hello
 bash: line 2: hello: command not found</pre>
 </div>
@@ -1962,6 +2578,96 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
+copying path '/nix/store/9zkfbyk0xjiyzkky8p01jc4hm7jrwz5w-source' from 'https://cache.nixos.org'...
+this derivation will be built:
+  /nix/store/qspvnv4m9cz2rinvswagi8jfnclzx24k-hello-flake-20230218.drv
+these 36 paths will be fetched (65.28 MiB download, 296.69 MiB unpacked):
+  /nix/store/218mzh306bw7rkhcgljlwqpvrdmcy13i-acl-2.3.1
+  /nix/store/ifs8pac5sv026ynk5gk5qg6ap7qdq1x1-attr-2.5.1
+  /nix/store/zcla0ljiwpg5w8pvfagfjq1y2vasfix5-bash-5.1-p16
+  /nix/store/c4j39cgj3cwxgb5fp3z1vsyjhav33bxs-binutils-2.39
+  /nix/store/4c302k97bbc33xgjzmkypkwrmqba9gqy-binutils-wrapper-2.39
+  /nix/store/61rpfcaxhyqfmnk5qp4z7hf20wh9zgrk-bzip2-1.0.8
+  /nix/store/7yhklbxbjivcqk5ql4rl660glgc3iba9-bzip2-1.0.8-bin
+  /nix/store/gn5515zj8skk23jvrrljirgxr10fw9az-coreutils-9.1
+  /nix/store/wjiawwzad72q2mm9515fpx6n4zn91xfg-diffutils-3.8
+  /nix/store/x056x7nsrzfxpzf61pfc6apajax7zd4h-ed-1.18
+  /nix/store/kny46nl4gq9415qqnhmwpfvn2376399m-expand-response-params
+  /nix/store/pdds64xdjvzddhcxlidna5xyphmjdxpg-file-5.43
+  /nix/store/3iwxvsnfx6kr7ga37kbmjz1df3nb95ri-findutils-4.9.0
+  /nix/store/n5x3p2n835bl0v6ampnqchdklwvr8szh-gawk-5.1.1
+  /nix/store/3cjvw93ly6cx2af13f2l3pw4yzbi8wp6-gcc-11.3.0
+  /nix/store/b13h86pg7lbf6vpc1vwzw6akmakyw1bs-gcc-11.3.0-lib
+  /nix/store/9yxrwp848f7msm6m2442yfpji8m3206b-gcc-wrapper-11.3.0
+  /nix/store/9xfad3b5z4y00mzmk2wnn4900q0qmxns-glibc-2.35-224
+  /nix/store/gfsg0n19r8q8v69kwwjvx4m2y77vi7i8-glibc-2.35-224-bin
+  /nix/store/bq928ff6m7lvcfyvcdvgvqxhqi5f3ijq-glibc-2.35-224-dev
+  /nix/store/askxicd00lc1jqshyh5lcwjpxfqygiiy-gmp-with-cxx-stage4-6.2.1
+  /nix/store/6l34p4ip6ib1q87cpd4g5yhg3j86zign-gnugrep-3.7
+  /nix/store/qnhmjdxh35whjqqya1sd6jh7jh2ld978-gnumake-4.3
+  /nix/store/687xxx92x0pg1yzvj8lv4xz5b9vs20qh-gnused-4.8
+  /nix/store/nybc3q7ksr0i226cvs7wgrfgzx3b60nw-gnutar-1.34
+  /nix/store/m8gycf587qfdkjc76bsf6c6w12pbzc35-gzip-1.12
+  /nix/store/5mh5019jigj0k14rdnjam1xwk5avn1id-libidn2-2.3.2
+  /nix/store/34xlpp3j3vy7ksn09zh44f1c04w77khf-libunistring-1.0
+  /nix/store/i38jcxrwa4fxk2b7acxircpi399kyixw-linux-headers-6.0
+  /nix/store/c4ssk8c0y9hxwjgv9i1qh26sas9as0hg-patch-2.7.6
+  /nix/store/d84xrx5n73fb0bc28gnsgwvj1rv2fywk-patchelf-0.15.0
+  /nix/store/sm5ch5nkhpj4dmhm8siia1kq8sia6jf5-pcre-8.45
+  /nix/store/7bc3vsg3laghwg0cin2il9iwd7ka820k-stdenv-linux
+  /nix/store/2gsz9a3v0fylbghzsljz2dnxfs9iidrn-xz-5.2.7
+  /nix/store/kvqhx6wxflyp780ggpd27dklwa28sban-xz-5.2.7-bin
+  /nix/store/fblaj5ywkgphzpp5kx41av32kls9256y-zlib-1.2.13
+copying path '/nix/store/34xlpp3j3vy7ksn09zh44f1c04w77khf-libunistring-1.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/i38jcxrwa4fxk2b7acxircpi399kyixw-linux-headers-6.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/5mh5019jigj0k14rdnjam1xwk5avn1id-libidn2-2.3.2' from 'https://cache.nixos.org'...
+copying path '/nix/store/9xfad3b5z4y00mzmk2wnn4900q0qmxns-glibc-2.35-224' from 'https://cache.nixos.org'...
+copying path '/nix/store/ifs8pac5sv026ynk5gk5qg6ap7qdq1x1-attr-2.5.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/zcla0ljiwpg5w8pvfagfjq1y2vasfix5-bash-5.1-p16' from 'https://cache.nixos.org'...
+copying path '/nix/store/kny46nl4gq9415qqnhmwpfvn2376399m-expand-response-params' from 'https://cache.nixos.org'...
+copying path '/nix/store/n5x3p2n835bl0v6ampnqchdklwvr8szh-gawk-5.1.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/b13h86pg7lbf6vpc1vwzw6akmakyw1bs-gcc-11.3.0-lib' from 'https://cache.nixos.org'...
+copying path '/nix/store/gfsg0n19r8q8v69kwwjvx4m2y77vi7i8-glibc-2.35-224-bin' from 'https://cache.nixos.org'...
+copying path '/nix/store/687xxx92x0pg1yzvj8lv4xz5b9vs20qh-gnused-4.8' from 'https://cache.nixos.org'...
+copying path '/nix/store/sm5ch5nkhpj4dmhm8siia1kq8sia6jf5-pcre-8.45' from 'https://cache.nixos.org'...
+copying path '/nix/store/2gsz9a3v0fylbghzsljz2dnxfs9iidrn-xz-5.2.7' from 'https://cache.nixos.org'...
+copying path '/nix/store/61rpfcaxhyqfmnk5qp4z7hf20wh9zgrk-bzip2-1.0.8' from 'https://cache.nixos.org'...
+copying path '/nix/store/m8gycf587qfdkjc76bsf6c6w12pbzc35-gzip-1.12' from 'https://cache.nixos.org'...
+copying path '/nix/store/x056x7nsrzfxpzf61pfc6apajax7zd4h-ed-1.18' from 'https://cache.nixos.org'...
+copying path '/nix/store/qnhmjdxh35whjqqya1sd6jh7jh2ld978-gnumake-4.3' from 'https://cache.nixos.org'...
+copying path '/nix/store/fblaj5ywkgphzpp5kx41av32kls9256y-zlib-1.2.13' from 'https://cache.nixos.org'...
+copying path '/nix/store/c4ssk8c0y9hxwjgv9i1qh26sas9as0hg-patch-2.7.6' from 'https://cache.nixos.org'...
+copying path '/nix/store/pdds64xdjvzddhcxlidna5xyphmjdxpg-file-5.43' from 'https://cache.nixos.org'...
+copying path '/nix/store/7yhklbxbjivcqk5ql4rl660glgc3iba9-bzip2-1.0.8-bin' from 'https://cache.nixos.org'...
+copying path '/nix/store/218mzh306bw7rkhcgljlwqpvrdmcy13i-acl-2.3.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/bq928ff6m7lvcfyvcdvgvqxhqi5f3ijq-glibc-2.35-224-dev' from 'https://cache.nixos.org'...
+copying path '/nix/store/kvqhx6wxflyp780ggpd27dklwa28sban-xz-5.2.7-bin' from 'https://cache.nixos.org'...
+copying path '/nix/store/6l34p4ip6ib1q87cpd4g5yhg3j86zign-gnugrep-3.7' from 'https://cache.nixos.org'...
+copying path '/nix/store/nybc3q7ksr0i226cvs7wgrfgzx3b60nw-gnutar-1.34' from 'https://cache.nixos.org'...
+copying path '/nix/store/c4j39cgj3cwxgb5fp3z1vsyjhav33bxs-binutils-2.39' from 'https://cache.nixos.org'...
+copying path '/nix/store/3cjvw93ly6cx2af13f2l3pw4yzbi8wp6-gcc-11.3.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/askxicd00lc1jqshyh5lcwjpxfqygiiy-gmp-with-cxx-stage4-6.2.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/d84xrx5n73fb0bc28gnsgwvj1rv2fywk-patchelf-0.15.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/gn5515zj8skk23jvrrljirgxr10fw9az-coreutils-9.1' from 'https://cache.nixos.org'...
+copying path '/nix/store/wjiawwzad72q2mm9515fpx6n4zn91xfg-diffutils-3.8' from 'https://cache.nixos.org'...
+copying path '/nix/store/3iwxvsnfx6kr7ga37kbmjz1df3nb95ri-findutils-4.9.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/4c302k97bbc33xgjzmkypkwrmqba9gqy-binutils-wrapper-2.39' from 'https://cache.nixos.org'...
+copying path '/nix/store/9yxrwp848f7msm6m2442yfpji8m3206b-gcc-wrapper-11.3.0' from 'https://cache.nixos.org'...
+copying path '/nix/store/7bc3vsg3laghwg0cin2il9iwd7ka820k-stdenv-linux' from 'https://cache.nixos.org'...
+building '/nix/store/qspvnv4m9cz2rinvswagi8jfnclzx24k-hello-flake-20230218.drv'...
+unpacking sources
+patching sources
+configuring
+no configure script, doing nothing
+building
+installing
+post-installation fixup
+shrinking RPATHs of ELF executables and libraries in /nix/store/h1064a2fs25vx6zwr0fmfrhfxhw6qm7z-hello-flake-20230218
+strip is /nix/store/9yxrwp848f7msm6m2442yfpji8m3206b-gcc-wrapper-11.3.0/bin/strip
+stripping (with command strip and flags -S) in  /nix/store/h1064a2fs25vx6zwr0fmfrhfxhw6qm7z-hello-flake-20230218/bin
+patching script interpreter paths in /nix/store/h1064a2fs25vx6zwr0fmfrhfxhw6qm7z-hello-flake-20230218
+/nix/store/h1064a2fs25vx6zwr0fmfrhfxhw6qm7z-hello-flake-20230218/bin/hello-flake: interpreter directive changed from "#!/usr/bin/env sh" to "/nix/store/zcla0ljiwpg5w8pvfagfjq1y2vasfix5-bash-5.1-p16/bin/sh"
+checking for references to /build/ in /nix/store/h1064a2fs25vx6zwr0fmfrhfxhw6qm7z-hello-flake-20230218...
 $ hello
 bash: line 2: hello: command not found</pre>
 </div>
@@ -2244,7 +2950,7 @@ cowsay<span class="tok-w"> </span><span class="tok-s2">&quot;Pretty cool, huh?&q
 <div class="literalblock">
 <div class="title">Output</div>
 <div class="content">
-<pre class="nowrap">"I have 3 cats, 2 dogs, and 0 zebras."</pre>
+<pre class="nowrap">bash: line 11: 2184465 Segmentation fault      (core dumped) ./my-script.sh</pre>
 </div>
 </div>
 </div>
@@ -2280,7 +2986,10 @@ print<span class="tok-o">(</span><span class="tok-s1">&#39;sanitized: &#39;</spa
 <div class="literalblock">
 <div class="title">Output</div>
 <div class="content">
-<pre class="nowrap">original:  &lt;span style="font-weight:bold"&gt;some text&lt;/span&gt;
+<pre class="nowrap">this path will be fetched (0.02 MiB download, 0.13 MiB unpacked):
+  /nix/store/i4ixl9vzscm259g168ar4fvj3bm38ika-python3.11-html-sanitizer-2.2
+copying path '/nix/store/i4ixl9vzscm259g168ar4fvj3bm38ika-python3.11-html-sanitizer-2.2' from 'https://cache.nixos.org'...
+original:  &lt;span style="font-weight:bold"&gt;some text&lt;/span&gt;
 sanitized:  &lt;strong&gt;some text&lt;/strong&gt;</pre>
 </div>
 </div>

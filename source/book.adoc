@@ -2,6 +2,7 @@
 {authors}, {build_date}
 :sectnums:
 :toc: left
+:toclevels: 4
 :source-highlighter: pygments
 :pygments-style: default
 :pygments-linenums-mode: table
@@ -30,7 +31,7 @@ include::hello-flake-return/main.adoc[leveloffset=+1]
 
 include::modify-hello-flake/main-generated.adoc[leveloffset=+1]
 
-include::python-flake/main-generated.adoc[leveloffset=+1]
+include::new-flake/main.adoc[leveloffset=+1]
 
 include::shell-recipes/main.adoc[leveloffset=+1]
 

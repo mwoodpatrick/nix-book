@@ -1,7 +1,6 @@
-= A new flake from scratch (Python)
+= Python
 
-At last we are ready to create a flake from scratch! Start with an empty
-directory and create a git repository.
+Start with an empty directory and create a git repository.
 
 ....
 $ mkdir hello-python
