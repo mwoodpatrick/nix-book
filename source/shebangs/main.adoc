@@ -6,9 +6,11 @@ standalone scripts because you don’t need to create a repo and write a
 separate `flake.nix`.
 
 The script should start with two "`shebang`" (`#!`) commands. The first
-should invoke `nix-shell`. The second should declares the scrpt
+should invoke `nix-shell`. The second should declares the script
 interpreter and any dependencies. Here are some examples.
 
 include::bash-with-nix-pkg/main-generated.adoc[leveloffset=+1]
+
+include::haskell-with-nix-pkg/main-generated.adoc[leveloffset=+1]
 
 include::python-with-nix-pkg/main-generated.adoc[leveloffset=+1]

@@ -16,4 +16,6 @@ include::shell-haskell-local/main-generated.adoc[leveloffset=+1]
 
 include::shell-haskell-local-deps/main-generated.adoc[leveloffset=+1]
 
+include::shell-haskell-no-cabal/main-generated.adoc[leveloffset=+1]
+
 include::shell-with-env-var/main-generated.adoc[leveloffset=+1]

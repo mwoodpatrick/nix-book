@@ -94,7 +94,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <div id="header">
 <h1>Wombat&#8217;s Book of Nix</h1>
 <div class="details">
-<span id="author" class="author">Amy de Buitléir, 2023-08-19</span><br>
+<span id="author" class="author">Amy de Buitléir, 2023-11-18</span><br>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -139,13 +139,15 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_shell_with_access_to_a_specific_revision_of_a_flake">9.3. Shell with access to a specific revision of a flake</a></li>
 <li><a href="#_shell_with_access_to_a_haskell_package_on_your_local_computer">9.4. Shell with access to a Haskell package on your local computer</a></li>
 <li><a href="#_shell_with_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.5. Shell with access to a Haskell package on your local computer, with interdependencies</a></li>
-<li><a href="#_shell_with_an_environment_variable_set">9.6. Shell with an environment variable set</a></li>
+<li><a href="#_shell_with_runtime_access_to_a_haskell_library_on_your_local_computer_no_cabal_file_required">9.6. Shell with runtime access to a Haskell library on your local computer (no <code>.cabal</code> file required)</a></li>
+<li><a href="#_shell_with_an_environment_variable_set">9.7. Shell with an environment variable set</a></li>
 </ul>
 </li>
 <li><a href="#_nix_shell_shebangs">10. Nix-shell shebangs</a>
 <ul class="sectlevel2">
 <li><a href="#_a_bash_script_depending_on_a_package_in_the_nixpkgs_repo">10.1. A Bash script depending on a package in the nixpkgs repo.</a></li>
-<li><a href="#_a_python_script_depending_on_a_package_in_the_nixpkgs_repo">10.2. A Python script depending on a package in the nixpkgs repo.</a></li>
+<li><a href="#_a_haskell_script_depending_on_a_haskell_library_package_in_the_nixpkgs_repo">10.2. A Haskell script depending on a Haskell library package in the nixpkgs repo.</a></li>
+<li><a href="#_a_python_script_depending_on_a_package_in_the_nixpkgs_repo">10.3. A Python script depending on a package in the nixpkgs repo.</a></li>
 </ul>
 </li>
 </ul>
@@ -2056,7 +2058,78 @@ mkShell <span class="tok-p">{</span>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_shell_with_an_environment_variable_set">9.6. Shell with an environment variable set</h3>
+<h3 id="_shell_with_runtime_access_to_a_haskell_library_on_your_local_computer_no_cabal_file_required">9.6. Shell with runtime access to a Haskell library on your local computer (no <code>.cabal</code> file required)</h3>
+<div class="paragraph">
+<p>Occasionally you might want to run a short Haskell program that depends on a Haskell library,
+but you don&#8217;t want to bother writing a cabal file.
+This shell provides access to the Haskell <code>containers</code> library (package).</p>
+</div>
+<div class="listingblock">
+<div class="title">shell.nix</div>
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+<span class="tok-k">let</span>
+  <span class="tok-ss">customGhc =</span> haskellPackages<span class="tok-o">.</span>ghcWithPackages <span class="tok-p">(</span>pkgs<span class="tok-p">:</span> <span class="tok-k">with</span> pkgs<span class="tok-p">;</span> <span class="tok-p">[</span> containers <span class="tok-p">]);</span>
+<span class="tok-k">in</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
+                  customGhc
+                <span class="tok-p">];</span>
+<span class="tok-p">}</span>
+</pre></div></td></tr></table></div></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s a short Haskell program that uses it.</p>
+</div>
+<div class="listingblock">
+<div class="title">Main.hs</div>
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="haskell"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-kr">import</span><span class="tok-w"> </span><span class="tok-nn">Data.Map</span>
+
+<span class="tok-nf">m</span><span class="tok-w"> </span><span class="tok-ow">::</span><span class="tok-w"> </span><span class="tok-kt">Map</span><span class="tok-w"> </span><span class="tok-kt">String</span><span class="tok-w"> </span><span class="tok-kt">Int</span>
+<span class="tok-nf">m</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-n">fromList</span><span class="tok-w"> </span><span class="tok-p">[(</span><span class="tok-s">&quot;cats&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">3</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-s">&quot;dogs&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">)]</span>
+
+<span class="tok-nf">main</span><span class="tok-w"> </span><span class="tok-ow">::</span><span class="tok-w"> </span><span class="tok-kt">IO</span><span class="tok-w"> </span><span class="tok-nb">()</span>
+<span class="tok-nf">main</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-kr">do</span>
+<span class="tok-w">  </span><span class="tok-kr">let</span><span class="tok-w"> </span><span class="tok-n">cats</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-n">findWithDefault</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-w"> </span><span class="tok-s">&quot;cats&quot;</span><span class="tok-w"> </span><span class="tok-n">m</span>
+<span class="tok-w">  </span><span class="tok-kr">let</span><span class="tok-w"> </span><span class="tok-n">dogs</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-n">findWithDefault</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-w"> </span><span class="tok-s">&quot;dogs&quot;</span><span class="tok-w"> </span><span class="tok-n">m</span>
+<span class="tok-w">  </span><span class="tok-kr">let</span><span class="tok-w"> </span><span class="tok-n">zebras</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-n">findWithDefault</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-w"> </span><span class="tok-s">&quot;zebras&quot;</span><span class="tok-w"> </span><span class="tok-n">m</span>
+<span class="tok-w">  </span><span class="tok-n">print</span><span class="tok-w"> </span><span class="tok-o">$</span><span class="tok-w"> </span><span class="tok-s">&quot;I have &quot;</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-n">show</span><span class="tok-w"> </span><span class="tok-n">cats</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-s">&quot; cats, &quot;</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-n">show</span><span class="tok-w"> </span><span class="tok-n">dogs</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-s">&quot; dogs, and &quot;</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-n">show</span><span class="tok-w"> </span><span class="tok-n">zebras</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-s">&quot; zebras.&quot;</span>
+</pre></div></td></tr></table></div></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s a demonstration using the program.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix-shell
+$ runghc Main.hs
+"I have 3 cats, 2 dogs, and 0 zebras."</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shell_with_an_environment_variable_set">9.7. Shell with an environment variable set</h3>
 <div class="paragraph">
 <p>This shell has the environment variable FOO set to &#8220;bar&#8221;</p>
 </div>
@@ -2101,7 +2174,7 @@ separate <code>flake.nix</code>.</p>
 </div>
 <div class="paragraph">
 <p>The script should start with two &#8220;shebang&#8221; (<code>#!</code>) commands. The first
-should invoke <code>nix-shell</code>. The second should declares the scrpt
+should invoke <code>nix-shell</code>. The second should declares the script
 interpreter and any dependencies. Here are some examples.</p>
 </div>
 <div class="sect2">
@@ -2132,7 +2205,51 @@ cowsay<span class="tok-w"> </span><span class="tok-s2">&quot;Pretty cool, huh?&q
 </div>
 </div>
 <div class="sect2">
-<h3 id="_a_python_script_depending_on_a_package_in_the_nixpkgs_repo">10.2. A Python script depending on a package in the nixpkgs repo.</h3>
+<h3 id="_a_haskell_script_depending_on_a_haskell_library_package_in_the_nixpkgs_repo">10.2. A Haskell script depending on a Haskell library package in the nixpkgs repo.</h3>
+<div class="listingblock">
+<div class="title">Script</div>
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="haskell"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-o">#!</span><span class="tok-w"> </span><span class="tok-o">/</span><span class="tok-n">usr</span><span class="tok-o">/</span><span class="tok-n">bin</span><span class="tok-o">/</span><span class="tok-n">env</span><span class="tok-w"> </span><span class="tok-n">nix</span><span class="tok-o">-</span><span class="tok-n">shell</span>
+<span class="tok-o">#!</span><span class="tok-w"> </span><span class="tok-n">nix</span><span class="tok-o">-</span><span class="tok-n">shell</span><span class="tok-w"> </span><span class="tok-o">-</span><span class="tok-n">p</span><span class="tok-w"> </span><span class="tok-s">&quot;haskellPackages.ghcWithPackages (p: [p.containers])&quot;</span>
+<span class="tok-o">#!</span><span class="tok-w"> </span><span class="tok-n">nix</span><span class="tok-o">-</span><span class="tok-n">shell</span><span class="tok-w"> </span><span class="tok-o">-</span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-n">runghc</span>
+
+<span class="tok-kr">import</span><span class="tok-w"> </span><span class="tok-nn">Data.Map</span>
+
+<span class="tok-nf">m</span><span class="tok-w"> </span><span class="tok-ow">::</span><span class="tok-w"> </span><span class="tok-kt">Map</span><span class="tok-w"> </span><span class="tok-kt">String</span><span class="tok-w"> </span><span class="tok-kt">Int</span>
+<span class="tok-nf">m</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-n">fromList</span><span class="tok-w"> </span><span class="tok-p">[(</span><span class="tok-s">&quot;cats&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">3</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-s">&quot;dogs&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">)]</span>
+
+<span class="tok-nf">main</span><span class="tok-w"> </span><span class="tok-ow">::</span><span class="tok-w"> </span><span class="tok-kt">IO</span><span class="tok-w"> </span><span class="tok-nb">()</span>
+<span class="tok-nf">main</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-kr">do</span>
+<span class="tok-w">  </span><span class="tok-kr">let</span><span class="tok-w"> </span><span class="tok-n">cats</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-n">findWithDefault</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-w"> </span><span class="tok-s">&quot;cats&quot;</span><span class="tok-w"> </span><span class="tok-n">m</span>
+<span class="tok-w">  </span><span class="tok-kr">let</span><span class="tok-w"> </span><span class="tok-n">dogs</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-n">findWithDefault</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-w"> </span><span class="tok-s">&quot;dogs&quot;</span><span class="tok-w"> </span><span class="tok-n">m</span>
+<span class="tok-w">  </span><span class="tok-kr">let</span><span class="tok-w"> </span><span class="tok-n">zebras</span><span class="tok-w"> </span><span class="tok-ow">=</span><span class="tok-w"> </span><span class="tok-n">findWithDefault</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-w"> </span><span class="tok-s">&quot;zebras&quot;</span><span class="tok-w"> </span><span class="tok-n">m</span>
+<span class="tok-w">  </span><span class="tok-n">print</span><span class="tok-w"> </span><span class="tok-o">$</span><span class="tok-w"> </span><span class="tok-s">&quot;I have &quot;</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-n">show</span><span class="tok-w"> </span><span class="tok-n">cats</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-s">&quot; cats, &quot;</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-n">show</span><span class="tok-w"> </span><span class="tok-n">dogs</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-s">&quot; dogs, and &quot;</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-n">show</span><span class="tok-w"> </span><span class="tok-n">zebras</span><span class="tok-w"> </span><span class="tok-o">++</span><span class="tok-w"> </span><span class="tok-s">&quot; zebras.&quot;</span>
+</pre></div></td></tr></table></div></code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Output</div>
+<div class="content">
+<pre class="nowrap">"I have 3 cats, 2 dogs, and 0 zebras."</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_python_script_depending_on_a_package_in_the_nixpkgs_repo">10.3. A Python script depending on a package in the nixpkgs repo.</h3>
 <div class="listingblock">
 <div class="title">Script</div>
 <div class="content">
