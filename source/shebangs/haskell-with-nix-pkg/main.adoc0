@@ -1,0 +1,13 @@
+= A Haskell script depending on a Haskell library package in the nixpkgs repo.
+
+[source,haskell,linenums]
+.Script
+....
+include::my-script.sh[]
+....
+
+.Output
+....
+$# ./my-script.sh
+....
+
