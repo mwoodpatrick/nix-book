@@ -1,0 +1,242 @@
+= Haskell
+
+Start with an empty directory and create a git repository.
+
+....
+$ mkdir hello-haskell
+$ cd hello-haskell
+$ git init
+....
+
+== A simple Haskell program
+
+Next, we’ll create a simple Haskell program.
+
+////
+$ curl https://codeberg.org/mhwombat/hello-flake-haskell/raw/branch/main/Main.hs --silent --output Main.hs
+////
+
+[source,haskell,linenums]
+.Main.hs
+....
+$# cat Main.hs
+....
+
+== (Optional) Testing before packaging
+
+Before we package the program, let’s verify that it runs. We’re going to
+need a Haskell compiler. By now you’ve probably figured out that we can write a
+`flake.nix` and define a development shell that includes Haskell. We’ll
+do that shortly, but first I want to show you a handy shortcut. We can
+lauch a _temporary_ shell with any Nix packages we want. This is
+convenient when you just want to try out some new software and you’re
+not sure if you’ll use it again. It’s also convenient when you’re not
+ready to write `flake.nix` (perhaps you’re not sure what tools and
+packages you need), and you want to experiment a bit first.
+
+The command to enter a temporary shell is
+
+`nix-shell -p __packages__`
+
+If there are multiple packages, they should be separated by spaces.
+
+[IMPORTANT]
+====
+The command used here is `nix-shell` with a hyphen, not `nix shell`
+with a space; those are two different commands. In fact there are
+hyphenated and non-hyphenated versions of many Nix commands, and yes,
+it’s confusing. The non-hyphenated commands were introduced when support
+for flakes was added to Nix. I predict that eventually all hyphenated
+commands will be replaced with non-hyphenated versions. Until then, a
+useful rule of thumb is that non-hyphenated commands are for for working
+directly with flakes; hyphenated commands are for everything else.
+====
+
+=== Some unsuitable shells
+
+[NOTE]
+====
+In this section, we will try commands that fail in subtle ways.
+Examining these failures will give you a much better understanding of Haskell development with Nix,
+and help you avoid (or at least diagnose) similar problems in future.
+If you're impatient, you can skip to the next section to see the right way to do it.
+You can come back to this section later to learn more.
+====
+
+Let’s enter a shell with the Glasgow Haskell Compiler ("ghc") and try to run the program.
+
+....
+$# echo '$ nix-shell -p ghc'
+$# nix-shell -p ghc --command sh
+$ runghc Main.hs
+....
+
+The error message tells us that we need the module `Network.HostName`.
+That module is provided by the Haskell package called `hostname`.
+Let's exit that shell and try again, this time adding the `hostname` package.
+
+....
+$# echo '$ exit'
+$# echo '$ nix-shell -p "[ghc hostname]"'
+$# nix-shell -p "[ghc hostname]" --command sh
+$ runghc Main.hs
+....
+
+That reason that failed is that we asked for the wrong package.
+The Nix package `hostname` isn't the Haskell package we wanted,
+it's a different package entirely (an alias for `hostname-net-tools`.)
+The package we want is in the _package set_ called `haskellPackages`, so we can refer to it as `haskellPackages.hostname`.
+
+Let's try that again, with the correct package.
+
+....
+$# echo '$ exit'
+$# echo '$ nix-shell -p "[ghc haskellPackages.hostname]"'
+$# nix-shell -p "[ghc haskellPackages.hostname]" --command sh
+$ runghc Main.hs
+....
+
+Now what's wrong?
+The syntax we used in the `nix-shell` command above is fine, but it doesn't make the package _available to GHC_!
+
+=== A suitable shell for a quick test
+
+Consider the Haskell "pandoc" package, which provides both an executable (the Nix package `pandoc`)
+and a library (the Nix package `haskellPackages.pandoc`).
+There are several different shells we could create involving both Pandoc and GHC,
+and it's important to understand the differences between them.
+
+[cols="1,1"]
+|===
+|`nix-shell -p "[ghc pandoc]"`
+|Makes the Pandoc _executable_ available at the command line, but the _library_ won't be visible to GHC.
+
+|`nix-shell -p "haskellPackages.ghcWithPackages (pkgs: with pkgs; [ pandoc ])"`
+|Makes the Pandoc _library_ visible to GHC, but we won't be able to run the _executable_.
+
+|`nix-shell -p "[pandoc (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ pandoc ]))]"`
+|Makes the Pandoc _executable_ available at the command line, and the _library_ visible to GHC.
+|===
+
+
+Now we can create a shell that can run the program.
+
+....
+$# echo '$ nix-shell -p "haskellPackages.ghcWithPackages (pkgs: with pkgs; [ hostname ])"'
+$# nix-shell -p "haskellPackages.ghcWithPackages (pkgs: with pkgs; [ hostname ])" --command sh
+$ runghc Main.hs
+....
+
+Success! Now we know the program works.
+
+== The cabal file
+
+It's time to write a Cabal file for this program.
+This is just an ordinary Cabal file; we don't need to do anything special for Nix.
+
+////
+$ curl https://codeberg.org/mhwombat/hello-flake-haskell/raw/branch/main/hello-flake-haskell.cabal --silent --output hello-flake-haskell.cabal
+////
+
+[source,cabal,linenums]
+.hello-flake-haskell.cabal
+....
+$# cat hello-flake-haskell.cabal
+....
+
+
+== (Optional) Building and running with cabal-install
+
+At this point, I would normally write `flake.nix` and use Nix to build the program.
+I'll cover that in the next section.
+However, it's useful to know how to build the package manually in a Nix envronment,
+without using a Nix flake.
+When you're new to Nix, this can help you differentiate between problems in your flake definition
+and problems in your Cabal file.
+
+....
+$ cabal build
+....
+
+Aha! We need `cabal-install` in our shell.
+Rather than launch another shell-within-a-shell, let's exit create a new one.
+
+....
+$# echo '$ exit'
+$# echo '$ nix-shell -p "[ cabal-install (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ hostname ]))]"'
+$# nix-shell -p "[ cabal-install (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ hostname ]))]" --command sh
+$ cabal build
+$ cabal run
+$# echo '$ exit'
+....
+
+After a lot of output messages, the build succeeds and the program runs.
+
+== The Nix flake
+
+Now we should write `flake.nix`. We already know how to write most of
+the flake from the examples we did earlier. The two parts that would be
+different are the development shell and the package builder.
+
+However, there's a simpler way, using `haskell-flake`.
+
+////
+$ curl https://codeberg.org/mhwombat/hello-flake-haskell/raw/branch/main/flake.nix --silent --output flake.nix
+////
+
+[source,nix,linenums]
+.flake.nix
+....
+$# cat flake.nix
+....
+
+The above definition will work for most of your haskell projects;
+simply change the `description` and the package name in `packages.default`.
+Let’s try out the new flake.
+
+....
+$ nix run
+....
+
+Why can’t it find `flake.nix`? Nix flakes only "`see`" files that are
+part of the repository. We need to add all of the important files to the
+repo before building or running the flake.
+
+....
+$ git add flake.nix hello-flake-haskell.cabal Main.hs
+$ nix run
+....
+
+We’d like to share this package with others, but first we should do some
+cleanup. When the package was built (automatically by the `nix run`
+command), it created a `flake.lock` file. We need to add this to the
+repo, and commit all important files.
+
+....
+$ git add flake.lock
+$ git commit -a -m 'initial commit'
+....
+
+You can test that your package is properly configured by going to
+another directory and running it from there.
+
+....
+$ cd ..
+$ nix run ./hello-haskell
+....
+
+If you move the project to a public repo, anyone can run it. Recall from
+the beginning of the tutorial that you were able to run `hello-flake`
+directly from my repo with the following command.
+
+....
+nix run "git+https://codeberg.org/mhwombat/hello-flake"
+....
+
+Modify the URL accordingly and invite someone else to run your new
+Haskell flake.
+
+////
+Good adoc0 scripts clean up after themselves.
+$ rm -rf hello-haskell # clean up
+////
