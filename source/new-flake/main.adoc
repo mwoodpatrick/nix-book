@@ -1,0 +1,12 @@
+= A new flake from scratch
+
+At last we are ready to create a flake from scratch!
+The sections in this chapter are very similar;
+read the one for your language of choice.
+If you're interested in a language that I haven't covered, feel free to suggest it by creating an
+https://codeberg.org/mhwombat/nix-book/issues[issue].
+
+include::haskell-flake/main-generated.adoc[leveloffset=+1]
+
+include::python-flake/main-generated.adoc[leveloffset=+1]
+
