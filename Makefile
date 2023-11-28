@@ -6,12 +6,13 @@ STATIC_ADOC_FILES != find source -name '*.adoc'
 GENERATED_ADOC_FILES != find source -name '*.adoc0' | sed 's/\.adoc0/-generated.adoc/'
 ADOC_FILES = $(STATIC_ADOC_FILES) $(GENERATED_ADOC_FILES)
 DATE != date +%F
+TIME != date +"%T %Z"
 
 MAIN_ADOC_FILE = source/book.adoc
 HTML_FILE = index.html
 PDF_FILE = wombats-book-of-nix.pdf
 
-ADOC_ATTR_DATE = -a build_date=$(DATE)
+ADOC_ATTR_DATE = -a docdate="$(DATE)" -a doctime="$(TIME)"
 ADOC_ATTR_AUTHORS = -a authors="Amy de Buitléir"
 ADOC_ATTRIBUTES = $(ADOC_ATTR_DATE) $(ADOC_ATTR_AUTHORS)
 ADOC_HTML_ATTRIBUTES = -a stylesheet=../themes/html.css -a imagesdir=images

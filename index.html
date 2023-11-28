@@ -94,7 +94,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <div id="header">
 <h1>Wombat&#8217;s Book of Nix</h1>
 <div class="details">
-<span id="author" class="author">Amy de Buitléir, 2023-11-18</span><br>
+<span id="author" class="author">Amy de Buitléir</span><br>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -151,22 +151,51 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </li>
 </ul>
 </li>
-<li><a href="#_nix_shell_recipes">9. nix-shell recipes</a>
+<li><a href="#_recipes">9. Recipes</a>
 <ul class="sectlevel2">
-<li><a href="#_shell_with_access_to_a_package_from_the_nixpkgsnixos_repo">9.1. Shell with access to a package from the Nixpkgs/NixOS repo</a></li>
-<li><a href="#_shell_with_access_to_a_package_defined_in_a_remote_git_repo">9.2. Shell with access to a package defined in a remote git repo</a></li>
-<li><a href="#_shell_with_access_to_a_specific_revision_of_a_flake">9.3. Shell with access to a specific revision of a flake</a></li>
-<li><a href="#_shell_with_access_to_a_haskell_package_on_your_local_computer">9.4. Shell with access to a Haskell package on your local computer</a></li>
-<li><a href="#_shell_with_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.5. Shell with access to a Haskell package on your local computer, with interdependencies</a></li>
-<li><a href="#_shell_with_runtime_access_to_a_haskell_library_on_your_local_computer_no_cabal_file_required">9.6. Shell with runtime access to a Haskell library on your local computer (no <code>.cabal</code> file required)</a></li>
-<li><a href="#_shell_with_an_environment_variable_set">9.7. Shell with an environment variable set</a></li>
+<li><a href="#_access_to_a_top_level_package_from_the_nixpkgsnixos_repo">9.1. Access to a top-level package from the Nixpkgs/NixOS repo</a>
+<ul class="sectlevel3">
+<li><a href="#_from_the_command_line">9.1.1. From the command line</a></li>
+<li><a href="#_in_shell_nix">9.1.2. In <code>shell.nix</code></a></li>
+<li><a href="#_in_a_bash_script">9.1.3. In a Bash script</a></li>
 </ul>
 </li>
-<li><a href="#_nix_shell_shebangs">10. Nix-shell shebangs</a>
-<ul class="sectlevel2">
-<li><a href="#_a_bash_script_depending_on_a_package_in_the_nixpkgs_repo">10.1. A Bash script depending on a package in the nixpkgs repo.</a></li>
-<li><a href="#_a_haskell_script_depending_on_a_haskell_library_package_in_the_nixpkgs_repo">10.2. A Haskell script depending on a Haskell library package in the nixpkgs repo.</a></li>
-<li><a href="#_a_python_script_depending_on_a_package_in_the_nixpkgs_repo">10.3. A Python script depending on a package in the nixpkgs repo.</a></li>
+<li><a href="#_access_to_a_package_defined_in_a_remote_git_repo">9.2. Access to a package defined in a remote git repo</a>
+<ul class="sectlevel3">
+<li><a href="#_in_shell_nix_2">9.2.1. In <code>shell.nix</code></a></li>
+</ul>
+</li>
+<li><a href="#_access_to_a_flake_defined_in_a_remote_git_repo">9.3. Access to a flake defined in a remote git repo</a>
+<ul class="sectlevel3">
+<li><a href="#_in_shell_nix_3">9.3.1. In <code>shell.nix</code></a></li>
+</ul>
+</li>
+<li><a href="#_access_to_a_haskell_library_package_in_the_nixpkgs_repo_without_a_cabal_file">9.4. Access to a Haskell library package in the nixpkgs repo (without a <code>.cabal</code> file)</a>
+<ul class="sectlevel3">
+<li><a href="#_in_shell_nix_4">9.4.1. In <code>shell.nix</code></a></li>
+<li><a href="#_in_a_haskell_script">9.4.2. In a Haskell script</a></li>
+</ul>
+</li>
+<li><a href="#_access_to_a_haskell_package_on_your_local_computer">9.5. Access to a Haskell package on your local computer</a>
+<ul class="sectlevel3">
+<li><a href="#_in_shell_nix_5">9.5.1. In <code>shell.nix</code></a></li>
+</ul>
+</li>
+<li><a href="#_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.6. Access to a Haskell package on your local computer, with interdependencies</a>
+<ul class="sectlevel3">
+<li><a href="#_in_shell_nix_6">9.6.1. In <code>shell.nix</code></a></li>
+</ul>
+</li>
+<li><a href="#_access_to_a_python_library_package_in_the_nixpkgs_repo_without_using_a_python_builder">9.7. Access to a Python library package in the nixpkgs repo (without using a Python builder)</a>
+<ul class="sectlevel3">
+<li><a href="#_in_a_python_script">9.7.1. In a Python script</a></li>
+</ul>
+</li>
+<li><a href="#_set_an_environment_variable">9.8. Set an environment variable</a>
+<ul class="sectlevel3">
+<li><a href="#_in_shell_nix_7">9.8.1. In <code>shell.nix</code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1366,7 +1395,7 @@ don’t need to <code>git push</code> the changes until we’re ready to share t
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
-[main d6b3d05] added bovine feature
+[main a678b41] added bovine feature
  2 files changed, 7 insertions(+), 1 deletion(-)
 $ nix run
  ________________________
@@ -1763,8 +1792,10 @@ Rather than launch another shell-within-a-shell, let&#8217;s exit create a new o
 <pre class="nowrap">$ exit
 $ nix-shell -p "[ cabal-install (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ hostname ]))]"
 $ cabal build
+Warning: The package list for 'hackage.haskell.org' is 19 days old.
+Run 'cabal update' to get the latest list of available packages.
 Resolving dependencies...
-Build profile: -w ghc-9.4.7 -O1
+Build profile: -w ghc-9.4.8 -O1
 In order, the following will be built (use -v for more details):
  - hello-flake-haskell-1.0.0 (exe:hello-flake-haskell) (first run)
 Configuring executable 'hello-flake-haskell' for hello-flake-haskell-1.0.0..
@@ -1776,8 +1807,8 @@ Warning: The 'license-file' field refers to the file 'LICENSE' which does not
 exist.
 Preprocessing executable 'hello-flake-haskell' for hello-flake-haskell-1.0.0..
 Building executable 'hello-flake-haskell' for hello-flake-haskell-1.0.0..
-[1 of 1] Compiling Main             ( Main.hs, /home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/dist-newstyle/build/x86_64-linux/ghc-9.4.7/hello-flake-haskell-1.0.0/x/hello-flake-haskell/build/hello-flake-haskell/hello-flake-haskell-tmp/Main.o )
-[2 of 2] Linking /home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/dist-newstyle/build/x86_64-linux/ghc-9.4.7/hello-flake-haskell-1.0.0/x/hello-flake-haskell/build/hello-flake-haskell/hello-flake-haskell
+[1 of 1] Compiling Main             ( Main.hs, /home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/dist-newstyle/build/x86_64-linux/ghc-9.4.8/hello-flake-haskell-1.0.0/x/hello-flake-haskell/build/hello-flake-haskell/hello-flake-haskell-tmp/Main.o )
+[2 of 2] Linking /home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/dist-newstyle/build/x86_64-linux/ghc-9.4.8/hello-flake-haskell-1.0.0/x/hello-flake-haskell/build/hello-flake-haskell/hello-flake-haskell
 $ cabal run
 Hello from Haskell inside a Nix flake!
 Your hostname is: wombat11k
@@ -1876,20 +1907,20 @@ warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/he
 warning: creating lock file '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/flake.lock'
 warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell' is dirty
 these 2 derivations will be built:
-  /nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv
-  /nix/store/czq5qmg6mxlzyy7zwxq84c3jg8njy6m9-hello-flake-haskell-1.0.0.drv
-building '/nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv'...
-error: builder for '/nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
+  /nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv
+  /nix/store/yv4fbbfl1jmh4i9j6ylvg1rd9d4anc5g-hello-flake-haskell-1.0.0.drv
+building '/nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv'...
+error: builder for '/nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
        last 7 log lines:
-       &gt; unpacking source archive /nix/store/hhgjzgy9ly522nl99y8h6m4kl6cknfin-source-hello-flake-haskell
+       &gt; unpacking source archive /nix/store/6w4qxvrlm1p1yhwv0kv57da7azz8y2mn-source-hello-flake-haskell
        &gt; source root is source-hello-flake-haskell
        &gt; Config file path source is default config file.
        &gt; Config file not found: /build/source-hello-flake-haskell/.config/cabal/config
        &gt; Writing default configuration to
        &gt; /build/source-hello-flake-haskell/.config/cabal/config
        &gt; /build/source-hello-flake-haskell/./LICENSE: withBinaryFile: does not exist (No such file or directory)
-       For full logs, run 'nix log /nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv'.
-error: 1 dependencies of derivation '/nix/store/czq5qmg6mxlzyy7zwxq84c3jg8njy6m9-hello-flake-haskell-1.0.0.drv' failed to build</pre>
+       For full logs, run 'nix log /nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv'.
+error: 1 dependencies of derivation '/nix/store/yv4fbbfl1jmh4i9j6ylvg1rd9d4anc5g-hello-flake-haskell-1.0.0.drv' failed to build</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1902,7 +1933,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) 2e016bc] initial commit
+[master (root-commit) 5604d0a] initial commit
  4 files changed, 137 insertions(+)
  create mode 100644 Main.hs
  create mode 100644 flake.lock
@@ -1919,20 +1950,20 @@ another directory and running it from there.</p>
 <pre class="nowrap">$ cd ..
 $ nix run ./hello-haskell
 these 2 derivations will be built:
-  /nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv
-  /nix/store/czq5qmg6mxlzyy7zwxq84c3jg8njy6m9-hello-flake-haskell-1.0.0.drv
-building '/nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv'...
-error: builder for '/nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
+  /nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv
+  /nix/store/yv4fbbfl1jmh4i9j6ylvg1rd9d4anc5g-hello-flake-haskell-1.0.0.drv
+building '/nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv'...
+error: builder for '/nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
        last 7 log lines:
-       &gt; unpacking source archive /nix/store/hhgjzgy9ly522nl99y8h6m4kl6cknfin-source-hello-flake-haskell
+       &gt; unpacking source archive /nix/store/6w4qxvrlm1p1yhwv0kv57da7azz8y2mn-source-hello-flake-haskell
        &gt; source root is source-hello-flake-haskell
        &gt; Config file path source is default config file.
        &gt; Config file not found: /build/source-hello-flake-haskell/.config/cabal/config
        &gt; Writing default configuration to
        &gt; /build/source-hello-flake-haskell/.config/cabal/config
        &gt; /build/source-hello-flake-haskell/./LICENSE: withBinaryFile: does not exist (No such file or directory)
-       For full logs, run 'nix log /nix/store/69ndw9rm52qas5wdmi60dhiavcv8xk0l-source-hello-flake-haskell-sdist.tar.gz.drv'.
-error: 1 dependencies of derivation '/nix/store/czq5qmg6mxlzyy7zwxq84c3jg8njy6m9-hello-flake-haskell-1.0.0.drv' failed to build</pre>
+       For full logs, run 'nix log /nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv'.
+error: 1 dependencies of derivation '/nix/store/yv4fbbfl1jmh4i9j6ylvg1rd9d4anc5g-hello-flake-haskell-1.0.0.drv' failed to build</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2315,7 +2346,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) 9909ad1] initial commit
+[master (root-commit) 4677957] initial commit
  4 files changed, 127 insertions(+)
  create mode 100644 flake.lock
  create mode 100644 flake.nix
@@ -2353,21 +2384,67 @@ Python flake.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_nix_shell_recipes">9. nix-shell recipes</h2>
+<h2 id="_recipes">9. Recipes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>There may be times where all you need is a shell.
-Perhaps you&#8217;re doing a quick, one-off task.
-In this situation, the older, non-flake way of using Nix
-may be more convenient.
-The examples in this chapter will illustrate the process.</p>
+<p>This chapter provides examples of how to use Nix in a variety of scanarios.
+Multiple types of recipes are provided are provided for some scenarios;
+comparing the different recipes will help you better understand Nix.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>An <em>"ad hoc" shell</em>
+is useful when you want to quickly create an environment
+for a one-off task.</p>
+</li>
+<li>
+<p>A <em>traditional nix shell</em>
+is useful when you want to define an environment that you will
+use more than once.</p>
+</li>
+<li>
+<p><em>Nix flakes</em>
+are the recommended approach for development projects.</p>
+</li>
+<li>
+<p>You can use <code>nix-shell</code> to run scripts in arbitrary languages, providing
+the necessary dependencies. This is particularly convenient for
+standalone scripts because you don’t need to create a repo and write a
+separate <code>flake.nix</code>.
+The script should start with two <em>"shebang"</em> (<code>#!</code>) commands. The first
+should invoke <code>nix-shell</code>. The second should declares the script
+interpreter and any dependencies.</p>
+</li>
+</ul>
 </div>
 <div class="sect2">
-<h3 id="_shell_with_access_to_a_package_from_the_nixpkgsnixos_repo">9.1. Shell with access to a package from the Nixpkgs/NixOS repo</h3>
+<h3 id="_access_to_a_top_level_package_from_the_nixpkgsnixos_repo">9.1. Access to a top-level package from the Nixpkgs/NixOS repo</h3>
 <div class="paragraph">
-<p>This shell provides access to two packages from nixpkgs: hello and
-cowsay.</p>
+<p>Ex: Access two packages from nixpkgs:
+hello and cowsay.</p>
 </div>
+<div class="sect3">
+<h4 id="_from_the_command_line">9.1.1. From the command line</h4>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">$ nix-shell -p "[hello cowsay]"
+$ hello
+Hello, world!
+$ cowsay "moo"
+ _____
+&lt; moo &gt;
+ -----
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_in_shell_nix">9.1.2. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
@@ -2406,12 +2483,48 @@ $ cowsay "moo"
                 ||     ||</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The command-line equivalent would be <code>nix-shell -p hello cowsay</code></p>
+</div>
+<div class="sect3">
+<h4 id="_in_a_bash_script">9.1.3. In a Bash script</h4>
+<div class="listingblock">
+<div class="title">Script</div>
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="bash"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-ch">#! /usr/bin/env nix-shell</span>
+<span class="tok-c1">#! nix-shell -i bash -p &quot;[hello cowsay]&quot;</span>
+hello
+cowsay<span class="tok-w"> </span><span class="tok-s2">&quot;Pretty cool, huh?&quot;</span>
+</pre></div></td></tr></table></div></code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Output</div>
+<div class="content">
+<pre class="nowrap">Hello, world!
+ ___________________
+&lt; Pretty cool, huh? &gt;
+ -------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_shell_with_access_to_a_package_defined_in_a_remote_git_repo">9.2. Shell with access to a package defined in a remote git repo</h3>
+<h3 id="_access_to_a_package_defined_in_a_remote_git_repo">9.2. Access to a package defined in a remote git repo</h3>
+<div class="paragraph">
+<p>Ex: Access a package called <code>hello-nix</code>,
+which is defined in a remote git repo on codeberg.
+To use a package from GitHub, GitLab, or any other public platform,
+modify the URL.</p>
+</div>
+<div class="sect3">
+<h4 id="_in_shell_nix_2">9.2.1. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
@@ -2426,13 +2539,13 @@ $ cowsay "moo"
 <span class="normal"> 9</span>
 <span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
 <span class="tok-k">let</span>
-  <span class="tok-ss">hello =</span> <span class="tok-nb">import</span> <span class="tok-p">(</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>fetchGit <span class="tok-p">{</span>
+  <span class="tok-ss">hello-nix =</span> <span class="tok-nb">import</span> <span class="tok-p">(</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>fetchGit <span class="tok-p">{</span>
                                            <span class="tok-ss">url =</span> <span class="tok-s2">&quot;https://codeberg.org/mhwombat/hello-nix&quot;</span><span class="tok-p">;</span>
                                            <span class="tok-ss">rev =</span> <span class="tok-s2">&quot;aa2c87f8b89578b069b09fdb2be30a0c9d8a77d8&quot;</span><span class="tok-p">;</span>
                                          <span class="tok-p">});</span>
 <span class="tok-k">in</span>
 mkShell <span class="tok-p">{</span>
-  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span> hello <span class="tok-p">];</span>
+  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span> hello-nix <span class="tok-p">];</span>
 <span class="tok-p">}</span>
 </pre></div></td></tr></table></div></code></pre>
 </div>
@@ -2443,31 +2556,44 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
-$ hello
-bash: line 2: hello: command not found</pre>
+$ hello-nix
+Hello from your nix package!</pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_shell_with_access_to_a_specific_revision_of_a_flake">9.3. Shell with access to a specific revision of a flake</h3>
+<h3 id="_access_to_a_flake_defined_in_a_remote_git_repo">9.3. Access to a flake defined in a remote git repo</h3>
+<div class="paragraph">
+<p>Ex: Access a flake called <code>hello-flake</code>,
+which is defined in a remote git repo on codeberg.
+To use a package from GitHub, GitLab, or any other public platform,
+modify the URL.</p>
+</div>
+<div class="sect3">
+<h4 id="_in_shell_nix_3">9.3.1. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
-<pre class="pygments highlight nowrap"><code data-lang="nix"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span>
-<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+<pre class="pygments highlight nowrap"><code data-lang="nix"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
 <span class="tok-k">let</span>
-   <span class="tok-ss">hello =</span> <span class="tok-p">(</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>getFlake <span class="tok-l">git+https://codeberg.org/mhwombat/hello-flake?ref=main&amp;rev=3aa43dbe7be878dde7b2bdcbe992fe1705da3150</span><span class="tok-p">)</span><span class="tok-o">.</span>packages<span class="tok-o">.</span><span class="tok-err">$</span><span class="tok-p">{</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>currentSystem<span class="tok-p">}</span><span class="tok-o">.</span>default<span class="tok-p">;</span>
+   <span class="tok-ss">hello-flake =</span> <span class="tok-p">(</span> <span class="tok-nb">builtins</span><span class="tok-o">.</span>getFlake
+                     <span class="tok-l">git+https://codeberg.org/mhwombat/hello-flake?ref=main&amp;rev=3aa43dbe7be878dde7b2bdcbe992fe1705da3150</span>
+		 <span class="tok-p">)</span><span class="tok-o">.</span>packages<span class="tok-o">.</span><span class="tok-err">$</span><span class="tok-p">{</span><span class="tok-nb">builtins</span><span class="tok-o">.</span>currentSystem<span class="tok-p">}</span><span class="tok-o">.</span>default<span class="tok-p">;</span>
 <span class="tok-k">in</span>
 mkShell <span class="tok-p">{</span>
   <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
-    hello
+    hello-flake
   <span class="tok-p">];</span>
 <span class="tok-p">}</span>
 </pre></div></td></tr></table></div></code></pre>
@@ -2479,108 +2605,23 @@ mkShell <span class="tok-p">{</span>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell
-$ hello
-bash: line 2: hello: command not found</pre>
+$ hello-flake
+Hello from your flake!</pre>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_shell_with_access_to_a_haskell_package_on_your_local_computer">9.4. Shell with access to a Haskell package on your local computer</h3>
-<div class="paragraph">
-<p>This shell provides access to three Haskell packages that are on my hard
-drive.</p>
-</div>
-<div class="listingblock">
-<div class="title">shell.nix</div>
-<div class="content">
-<pre class="pygments highlight nowrap"><code data-lang="nix"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
-<span class="tok-k">let</span>
-  <span class="tok-ss">pandoc-linear-table =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-linear-table&quot;</span> <span class="tok-l">/home/amy/github/pandoc-linear-table</span> <span class="tok-p">{};</span>
-  <span class="tok-ss">pandoc-logic-proof =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-logic-proof&quot;</span> <span class="tok-l">/home/amy/github/pandoc-logic-proof</span> <span class="tok-p">{};</span>
-  <span class="tok-ss">pandoc-columns =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-columns&quot;</span> <span class="tok-l">/home/amy/github/pandoc-columns</span> <span class="tok-p">{};</span>
-<span class="tok-k">in</span>
-mkShell <span class="tok-p">{</span>
-  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
-                  pandoc
-                  pandoc-linear-table
-                  pandoc-logic-proof
-                  pandoc-columns
-                <span class="tok-p">];</span>
-<span class="tok-p">}</span>
-</pre></div></td></tr></table></div></code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_shell_with_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.5. Shell with access to a Haskell package on your local computer, with interdependencies</h3>
-<div class="paragraph">
-<p>This shell provides access to four Haskell packages that are on my hard
-drive. The fourth package depends on the first three to build.</p>
-</div>
-<div class="listingblock">
-<div class="title">shell.nix</div>
-<div class="content">
-<pre class="pygments highlight nowrap"><code data-lang="nix"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
-<span class="tok-k">let</span>
-  <span class="tok-ss">pandoc-linear-table =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-linear-table&quot;</span> <span class="tok-l">/home/amy/github/pandoc-linear-table</span> <span class="tok-p">{};</span>
-  <span class="tok-ss">pandoc-logic-proof =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-logic-proof&quot;</span> <span class="tok-l">/home/amy/github/pandoc-logic-proof</span> <span class="tok-p">{};</span>
-  <span class="tok-ss">pandoc-columns =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-columns&quot;</span> <span class="tok-l">/home/amy/github/pandoc-columns</span> <span class="tok-p">{};</span>
-  <span class="tok-ss">pandoc-maths-web =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-maths-web&quot;</span> <span class="tok-l">/home/amy/github/pandoc-maths-web</span>
-                       <span class="tok-p">{</span>
-                         <span class="tok-k">inherit</span> pandoc-linear-table pandoc-logic-proof pandoc-columns<span class="tok-p">;</span>
-                       <span class="tok-p">};</span>
-<span class="tok-k">in</span>
-mkShell <span class="tok-p">{</span>
-  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
-                  pandoc
-                  pandoc-linear-table
-                  pandoc-logic-proof
-                  pandoc-columns
-                  pandoc-maths-web
-                <span class="tok-p">];</span>
-<span class="tok-p">}</span>
-</pre></div></td></tr></table></div></code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_shell_with_runtime_access_to_a_haskell_library_on_your_local_computer_no_cabal_file_required">9.6. Shell with runtime access to a Haskell library on your local computer (no <code>.cabal</code> file required)</h3>
+<h3 id="_access_to_a_haskell_library_package_in_the_nixpkgs_repo_without_a_cabal_file">9.4. Access to a Haskell library package in the nixpkgs repo (without a <code>.cabal</code> file)</h3>
 <div class="paragraph">
 <p>Occasionally you might want to run a short Haskell program that depends on a Haskell library,
-but you don&#8217;t want to bother writing a cabal file.
-This shell provides access to the Haskell <code>containers</code> library (package).</p>
+but you don&#8217;t want to bother writing a cabal file.</p>
 </div>
+<div class="paragraph">
+<p>Example: Access the <code>containers</code> package from the <code>haskellPackages</code> set in the nixpkgs repo.</p>
+</div>
+<div class="sect3">
+<h4 id="_in_shell_nix_4">9.4.1. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
@@ -2645,84 +2686,8 @@ $ runghc Main.hs
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_shell_with_an_environment_variable_set">9.7. Shell with an environment variable set</h3>
-<div class="paragraph">
-<p>This shell has the environment variable FOO set to &#8220;bar&#8221;</p>
-</div>
-<div class="listingblock">
-<div class="title">shell.nix</div>
-<div class="content">
-<pre class="pygments highlight nowrap"><code data-lang="nix"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
-mkShell <span class="tok-p">{</span>
-  <span class="tok-ss">shellHook =</span> <span class="tok-s1">&#39;&#39;</span>
-<span class="tok-s1">    export FOO=&quot;bar&quot;</span>
-<span class="tok-s1">  &#39;&#39;</span><span class="tok-p">;</span>
-<span class="tok-p">}</span>
-</pre></div></td></tr></table></div></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Here’s a demonstration using the shell.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre class="nowrap">$ nix-shell
-$ echo "FOO=$FOO"
-FOO=</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_nix_shell_shebangs">10. Nix-shell shebangs</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can use <code>nix-shell</code> to run scripts in arbitrary languages, providing
-the necessary dependencies. This is particularly convenient for
-standalone scripts because you don’t need to create a repo and write a
-separate <code>flake.nix</code>.</p>
-</div>
-<div class="paragraph">
-<p>The script should start with two &#8220;shebang&#8221; (<code>#!</code>) commands. The first
-should invoke <code>nix-shell</code>. The second should declares the script
-interpreter and any dependencies. Here are some examples.</p>
-</div>
-<div class="sect2">
-<h3 id="_a_bash_script_depending_on_a_package_in_the_nixpkgs_repo">10.1. A Bash script depending on a package in the nixpkgs repo.</h3>
-<div class="listingblock">
-<div class="title">Script</div>
-<div class="content">
-<pre class="pygments highlight nowrap"><code data-lang="bash"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-ch">#! /usr/bin/env nix-shell</span>
-<span class="tok-c1">#! nix-shell -i bash -p cowsay</span>
-cowsay<span class="tok-w"> </span><span class="tok-s2">&quot;Pretty cool, huh?&quot;</span>
-</pre></div></td></tr></table></div></code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="title">Output</div>
-<div class="content">
-<pre class="nowrap"> ___________________
-&lt; Pretty cool, huh? &gt;
- -------------------
-        \   ^__^
-         \  (oo)\_______
-            (__)\       )\/\
-                ||----w |
-                ||     ||</pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_a_haskell_script_depending_on_a_haskell_library_package_in_the_nixpkgs_repo">10.2. A Haskell script depending on a Haskell library package in the nixpkgs repo.</h3>
+<div class="sect3">
+<h4 id="_in_a_haskell_script">9.4.2. In a Haskell script</h4>
 <div class="listingblock">
 <div class="title">Script</div>
 <div class="content">
@@ -2765,12 +2730,121 @@ cowsay<span class="tok-w"> </span><span class="tok-s2">&quot;Pretty cool, huh?&q
 </div>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_a_python_script_depending_on_a_package_in_the_nixpkgs_repo">10.3. A Python script depending on a package in the nixpkgs repo.</h3>
+<h3 id="_access_to_a_haskell_package_on_your_local_computer">9.5. Access to a Haskell package on your local computer</h3>
+<div class="paragraph">
+<p>Ex: Access three Haskell packages
+(<code>pandoc-linear-table</code>, <code>pandoc-logic-proof</code>, and <code>pandoc-columns</code>)
+that are on my hard drive.</p>
+</div>
+<div class="sect3">
+<h4 id="_in_shell_nix_5">9.5.1. In <code>shell.nix</code></h4>
+<div class="listingblock">
+<div class="title">shell.nix</div>
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+<span class="tok-k">let</span>
+  <span class="tok-ss">pandoc-linear-table =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-linear-table&quot;</span> <span class="tok-l">/home/amy/github/pandoc-linear-table</span> <span class="tok-p">{};</span>
+  <span class="tok-ss">pandoc-logic-proof =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-logic-proof&quot;</span> <span class="tok-l">/home/amy/github/pandoc-logic-proof</span> <span class="tok-p">{};</span>
+  <span class="tok-ss">pandoc-columns =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-columns&quot;</span> <span class="tok-l">/home/amy/github/pandoc-columns</span> <span class="tok-p">{};</span>
+<span class="tok-k">in</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
+                  pandoc
+                  pandoc-linear-table
+                  pandoc-logic-proof
+                  pandoc-columns
+                <span class="tok-p">];</span>
+<span class="tok-p">}</span>
+</pre></div></td></tr></table></div></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.6. Access to a Haskell package on your local computer, with interdependencies</h3>
+<div class="paragraph">
+<p>Ex: Access four Haskell packages
+(<code>pandoc-linear-table</code>, <code>pandoc-logic-proof</code>, <code>pandoc-columns</code> and <code>pandoc-maths-web</code>)
+that are on my hard drive.
+The fourth package depends on the first three to build.</p>
+</div>
+<div class="sect3">
+<h4 id="_in_shell_nix_6">9.6.1. In <code>shell.nix</code></h4>
+<div class="listingblock">
+<div class="title">shell.nix</div>
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+<span class="tok-k">let</span>
+  <span class="tok-ss">pandoc-linear-table =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-linear-table&quot;</span> <span class="tok-l">/home/amy/github/pandoc-linear-table</span> <span class="tok-p">{};</span>
+  <span class="tok-ss">pandoc-logic-proof =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-logic-proof&quot;</span> <span class="tok-l">/home/amy/github/pandoc-logic-proof</span> <span class="tok-p">{};</span>
+  <span class="tok-ss">pandoc-columns =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-columns&quot;</span> <span class="tok-l">/home/amy/github/pandoc-columns</span> <span class="tok-p">{};</span>
+  <span class="tok-ss">pandoc-maths-web =</span> haskellPackages<span class="tok-o">.</span>callCabal2nix <span class="tok-s2">&quot;pandoc-maths-web&quot;</span> <span class="tok-l">/home/amy/github/pandoc-maths-web</span>
+                       <span class="tok-p">{</span>
+                         <span class="tok-k">inherit</span> pandoc-linear-table pandoc-logic-proof pandoc-columns<span class="tok-p">;</span>
+                       <span class="tok-p">};</span>
+<span class="tok-k">in</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">buildInputs =</span> <span class="tok-p">[</span>
+                  pandoc
+                  pandoc-linear-table
+                  pandoc-logic-proof
+                  pandoc-columns
+                  pandoc-maths-web
+                <span class="tok-p">];</span>
+<span class="tok-p">}</span>
+</pre></div></td></tr></table></div></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_access_to_a_python_library_package_in_the_nixpkgs_repo_without_using_a_python_builder">9.7. Access to a Python library package in the nixpkgs repo (without using a Python builder)</h3>
+<div class="paragraph">
+<p>Occasionally you might want to run a short Python program that depends on a Python library,
+but you don&#8217;t want to bother configuring a builder.</p>
+</div>
+<div class="paragraph">
+<p>Example: Access the <code>html_sanitizer</code> package from the <code>python3nnPackages</code> set in the nixpkgs repo.</p>
+</div>
+<div class="sect3">
+<h4 id="_in_a_python_script">9.7.1. In a Python script</h4>
 <div class="listingblock">
 <div class="title">Script</div>
 <div class="content">
-<pre class="pygments highlight nowrap"><code data-lang="bash"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<pre class="pygments highlight nowrap"><code data-lang="python"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
 <span class="normal"> 4</span>
@@ -2783,14 +2857,14 @@ cowsay<span class="tok-w"> </span><span class="tok-s2">&quot;Pretty cool, huh?&q
 <span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-ch">#! /usr/bin/env nix-shell</span>
 <span class="tok-c1">#! nix-shell -i python3 -p python3Packages.html-sanitizer</span>
 
-from<span class="tok-w"> </span>html_sanitizer<span class="tok-w"> </span>import<span class="tok-w"> </span>Sanitizer
-<span class="tok-nv">sanitizer</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span>Sanitizer<span class="tok-o">()</span><span class="tok-w">  </span><span class="tok-c1"># default configuration</span>
+<span class="tok-kn">from</span> <span class="tok-nn">html_sanitizer</span> <span class="tok-kn">import</span> <span class="tok-n">Sanitizer</span>
+<span class="tok-n">sanitizer</span> <span class="tok-o">=</span> <span class="tok-n">Sanitizer</span><span class="tok-p">()</span>  <span class="tok-c1"># default configuration</span>
 
-<span class="tok-nv">original</span><span class="tok-o">=</span><span class="tok-s1">&#39;&lt;span style=&quot;font-weight:bold&quot;&gt;some text&lt;/span&gt;&#39;</span>
-print<span class="tok-o">(</span><span class="tok-s1">&#39;original: &#39;</span>,<span class="tok-w"> </span>original<span class="tok-o">)</span>
+<span class="tok-n">original</span><span class="tok-o">=</span><span class="tok-s1">&#39;&lt;span style=&quot;font-weight:bold&quot;&gt;some text&lt;/span&gt;&#39;</span>
+<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;original: &#39;</span><span class="tok-p">,</span> <span class="tok-n">original</span><span class="tok-p">)</span>
 
-<span class="tok-nv">sanitized</span><span class="tok-o">=</span>sanitizer.sanitize<span class="tok-o">(</span>original<span class="tok-o">)</span>
-print<span class="tok-o">(</span><span class="tok-s1">&#39;sanitized: &#39;</span>,<span class="tok-w"> </span>sanitized<span class="tok-o">)</span>
+<span class="tok-n">sanitized</span><span class="tok-o">=</span><span class="tok-n">sanitizer</span><span class="tok-o">.</span><span class="tok-n">sanitize</span><span class="tok-p">(</span><span class="tok-n">original</span><span class="tok-p">)</span>
+<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;sanitized: &#39;</span><span class="tok-p">,</span> <span class="tok-n">sanitized</span><span class="tok-p">)</span>
 </pre></div></td></tr></table></div></code></pre>
 </div>
 </div>
@@ -2799,6 +2873,33 @@ print<span class="tok-o">(</span><span class="tok-s1">&#39;sanitized: &#39;</spa
 <div class="content">
 <pre class="nowrap">original:  &lt;span style="font-weight:bold"&gt;some text&lt;/span&gt;
 sanitized:  &lt;strong&gt;some text&lt;/strong&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_set_an_environment_variable">9.8. Set an environment variable</h3>
+<div class="paragraph">
+<p>Ex: Set the value of the environment variable FOO to &#8220;bar&#8221;</p>
+</div>
+<div class="sect3">
+<h4 id="_in_shell_nix_7">9.8.1. In <code>shell.nix</code></h4>
+<div class="listingblock">
+<div class="title">shell.nix</div>
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="nix"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-k">with</span> <span class="tok-p">(</span><span class="tok-nb">import</span> <span class="tok-l">&lt;nixpkgs&gt;</span> <span class="tok-p">{});</span>
+mkShell <span class="tok-p">{</span>
+  <span class="tok-ss">shellHook =</span> <span class="tok-s1">&#39;&#39;</span>
+<span class="tok-s1">    export FOO=&quot;bar&quot;</span>
+<span class="tok-s1">  &#39;&#39;</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+</pre></div></td></tr></table></div></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -2816,7 +2917,7 @@ sanitized:  &lt;strong&gt;some text&lt;/strong&gt;</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 1980-01-01 00:00:00 UTC
+Last updated 2023-11-28 16:01:42 GMT
 </div>
 </div>
 </body>

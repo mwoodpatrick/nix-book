@@ -1,0 +1,9 @@
+= In `shell.nix`
+
+[source,nix,linenums]
+.shell.nix
+....
+include::shell.nix[]
+....
+
+// TODO add demo

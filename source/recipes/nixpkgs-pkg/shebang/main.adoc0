@@ -1,4 +1,4 @@
-= A Bash script depending on a package in the nixpkgs repo.
+= In a Bash script
 
 [source,bash,linenums]
 .Script

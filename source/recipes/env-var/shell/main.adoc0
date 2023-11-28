@@ -1,4 +1,4 @@
-= Shell with access to a flake
+= In `shell.nix`
 
 [source,nix,linenums]
 .shell.nix
@@ -6,12 +6,16 @@
 include::shell.nix[]
 ....
 
+////
+TODO FIX
+
 Here’s a demonstration using the shell.
 
 ....
 $# echo '$ nix-shell'
 $# nix-shell --run bash <<EOL
-$ hello-flake
+$ echo "FOO=$FOO"
 $# EOL
 ....
 
+////

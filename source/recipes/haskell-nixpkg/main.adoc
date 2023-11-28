@@ -1,0 +1,11 @@
+= Access to a Haskell library package in the nixpkgs repo (without a `.cabal` file)
+
+Occasionally you might want to run a short Haskell program that depends on a Haskell library,
+but you don't want to bother writing a cabal file.
+
+Example: Access the `containers` package from the `haskellPackages` set in the nixpkgs repo.
+
+include::shell/main-generated.adoc[leveloffset=+1]
+
+include::shebang/main-generated.adoc[leveloffset=+1]
+

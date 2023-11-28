@@ -1,4 +1,4 @@
-= Shell with access to a package defined in a remote git repo
+= In `shell.nix`
 
 [source,nix,linenums]
 .shell.nix
@@ -12,5 +12,6 @@ Here’s a demonstration using the shell.
 $# echo '$ nix-shell'
 $# nix-shell --run bash <<EOL
 $ hello
+$ cowsay "moo"
 $# EOL
 ....

@@ -1,0 +1,25 @@
+= In `shell.nix`
+
+
+[source,nix,linenums]
+.shell.nix
+....
+include::shell.nix[]
+....
+
+Here's a short Haskell program that uses it.
+
+[source,haskell,linenums]
+.Main.hs
+....
+include::Main.hs[]
+....
+
+Here's a demonstration using the program.
+
+....
+$# echo '$ nix-shell'
+$# nix-shell --run bash <<EOL
+$ runghc Main.hs
+$# EOL
+....
