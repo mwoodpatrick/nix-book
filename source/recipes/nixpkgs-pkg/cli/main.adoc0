@@ -1,0 +1,9 @@
+= From the command line
+
+....
+$# echo '$ nix-shell -p "[hello cowsay]"'
+$# nix-shell -p "[hello cowsay]" --run bash <<EOL
+$ hello
+$ cowsay "moo"
+$# EOL
+....

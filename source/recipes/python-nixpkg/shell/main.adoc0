@@ -1,0 +1,24 @@
+= In `shell.nix`
+
+[source,nix,linenums]
+.shell.nix
+....
+include::shell.nix[]
+....
+
+Here's a short Python program that uses it.
+
+[source,python,linenums]
+.Main.hs
+....
+include::Main.py[]
+....
+
+Here's a demonstration using the program.
+
+....
+$# echo '$ nix-shell'
+$# nix-shell --run bash <<EOL
+$ python Main.py
+$# EOL
+....
