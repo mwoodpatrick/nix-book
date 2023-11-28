@@ -1,0 +1,41 @@
+= Recipes
+
+This chapter provides examples of how to use Nix in a variety of scanarios.
+Multiple types of recipes are provided are provided for some scenarios;
+comparing the different recipes will help you better understand Nix.
+
+- An _"ad hoc" shell_
+is useful when you want to quickly create an environment
+for a one-off task.
+
+- A _traditional nix shell_
+is useful when you want to define an environment that you will
+use more than once.
+
+- _Nix flakes_
+are the recommended approach for development projects.
+
+- You can use `nix-shell` to run scripts in arbitrary languages, providing
+the necessary dependencies. This is particularly convenient for
+standalone scripts because you don’t need to create a repo and write a
+separate `flake.nix`.
+The script should start with two _"shebang"_ (`#!`) commands. The first
+should invoke `nix-shell`. The second should declares the script
+interpreter and any dependencies.
+
+
+include::nixpkgs-pkg/main.adoc[leveloffset=+1]
+
+include::remote-git/main.adoc[leveloffset=+1]
+
+include::remote-git-flake/main.adoc[leveloffset=+1]
+
+include::haskell-nixpkg/main.adoc[leveloffset=+1]
+
+include::haskell-local/main.adoc[leveloffset=+1]
+
+include::haskell-local-deps/main.adoc[leveloffset=+1]
+
+include::python-nixpkg/main.adoc[leveloffset=+1]
+
+include::env-var/main.adoc[leveloffset=+1]

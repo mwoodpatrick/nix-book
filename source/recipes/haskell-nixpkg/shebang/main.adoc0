@@ -1,0 +1,13 @@
+= In a Haskell script
+
+[source,haskell,linenums]
+.Script
+....
+include::my-script.sh[]
+....
+
+.Output
+....
+$# ./my-script.sh
+....
+

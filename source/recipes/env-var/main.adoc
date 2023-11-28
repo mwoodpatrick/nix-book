@@ -1,0 +1,5 @@
+= Set an environment variable
+
+Ex: Set the value of the environment variable FOO to "`bar`"
+
+include::shell/main-generated.adoc[leveloffset=+1]

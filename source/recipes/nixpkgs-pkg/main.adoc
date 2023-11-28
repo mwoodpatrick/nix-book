@@ -1,0 +1,10 @@
+= Access to a top-level package from the Nixpkgs/NixOS repo
+
+Ex: Access two packages from nixpkgs:
+hello and cowsay.
+
+include::cli/main-generated.adoc[leveloffset=+1]
+
+include::shell/main-generated.adoc[leveloffset=+1]
+
+include::shebang/main-generated.adoc[leveloffset=+1]

@@ -1,0 +1,8 @@
+= Access to a Haskell package on your local computer, with interdependencies
+
+Ex: Access four Haskell packages
+(`pandoc-linear-table`, `pandoc-logic-proof`, `pandoc-columns` and `pandoc-maths-web`)
+that are on my hard drive.
+The fourth package depends on the first three to build.
+
+include::shell/main-generated.adoc[leveloffset=+1]

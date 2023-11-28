@@ -1,0 +1,11 @@
+= Access to a Python library package in the nixpkgs repo (without using a Python builder)
+
+Occasionally you might want to run a short Python program that depends on a Python library,
+but you don't want to bother configuring a builder.
+
+Example: Access the `html_sanitizer` package from the `python3nnPackages` set in the nixpkgs repo.
+
+// TODO include::shell/main-generated.adoc[leveloffset=+1]
+
+include::shebang/main-generated.adoc[leveloffset=+1]
+

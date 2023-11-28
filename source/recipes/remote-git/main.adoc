@@ -1,0 +1,8 @@
+= Access to a package defined in a remote git repo
+
+Ex: Access a package called `hello-nix`,
+which is defined in a remote git repo on codeberg.
+To use a package from GitHub, GitLab, or any other public platform,
+modify the URL.
+
+include::shell/main-generated.adoc[leveloffset=+1]

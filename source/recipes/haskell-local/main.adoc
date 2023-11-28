@@ -1,0 +1,7 @@
+= Access to a Haskell package on your local computer
+
+Ex: Access three Haskell packages
+(`pandoc-linear-table`, `pandoc-logic-proof`, and `pandoc-columns`)
+that are on my hard drive.
+
+include::shell/main-generated.adoc[leveloffset=+1]
