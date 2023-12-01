@@ -43,12 +43,10 @@ $# cat flake.nix
 ....
 
 If this is your first time seeing a flake definition, it probably looks
-intimidating. Flakes are written in a functional language called
-Nixfootnote:[For an introduction to the Nix language, see
-https://nixos.org/guides/nix-language.html[Nix language basics].]. Yes,
-"`Nix`" is the name of both the package manager and the language it
-uses. We’ll look at this in more detail shortly. For now, I’d like to
-focus on the inputs section.
+intimidating.
+Flakes are written in the Nix language, introduced in an earlier chapter.
+However, you don't really need to know Nix to follow this example.
+For now, I’d like to focus on the inputs section.
 
 [source,nix]
 ....
