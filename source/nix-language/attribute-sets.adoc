@@ -1,5 +1,24 @@
 = Attribute set operations
 
+
+An ordinary attribute set cannot refer to its own elements.
+To do this, you need a _recursive_ attribute set.
+
+[source]
+....
+nix-repl> { x = 3; y = 4*x; }
+error: undefined variable 'x'
+
+       at «string»:1:16:
+
+            1| { x = 3; y = 4*x; }
+             |                ^
+
+nix-repl> rec { x = 3; y = 4*x; }
+{ x = 3; y = 12; }
+....
+
+
 The `.` operator selects an attribute from a set.
 
 [source]

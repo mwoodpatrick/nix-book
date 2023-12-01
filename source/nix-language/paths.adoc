@@ -1,4 +1,18 @@
-= Path opearations
+= Path operations
+
+Any expression that contains a forward slash (`/`) _not_ followed by a space
+is interpreted as a path.
+To refer to a file or directory relative to the current directory, prefix it with `./`.
+You can specify the current directory as `./.`
+
+[source]
+....
+nix-repl> ./file.txt
+/home/amy/codeberg/nix-book/file.txt
+
+nix-repl> ./.
+/home/amy/codeberg/nix-book
+....
 
 Paths can be concatenated with each other to produce a new path.
 

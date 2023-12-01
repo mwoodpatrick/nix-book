@@ -1,0 +1,37 @@
+= With expression
+
+A `with` expression is somewhat similar to a `let` expression,
+but it brings all of the associations in an attribute set into scope.
+
+[source]
+....
+nix-repl> point = { x1 = 3; x2 = 2; }
+
+nix-repl> with point; x1*x1 + x2
+11
+....
+
+
+[IMPORTANT]
+====
+Unlike a `let` expression, a variable defined inside a `with` expression will _not_
+"shadow" an outer variable with the same name.
+
+[source]
+....
+nix-repl> name = "Amy"
+
+nix-repl> animal = { name = "Professor Paws"; age = 10; species = "cat"; }
+
+nix-repl> with animal; "Hello, " + name
+"Hello, Amy"
+....
+
+However, you can refer to it using the attribute set selection operaator `.`.
+
+[source]
+....
+nix-repl> with animal; "Hello, " + animal.name
+"Hello, Professor Paws"
+....
+====

@@ -63,6 +63,10 @@ Note that the final semi-colon before the closing bracket is required.
 
     { name = "Professor Paws"; age = 10; species = "cat"; }
 
+The keys of an attribute set must be strings.
+When the key is not a valid identifier, it must be enclosed in quotation marks.
+
+    { abc = true; "123" = false; }
 
 Attribute sets can be empty.
 

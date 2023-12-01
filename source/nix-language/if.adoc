@@ -1,0 +1,15 @@
+= If expressions
+
+The conditional construct in Nix is an _expression_, not a _statement_.
+Since expressions must have values in all cases, you must specify both the `then` and the `else` branch.
+
+[source]
+....
+nix-repl> a = 7
+
+nix-repl> b = 3
+
+nix-repl> if a > b then "yes" else "no"
+"yes"
+....
+
