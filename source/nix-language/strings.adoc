@@ -1,0 +1,42 @@
+# String operations
+
+String concatenation uses the `+` operator.
+
+[source]
+....
+nix-repl> "Hello, " + "world!"
+"Hello, world!"
+....
+
+You can use the `${_variable_}` syntax to insert the value of a variable within a string.
+
+[source]
+....
+nix-repl> name = "Wombat"
+
+nix-repl> "Hi, I'm ${name}."
+"Hi, I'm Wombat."
+....
+
+[IMPORTANT]
+====
+You cannot mix numbers and strings.
+Nix does provide functions for converting between types; we'll see these later.
+Earlier we set `a = 7`, so the following expression fails.
+
+[source]
+....
+nix-repl> "My favourite number is ${a}."
+error:
+       … while evaluating a path segment
+
+         at «string»:1:25:
+
+            1| "My favourite number is ${a}."
+             |                         ^
+
+       error: cannot coerce an integer to a string
+....
+====
+
+// TODO Talk about "strings with context" https://shealevy.com/blog/2018/08/05/understanding-nixs-string-context/

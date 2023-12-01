@@ -1,0 +1,33 @@
+= Variables
+
+You can declare variables in Nix and assign values to them.
+// TODO explain that values are immutable.
+
+[source]
+....
+nix-repl> a = 7
+
+nix-repl> b = 3
+
+nix-repl> a - b
+4
+....
+
+[IMPORTANT]
+====
+As mentioned previously, omitting the spaces around operators can have unexpected results.
+As Nix allows hyphens (`-`) in variable names,
+`a-b` is interpreted as the name of a variable in the following example.
+
+[source]
+....
+nix-repl> a-b
+error: undefined variable 'a-b'
+
+       at «string»:1:1:
+
+            1| a-b
+             | ^
+....
+====
+

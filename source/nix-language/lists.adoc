@@ -1,0 +1,9 @@
+= List operations
+
+Lists can be concatenated using the `++` operator.
+
+[source]
+....
+nix-repl> [ 1 2 3 ] ++ [ "apple" "banana" ]
+[ 1 2 3 "apple" "banana" ]
+....

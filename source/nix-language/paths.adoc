@@ -1,0 +1,65 @@
+= Path opearations
+
+Paths can be concatenated with each other to produce a new path.
+
+[source]
+....
+nix-repl> /home/wombat + /bin/sh
+/home/wombat/bin/sh
+
+nix-repl> :t /home/wombat + /bin/sh
+a path
+....
+
+[IMPORTANT]
+====
+Relative paths become absolute when they are parsed, which occurs before concatenation.
+This is why the result in the example below is not `/home/amy/file.txt`.
+
+[source]
+....
+nix-repl> /home/wombat + ./file.txt
+/home/wombat/home/amy/codeberg/nix-book/file.txt
+....
+====
+
+
+A path can be concatenated with a string to produce a new path.
+
+[source]
+....
+nix-repl> homePath + "/file.txt"
+/home/wombat/file.txt
+
+nix-repl> :t homePath + "/myfile.txt"
+a path
+....
+
+[NOTE]
+====
+The Nix reference manual says that the string must not "have a string context" that refers to a store path.
+String contexts are beyond the scope of this book;
+for more information see https://nixos.org/manual/nix/stable/language/operators#path-concatenation.
+====
+
+Strings can be concatenated with paths, but with a side-effect that may surprise you:
+if the path exists, the file is copied to the Nix store!
+The result is a string, not a path.
+
+In the example below, the file `file.txt` is copied to `/nix/store/gp8ba25gpwvbqizqfr58jr014gmv1hd8-file.txt`
+(not `/home/wombat/nix/store/gp8ba25gpwvbqizqfr58jr014gmv1hd8-file.txt`).
+
+[source]
+....
+nix-repl> "/home/wombat" + ./file.txt
+"/home/wombat/nix/store/gp8ba25gpwvbqizqfr58jr014gmv1hd8-file.txt"
+....
+
+The path must exist.
+
+[source]
+....
+nix-repl> "/home/wombat" + ./no-such-file.txt
+error (ignored): error: end of string reached
+error: getting status of '/home/amy/codeberg/nix-book/no-such-file.txt': No such file or directory
+....

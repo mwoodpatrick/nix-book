@@ -1,0 +1,31 @@
+= Stop reading this chapter!
+
+When I first began using Nix, it seemed logical to start by learning the Nix language.
+However, after following an in-depth tutorial,
+I found that I didn't know how to do anything useful with the language!
+It wasn't until later that I understood what I was missing:
+a guide to the most useful library functions.
+
+When working with Nix or NixOS,
+it's very rare that you'll want to write something from scratch.
+Instead, you'll use one of the many library functions
+that make things easier and shield you from the underlying complexity.
+Many of these functions are language-specific,
+and the documentation for them may be inadequate.
+Often the easiest (or only) way to learn to use them
+is to find an example that does something similar to what you want,
+and then modify the function parameters to suit your needs.
+
+At this point you've learned enough of the Nix language
+to do the majority of common Nix tasks.
+So when I say "Stop reading this chapter!", I'm only half-joking.
+Instead I suggest that you _skim_ the rest of this chapter,
+paying special attention to anything marked with icon:exclamation-circle[].
+Then move on to the following chapters
+where you will learn how to develop and package software using Nix.
+Afterward, come back to this chapter and read it in more detail.
+
+While writing this book, I anticipated that readers would want to skip around,
+alternating between pure learning and learning-by-doing.
+I've tried to structure the book to support that;
+sometimes repeating information from earlier chapters that you might have skipped.

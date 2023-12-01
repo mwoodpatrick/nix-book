@@ -1,0 +1,90 @@
+= Data types
+
+== Strings
+
+Strings are enclosed by double quotes (`"`), or _two_ single quotes (`'`).
+
+    "Hello, world!"
+
+    ''This string contains "double quotes"''
+
+They can span multiple lines.
+
+    ''Old pond
+    A frog jumps in
+    The sound of water
+              -- Basho''
+
+== Integers
+
+    7
+    256
+
+== Floating point numbers
+
+    3.14
+    6.022e23
+
+== Boolean
+
+The Boolean values in Nix are `true` and `false`.
+
+== Paths
+
+File paths are play an important role in building software, so Nix has a special data type for them.
+Paths may be absolute (e.g. `/bin/sh`) or relative (e.g. `./data/file1.csv`).
+Note that paths are not enclosed in quotation marks; they are not strings!
+
+Enclosing a path in angle brackets, e.g. <nixpkgs> causes the directories
+listed in the environment variable NIX_PATH to be searched for the given
+file or directory name.
+These are called _lookup paths_.
+
+== Lists
+
+List elements are enclosed in square brackets and separated by spaces (not commas).
+The elements need not be of the same type.
+
+    [ "apple" 123 ./build.sh false ]
+
+Lists can be empty.
+
+    []
+
+List elements can be of any type, and can even be lists themselves.
+
+    [ [ 1 2 ] [ 3 4 ] ]
+
+== Attribute sets
+
+Attribute sets associate keys with values.
+They are enclosed in curly brackets, and the associations are terminated by semi-colons.
+Note that the final semi-colon before the closing bracket is required.
+
+    { name = "Professor Paws"; age = 10; species = "cat"; }
+
+
+Attribute sets can be empty.
+
+    {}
+
+Values of attribute sets can be of any type, and can even be attribute sets themselves.
+
+    { name = { first = "Professor"; last = "Paws"; }; age = 10; species = "cat"; }
+
+[NOTE]
+====
+In some Nix documentation, and in many articles about Nix,
+attribute sets are simply called "sets".
+====
+
+== Functions
+
+We'll learn how to write functions later in this chapter.
+For now, note that functions are "first-class values",
+meaning that they can be treated like any other data type.
+For example, a function can be assigned to a variable, appear as an element in a list,
+or be associated with a key in an attribute set.
+
+    [ "apple" 123 ./build.sh false (x: x*x) ]
+    { name = "Professor Paws"; age = 10; species = "cat"; formula = (x: x*2); }

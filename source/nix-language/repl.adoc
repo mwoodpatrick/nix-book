@@ -1,0 +1,44 @@
+= The Nix REPL
+
+The Nix REPL footnote:[REPL is an acronym for (Read-Eval-Print-Loop).]
+is an interactive environment for evaluating and debugging Nix code.
+It's also a good place to begin learning Nix.
+Enter it using the command `nix repl`.
+Within the REPL, type `:?` to see a list of available commands.
+
+[source]
+....
+$# echo "$ nix repl"
+Welcome to Nix 2.18.1. Type :? for help.
+
+nix-repl> :?
+The following commands are available:
+
+  <expr>                       Evaluate and print expression
+  <x> = <expr>                 Bind expression to variable
+  :a, :add <expr>              Add attributes from resulting set to scope
+  :b <expr>                    Build a derivation
+  :bl <expr>                   Build a derivation, creating GC roots in the
+                               working directory
+  :e, :edit <expr>             Open package or function in $EDITOR
+  :i <expr>                    Build derivation, then install result into
+                               current profile
+  :l, :load <path>             Load Nix expression and add it to scope
+  :lf, :load-flake <ref>       Load Nix flake and add it to scope
+  :p, :print <expr>            Evaluate and print expression recursively
+  :q, :quit                    Exit nix-repl
+  :r, :reload                  Reload all files
+  :sh <expr>                   Build dependencies of derivation, then start
+                               nix-shell
+  :t <expr>                    Describe result of evaluation
+  :u <expr>                    Build derivation, then start nix-shell
+  :doc <expr>                  Show documentation of a builtin function
+  :log <expr>                  Show logs for a derivation
+  :te, :trace-enable [bool]    Enable, disable or toggle showing traces for
+                               errors
+  :?, :help                    Brings up this help menu
+....
+
+A command that is useful to beginners is `:t`, which tells you the type of an expression.
+
+Note that the command to exit the REPL is `:q` (or `:quit` if you prefer).

@@ -1,0 +1,83 @@
+# Numeric operations
+
+The usual arithmetic operators are provided.
+
+[source]
+....
+nix-repl> 1 + 2   # addition
+3
+
+nix-repl> 5 - 3   # subtraction
+2
+
+nix-repl> 3 * 4   # multiplication
+12
+
+nix-repl> 6 / 2   # division
+3
+
+nix-repl> -1      # negation
+-1
+....
+
+[IMPORTANT]
+====
+The spaces before and after operators aren't always required.
+However, you can get unexpected results when you omit them, as shown below.
+
+[source]
+....
+nix-repl> 6/2
+/home/amy/codeberg/nix-book/6/2
+....
+
+What happened?
+Let's use the `:t` command to find out the type of the expression.
+
+[source]
+....
+nix-repl> :t 6/2
+....
+
+If an expression can be interpreted as a path, Nix will do so.
+This is useful, because paths are _far_ more commonly used in Nix expressions that arithmetic operators.
+In this case, Nix interpreted `6/2` as a relative path from the current directory,
+which in the above example was `/home/amy/codeberg/nix-book`.
+
+Adding a space after the `/` operator produces the expected result.
+
+[source]
+....
+nix-repl> 6/ 2
+3
+....
+
+To avoid surprises and improve readability, I prefer to use spaces before and after all operators.
+====
+
+Numbers without a decimal point are assumed to be integers.
+To ensure that a number is interpreted as a floating-point value, add a decimal point.
+
+[source]
+....
+nix-repl> :t 5
+an integer
+
+nix-repl> :t 5.0
+a float
+
+nix-repl> :t 5.
+a float
+....
+
+In the example below, the first expression results in integer division (rounding down),
+while the second produces a floating-point result.
+
+[source]
+....
+nix-repl> 5 / 3
+1
+
+nix-repl> 5.0 / 3
+1.66667
+....

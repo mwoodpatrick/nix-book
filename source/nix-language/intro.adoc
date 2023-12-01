@@ -1,0 +1,16 @@
+= Introducing the Nix language
+
+Nix and NixOS use a functional programming language called _Nix_
+to specify how to build and install software,
+and how to configure system, user, and project-specific environments.
+(Yes, “Nix” is the name of both the package manager and the language it uses.)
+
+Nix is a _functional_ language.
+In a _procedural_ language such as C or Java,
+the focus is on writing a series of _steps_ (statements) to achieve a desired result.
+By contrast, in a functional language the focus is on _defining_ the desired result.
+
+In the case of Nix, the desired result is usually a _derivation_:
+a software package that has been built and is ready for use.
+The Nix language has been designed for that purpose,
+and thus has some features you don't typically find in general-purpose languages.

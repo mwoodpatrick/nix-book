@@ -1,0 +1,50 @@
+# Boolean operations
+
+The usual boolean operators are available.
+Recall that earlier we set `a = 7` and `b = 3`.
+
+[source]
+....
+nix-repl> a == 7                     # equality test
+true
+
+nix-repl> b != 3                     # inequality
+false
+
+nix-repl> a > 12                     # greater than
+false
+
+nix-repl> b >= 2                     # greater than or equal
+true
+
+nix-repl> a < b                      # less than
+false
+
+nix-repl> b <= a                     # less than or equal
+true
+
+nix-repl> !true                      # logical negation
+false
+
+nix-repl> (3 * a == 21) && (a > b)   # logical AND
+true
+
+nix-repl> (b > a) || (b > 10)        # logical OR
+false
+....
+
+One operator that might be unfamiliar to you is _logical implication_, which uses the symbol `->`.
+The expression `u -> v` is equivalent to `!u || v`.
+
+[source]
+....
+nix-repl> u = false
+
+nix-repl> v = true
+
+nix-repl> u -> v
+true
+
+nix-repl> v -> u
+false
+....
