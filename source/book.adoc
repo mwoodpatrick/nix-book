@@ -19,6 +19,8 @@ https://codeberg.org/mhwombat/nix-book/raw/branch/pages/wombats-book-of-nix.pdf[
 
 include::intro/main.adoc[leveloffset=+1]
 
+include::nix-language/main.adoc[leveloffset=+1]
+
 include::hello-flake/main-generated.adoc[leveloffset=+1]
 
 include::hello-flake-repo/main-generated.adoc[leveloffset=+1]
