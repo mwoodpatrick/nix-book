@@ -27,7 +27,8 @@ nix-repl> with animal; "Hello, " + name
 "Hello, Amy"
 ....
 
-However, you can refer to it using the attribute set selection operaator `.`.
+However, you can refer to the variable in the inner scope
+using the attribute selection operator (`.`).
 
 [source]
 ....
