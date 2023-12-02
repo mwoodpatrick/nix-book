@@ -83,7 +83,7 @@ Values of attribute sets can be of any type, and can even be attribute sets them
 
     { name = { first = "Professor"; last = "Paws"; }; age = 10; species = "cat"; }
 
-In <<_recursive_attribute_sets>> you will be introduced to a special type of attribute set.
+In <<#rec-attrset>> you will be introduced to a special type of attribute set.
 
 [NOTE]
 ====

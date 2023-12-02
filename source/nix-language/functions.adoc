@@ -1,3 +1,4 @@
+[#functions]
 = Functions
 
 == Anonymous functions
@@ -55,7 +56,7 @@ nix-repl> f 5
 6
 ....
 
-== Multiple parameters
+== Multiple parameters using nested functions
 
 Functions in Nix always have a single parameter.
 To define a calculation that requires more than one parameter,
@@ -121,3 +122,52 @@ nix-repl> g 5
 8
 ....
 
+== Multiple parameters using attribute sets
+
+I said earlier that a function in Nix always has a single parameter.
+However, that parameter need not be a simple value; it could be a list or an attribute set.
+To specify an attribute set as a parameter, we use a _set pattern_,
+which has the form
+
+    { _name1_, _name2_, ... }
+
+Note that while the key-value associations in attribute sets are separated by semi-colons,
+the key names in the attribute _set pattern_ are separated by commas.
+Here's an example.
+
+[source]
+....
+nix-repl> greet = { first, last }: "Hello ${first} ${last}! May I call you ${first}?"
+
+nix-repl> greet { first="Amy"; last="de Buitléir"; }
+"Hello Amy de Buitléir! May I call you Amy?"
+....
+
+== Optional parameters
+
+We can make some values in an attribute set optional by providing default values,
+using the syntax `_name_ ? _value_`.
+This is illustrated below.
+
+[source]
+....
+nix-repl> greet = { first, last ? "whatever-your-lastname-is", topic ? "Nix" }: "Hello ${first} ${last}! May I call you ${first}? Are you enjoying learning ${topic}?"
+
+nix-repl> greet { first="Amy"; }
+"Hello Amy whatever-your-lastname-is! May I call you Amy? Are you enjoying learning Nix?"
+
+nix-repl> greet { first="Amy"; topic="Mathematics";}
+"Hello Amy whatever-your-lastname-is! May I call you Amy? Are you enjoying learning Mathematics?"
+....
+
+== @-patterns
+
+TODO
+
+TODO
+
+TODO
+
+TODO
+
+TODO

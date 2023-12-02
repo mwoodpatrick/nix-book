@@ -42,3 +42,38 @@ error:
 ....
 Nix does provide functions for converting between types; we'll see these in <<_built_in_functions>>.
 ====
+
+== Useful built-in functions for strings
+
+Nix provides some built-in functions for working with strings;
+a few examples are shown below.
+For more information on these and other built-in functions, see the Nix Manual
+(https://nixos.org/manual/nix/stable/language/builtins).
+
+How long is this string?
+
+[source]
+....
+nix-repl> builtins.stringLength "supercalifragilisticexpialidocious"
+34
+....
+
+Given a startiing position and a length, extract a substring.
+The first character of a string has index `0`.
+
+[source]
+....
+nix-repl> builtins.substring 3 6 "hayneedlestack"
+"needle"
+....
+
+Convert an expression to a string.
+
+[source]
+....
+nix-repl> builtins.toString 7
+"7"
+
+nix-repl> builtins.toString (3*4 + 1)
+"13"
+....

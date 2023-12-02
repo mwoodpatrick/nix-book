@@ -1,6 +1,6 @@
 = Attribute set operations
 
-== Selecttion
+== Selection
 
 The `.` operator selects an attribute from a set.
 
@@ -39,6 +39,7 @@ nix-repl> animal // { species = "tiger"; }
 { age = 10; name = { ... }; species = "tiger"; }
 ....
 
+[#rec-attrset]
 == Recursive attribute sets
 
 An ordinary attribute set cannot refer to its own elements.
@@ -56,4 +57,54 @@ error: undefined variable 'x'
 
 nix-repl> rec { x = 3; y = 4*x; }
 { x = 3; y = 12; }
+....
+
+== Useful built-in functions for attribute sets
+
+Nix provides some built-in functions for working with attribute sets;
+a few examples are shown below.
+For more information on these and other built-in functions, see the Nix Manual
+(https://nixos.org/manual/nix/stable/language/builtins).
+
+Get an alphabetical list of the keys.
+
+[source]
+....
+nix-repl> builtins.attrNames animal
+[ "age" "name" "species" ]
+....
+
+Get the values associated with each key, in alphabetical order by the key names.
+
+[source]
+....
+nix-repl> builtins.attrValues animal
+[ 10 "Professor Paws" "cat" ]
+....
+
+What value is associated with a key?
+
+[source]
+....
+nix-repl> builtins.getAttr "age" animal
+10
+....
+
+Does the set have a value for a key?
+
+[source]
+....
+nix-repl> builtins.hasAttr "name" animal
+true
+
+nix-repl> builtins.hasAttr "car" animal
+false
+....
+
+Remove one or more keys and associated values from a set.
+
+[source]
+....
+nix-repl> builtins.removeAttrs animal [ "age" "species" ]
+{ name = "Professor Paws"; }
 ....

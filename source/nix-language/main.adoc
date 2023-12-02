@@ -24,8 +24,6 @@ include::attribute-sets.adoc[leveloffset=+1]
 
 include::functions.adoc[leveloffset=+1]
 
-include::builtins.adoc[leveloffset=+1]
-
 include::if.adoc[leveloffset=+1]
 
 include::let.adoc[leveloffset=+1]

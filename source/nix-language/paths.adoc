@@ -82,3 +82,42 @@ nix-repl> "/home/wombat" + ./no-such-file.txt
 error (ignored): error: end of string reached
 error: getting status of '/home/amy/codeberg/nix-book/no-such-file.txt': No such file or directory
 ....
+
+== Useful built-in functions for paths
+
+Nix provides some built-in functions for working with paths;
+a few examples are shown below.
+For more information on these and other built-in functions, see the Nix Manual
+(https://nixos.org/manual/nix/stable/language/builtins).
+
+Does the path exist?
+
+[source]
+....
+nix-repl> builtins.pathExists ./index.html
+true
+
+nix-repl> builtins.pathExists /no/such/path
+false
+....
+
+Get a list of the files in a directory, along with the type of each file.
+
+[source]
+....
+nix-repl> builtins.readDir ./.
+{ ".envrc" = "regular"; ".git" = "directory"; ".gitignore" = "regular"; Makefile = "regular"; images = "directory"; "index.html" = "regular"; "shell.nix" = "regular"; source = "directory"; themes = "directory"; "wombats-book-of-nix.pdf" = "regular"; }
+....
+
+Read the contents of a file into a string.
+
+[source]
+....
+nix-repl> builtins.readFile ./.envrc
+"use nix\n"
+....
+
+
+[source]
+....
+....

@@ -1,5 +1,7 @@
 = List operations
 
+== List concatenation
+
 Lists can be concatenated using the `++` operator.
 
 [source]
@@ -7,3 +9,86 @@ Lists can be concatenated using the `++` operator.
 nix-repl> [ 1 2 3 ] ++ [ "apple" "banana" ]
 [ 1 2 3 "apple" "banana" ]
 ....
+
+== Useful built-in functions for lists
+
+Nix provides some built-in functions for working with lists;
+a few examples are shown below.
+For more information on these and other built-in functions, see the Nix Manual
+(https://nixos.org/manual/nix/stable/language/builtins).
+
+Testing if an element appears in a list.
+
+[source]
+....
+nix-repl> fruit = [ "apple" "banana" "canteloupe" ]
+
+nix-repl> builtins.elem "apple" fruit
+true
+
+nix-repl> builtins.elem "broccoli" fruit
+false
+....
+
+Selecting an item from a list by index.
+The first element in a list has index `0`.
+
+[source]
+....
+nix-repl> builtins.elemAt fruit 0
+"apple"
+
+nix-repl> builtins.elemAt fruit 2
+"canteloupe"
+....
+
+Determining the number of elements in a list.
+
+[source]
+....
+nix-repl> builtins.length fruit
+3
+....
+
+Accessing the first element of a list.
+
+[source]
+....
+nix-repl> builtins.head fruit
+"apple"
+....
+
+Dropping the first element of a list.
+
+[source]
+....
+nix-repl> builtins.tail fruit
+[ "banana" "canteloupe" ]
+....
+
+Functions are useful for working with lists.
+Functions will be introduced in <<functions>>,
+but the following examples should be somewhat self-explanatory.
+
+Using a function to filter (select elements from) a list.
+
+[source]
+....
+nix-repl> numbers = [ 1 3 6 8 9 15 25 ]
+
+nix-repl> isBig = n: n > 10                 # is the number "big" (greater than 10)?
+
+nix-repl> builtins.filter isBig numbers     # get just the "big" numbers
+[ 15 25 ]
+....
+
+Applying a function to all the elements in a list.
+
+[source]
+....
+nix-repl> double = n: 2*n                # multiply by two
+
+nix-repl> builtins.map double numbers    # double each element in the list
+[ 2 6 12 16 18 30 50 ]
+....
+
