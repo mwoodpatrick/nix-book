@@ -44,3 +44,5 @@ This is similar to how recursive attribute sets work.
 nix-repl> let x = 3; y = x + 1; in x*y
 12
 ....
+
+// TODO Discuss inheriting attributes https://nixos.org/manual/nix/stable/language/constructs#inheriting-attributes

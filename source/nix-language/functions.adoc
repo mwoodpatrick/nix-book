@@ -1,3 +1,123 @@
 = Functions
 
-// TODO
+== Anonymous functions
+
+Functions are defined using the syntax `_parameter_: _expression_`,
+where the _expression_ typically involves the _parameter_.
+Consider the following example.
+
+[source]
+....
+nix-repl> x: x + 1
+«lambda @ «string»:1:1»
+....
+
+We created a function that adds `1` to its input.
+However, it doesn't have a name, so we can't use it directly.
+Anonymous functions do have their uses, as we shall see shortly.
+
+Note that the message printed by the NixREPL when we created the function uses the term _lambda_.
+This derives from a branch of mathematics called _lambda calculus_.
+Lambda calculus was the inspiration for most functional languages such as Nix.
+Functional programmers often call anonymous functions "lambdas".
+
+The Nix REPL confirms that the expression `x: x + 1` defines a function.
+
+[source]
+....
+nix-repl> :t x: x + 1
+a function
+....
+
+== Named functions and function application
+
+How can we use a function?
+Recall from <<type-lambda>> that functions can be treated like any other data type.
+In particular, we can assign it to a variable.
+
+[source]
+....
+nix-repl> f = x: x + 1
+
+nix-repl> f
+«lambda @ «string»:1:2»
+....
+
+Procedural languages such as C or Java often use parenthesis to apply a function to a value, e.g. `f(5)`.
+Nix, like lambda calculus and most functional languages, does not require parenthesis for function application.
+This reduces visual clutter when chaining a series of functions.
+
+Now that our function has a name, we can use it.
+
+[source]
+....
+nix-repl> f 5
+6
+....
+
+== Multiple parameters
+
+Functions in Nix always have a single parameter.
+To define a calculation that requires more than one parameter,
+we create functions that return functions!
+
+[source]
+....
+nix-repl> add = a: (b: a+b)
+....
+
+We have created a function called `add`.
+When applied to a parameter `a`, it returns a new function that adds `a` to its input.
+Note that the expression `(b: a+b)` is an anonymous function.
+We never call it directly, so it doesn't need a name.
+Anonymous functions are useful after all!
+
+[source]
+....
+nix-repl> add 3             # Returns a function that adds 3 to any input
+«lambda @ «string»:1:6»
+....
+
+Now let's apply `add 3` to the value `5`.
+
+[source]
+....
+nix-repl> (add 3) 5
+8
+....
+
+In fact, the parentheses aren't needed.
+
+[source]
+....
+nix-repl> add 3 5
+8
+....
+
+In case that wasn't clear, let's repeat those steps, but in more detail.
+The function `add` takes a single parameter `a`,
+and returns a new function that takes a single parameter `b`, and returns the value `a + b`.
+Let's apply `add` to the value `3`, and give the resulting new function a name, `g`.
+
+[source]
+....
+nix-repl> g = add 3
+....
+
+The function `g` takes a single parameter and adds `3` to it.
+The Nix REPL confirms that `g` is indeed a function.
+
+[source]
+....
+nix-repl> :t g
+a function
+....
+
+Now we can apply `g` to a number to get a new number.
+
+[source]
+....
+nix-repl> g 5
+8
+....
+

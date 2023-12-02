@@ -1,4 +1,4 @@
-= With expression
+= With expressions
 
 A `with` expression is somewhat similar to a `let` expression,
 but it brings all of the associations in an attribute set into scope.

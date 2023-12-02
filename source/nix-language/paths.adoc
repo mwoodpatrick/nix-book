@@ -14,7 +14,9 @@ nix-repl> ./.
 /home/amy/codeberg/nix-book
 ....
 
-Paths can be concatenated with each other to produce a new path.
+== Concatenating paths
+
+Paths can be concatenated to produce a new path.
 
 [source]
 ....
@@ -27,8 +29,8 @@ a path
 
 [IMPORTANT]
 ====
-Relative paths become absolute when they are parsed, which occurs before concatenation.
-This is why the result in the example below is not `/home/amy/file.txt`.
+Relative paths are made absolute when they are parsed, which occurs before concatenation.
+This is why the result in the example below is not `/home/wombat/file.txt`.
 
 [source]
 ....
@@ -37,15 +39,16 @@ nix-repl> /home/wombat + ./file.txt
 ....
 ====
 
+== Concatenating a path + a string
 
 A path can be concatenated with a string to produce a new path.
 
 [source]
 ....
-nix-repl> homePath + "/file.txt"
+nix-repl> /home/wombat + "/file.txt"
 /home/wombat/file.txt
 
-nix-repl> :t homePath + "/myfile.txt"
+nix-repl> :t /home/wombat + "/file.txt"
 a path
 ....
 
@@ -56,12 +59,14 @@ String contexts are beyond the scope of this book;
 for more information see https://nixos.org/manual/nix/stable/language/operators#path-concatenation.
 ====
 
+== Concatenating a string + a path
+
 Strings can be concatenated with paths, but with a side-effect that may surprise you:
 if the path exists, the file is copied to the Nix store!
 The result is a string, not a path.
 
 In the example below, the file `file.txt` is copied to `/nix/store/gp8ba25gpwvbqizqfr58jr014gmv1hd8-file.txt`
-(not `/home/wombat/nix/store/gp8ba25gpwvbqizqfr58jr014gmv1hd8-file.txt`).
+(not, as you might expect, to `/home/wombat/nix/store/gp8ba25gpwvbqizqfr58jr014gmv1hd8-file.txt`).
 
 [source]
 ....

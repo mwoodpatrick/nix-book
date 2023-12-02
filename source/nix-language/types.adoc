@@ -1,5 +1,6 @@
 = Data types
 
+[#type-string]
 == Strings
 
 Strings are enclosed by double quotes (`"`), or _two_ single quotes (`'`).
@@ -15,20 +16,24 @@ They can span multiple lines.
     The sound of water
               -- Basho''
 
+[#type-integer]
 == Integers
 
     7
     256
 
+[#type-float]
 == Floating point numbers
 
     3.14
     6.022e23
 
+[#type-boolean]
 == Boolean
 
 The Boolean values in Nix are `true` and `false`.
 
+[#type-path]
 == Paths
 
 File paths are play an important role in building software, so Nix has a special data type for them.
@@ -40,6 +45,7 @@ listed in the environment variable NIX_PATH to be searched for the given
 file or directory name.
 These are called _lookup paths_.
 
+[#type-list]
 == Lists
 
 List elements are enclosed in square brackets and separated by spaces (not commas).
@@ -55,6 +61,7 @@ List elements can be of any type, and can even be lists themselves.
 
     [ [ 1 2 ] [ 3 4 ] ]
 
+[#type-set]
 == Attribute sets
 
 Attribute sets associate keys with values.
@@ -76,12 +83,15 @@ Values of attribute sets can be of any type, and can even be attribute sets them
 
     { name = { first = "Professor"; last = "Paws"; }; age = 10; species = "cat"; }
 
+In <<_recursive_attribute_sets>> you will be introduced to a special type of attribute set.
+
 [NOTE]
 ====
 In some Nix documentation, and in many articles about Nix,
 attribute sets are simply called "sets".
 ====
 
+[#type-lambda]
 == Functions
 
 We'll learn how to write functions later in this chapter.

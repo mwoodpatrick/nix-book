@@ -31,3 +31,5 @@ include::if.adoc[leveloffset=+1]
 include::let.adoc[leveloffset=+1]
 
 include::with.adoc[leveloffset=+1]
+
+// TODO discuss laziness

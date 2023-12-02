@@ -1,4 +1,4 @@
-# Boolean operations
+= Boolean operations
 
 The usual boolean operators are available.
 Recall that earlier we set `a = 7` and `b = 3`.

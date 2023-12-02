@@ -1,7 +1,10 @@
 = Variables
 
+// TODO what characters are legal in a variable name/identifier?
+
+== Assignment
+
 You can declare variables in Nix and assign values to them.
-// TODO explain that values are immutable.
 
 [source]
 ....
@@ -15,9 +18,10 @@ nix-repl> a - b
 
 [IMPORTANT]
 ====
-As mentioned previously, omitting the spaces around operators can have unexpected results.
-As Nix allows hyphens (`-`) in variable names,
-`a-b` is interpreted as the name of a variable in the following example.
+The spaces before and after operators aren't always required.
+However, you can get unexpected results when you omit them, as shown in the following example.
+Nix allows hyphens (`-`) in variable names,
+so `a-b` is interpreted as the name of a variable rather than a subtraction operation.
 
 [source]
 ....
@@ -28,6 +32,36 @@ error: undefined variable 'a-b'
 
             1| a-b
              | ^
+....
+====
+
+== Immutability
+
+In Nix, values are _immutable_;
+once you assign a value to a variable, you cannot change it.
+You can, however, create a new variable with the same name, but in a different scope.
+Don't worry if you don't completely understand the previous sentence;
+we will see some examples in <<_functions>>, <<_let_expressions>>, and <<_with_expressions>>.
+
+[IMPORTANT]
+====
+In the Nix REPL, it may seem like the values of variables can be changed,
+in _apparent_ contradiction to the previous paragraph.
+In truth, the REPL works some behind-the-scenes "magic",
+effectively creating a new nested scope with each assignment.
+This makes it much easier to experiment in the REPL.
+
+[source]
+....
+nix-repl> x = 1
+
+nix-repl> x
+1
+
+nix-repl> x = x + 1 # creates a new variable called "x"; the original is no longer in scope
+
+nix-repl> x
+2
 ....
 ====
 

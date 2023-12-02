@@ -1,4 +1,6 @@
-# String operations
+= String operations
+
+== String concatenation
 
 String concatenation uses the `+` operator.
 
@@ -7,6 +9,8 @@ String concatenation uses the `+` operator.
 nix-repl> "Hello, " + "world!"
 "Hello, world!"
 ....
+
+== String interpolation
 
 You can use the `${_variable_}` syntax to insert the value of a variable within a string.
 
@@ -21,7 +25,6 @@ nix-repl> "Hi, I'm ${name}."
 [IMPORTANT]
 ====
 You cannot mix numbers and strings.
-Nix does provide functions for converting between types; we'll see these later.
 Earlier we set `a = 7`, so the following expression fails.
 
 [source]
@@ -37,6 +40,5 @@ error:
 
        error: cannot coerce an integer to a string
 ....
+Nix does provide functions for converting between types; we'll see these in <<_built_in_functions>>.
 ====
-
-// TODO Talk about "strings with context" https://shealevy.com/blog/2018/08/05/understanding-nixs-string-context/

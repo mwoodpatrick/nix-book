@@ -1,4 +1,6 @@
-# Numeric operations
+= Numeric operations
+
+== Arithmetic operators
 
 The usual arithmetic operators are provided.
 
@@ -22,8 +24,9 @@ nix-repl> -1      # negation
 
 [IMPORTANT]
 ====
-The spaces before and after operators aren't always required.
-However, you can get unexpected results when you omit them, as shown below.
+As mentioned in <<_variables>>,
+you can get unexpected results when you omit spaces around operators.
+Consider the following example.
 
 [source]
 ....
@@ -37,6 +40,7 @@ Let's use the `:t` command to find out the type of the expression.
 [source]
 ....
 nix-repl> :t 6/2
+a path
 ....
 
 If an expression can be interpreted as a path, Nix will do so.
@@ -54,6 +58,8 @@ nix-repl> 6/ 2
 
 To avoid surprises and improve readability, I prefer to use spaces before and after all operators.
 ====
+
+== Floating-point calculations
 
 Numbers without a decimal point are assumed to be integers.
 To ensure that a number is interpreted as a floating-point value, add a decimal point.

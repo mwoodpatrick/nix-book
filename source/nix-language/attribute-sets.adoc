@@ -1,5 +1,45 @@
 = Attribute set operations
 
+== Selecttion
+
+The `.` operator selects an attribute from a set.
+
+[source]
+....
+nix-repl> animal = { name = { first = "Professor"; last = "Paws"; }; age = 10; species = "cat"; }
+
+nix-repl> animal . age
+10
+
+nix-repl> animal . name . first
+"Professor"
+....
+
+== Query
+
+We can use the `?` operator to find out if a set has a particular attribute.
+
+[source]
+....
+nix-repl> animal ? species
+true
+
+nix-repl> animal ? bicycle
+false
+....
+
+== Modification
+
+We can use the `//` operator to modify an attribute set.
+Recall that Nix values are immutable, so the result is a new value (the original is not modified).
+
+[source]
+....
+nix-repl> animal // { species = "tiger"; }
+{ age = 10; name = { ... }; species = "tiger"; }
+....
+
+== Recursive attribute sets
 
 An ordinary attribute set cannot refer to its own elements.
 To do this, you need a _recursive_ attribute set.
@@ -16,38 +56,4 @@ error: undefined variable 'x'
 
 nix-repl> rec { x = 3; y = 4*x; }
 { x = 3; y = 12; }
-....
-
-
-The `.` operator selects an attribute from a set.
-
-[source]
-....
-nix-repl> animal = { name = { first = "Professor"; last = "Paws"; }; age = 10; species = "cat"; }
-
-nix-repl> animal . age
-10
-
-nix-repl> animal . name . first
-"Professor"
-....
-
-We can use the `?` operator to find out if a set has a particular attribute.
-
-[source]
-....
-nix-repl> animal ? species
-true
-
-nix-repl> animal ? bicycle
-false
-....
-
-We can use the `//` operator to modify an attribute set.
-Recall that Nix values are immutable, so the result is a new value (the original is not modified).
-
-[source]
-....
-nix-repl> animal // { species = "tiger"; }
-{ age = 10; name = { ... }; species = "tiger"; }
 ....
