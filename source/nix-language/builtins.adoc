@@ -1,6 +1,0 @@
-= Built-in functions
-
-// TODO
-
-For a complete list of built-in functions, see
-https://nixos.org/manual/nix/stable/language/builtins

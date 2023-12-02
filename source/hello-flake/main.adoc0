@@ -1,5 +1,7 @@
 = Hello, flake!
 
+// TODO Need an intro explaining what flakes are. Move the "why flakes" section here.
+
 Before learning to write Nix flakes, let’s learn how to use them. I’ve
 created a simple example of a flake in this git
 https://codeberg.org/mhwombat/hello-flake[repository]. To run this

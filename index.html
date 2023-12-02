@@ -107,93 +107,168 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_see_an_error_or_want_more">1.4. See an error? Or want more?</a></li>
 </ul>
 </li>
-<li><a href="#_hello_flake">2. Hello, flake!</a></li>
-<li><a href="#_the_hello_flake_repo">3. The hello-flake repo</a></li>
-<li><a href="#_flake_structure">4. Flake structure</a>
+<li><a href="#_the_nix_language">2. The Nix language</a>
 <ul class="sectlevel2">
-<li><a href="#_description">4.1. Description</a></li>
-<li><a href="#_inputs">4.2. Inputs</a></li>
-<li><a href="#_outputs">4.3. Outputs</a></li>
-</ul>
-</li>
-<li><a href="#_a_generic_flake">5. A generic flake</a></li>
-<li><a href="#_another_look_at_hello_flake">6. Another look at hello-flake</a></li>
-<li><a href="#_modifying_the_flake">7. Modifying the flake</a>
-<ul class="sectlevel2">
-<li><a href="#_the_nix_development_shell">7.1. The Nix development shell</a></li>
-<li><a href="#_introducing_a_dependency">7.2. Introducing a dependency</a></li>
-<li><a href="#_development_workflows">7.3. Development workflows</a></li>
-<li><a href="#_this_all_seems_like_a_hassle">7.4. This all seems like a hassle!</a></li>
-</ul>
-</li>
-<li><a href="#_a_new_flake_from_scratch">8. A new flake from scratch</a>
-<ul class="sectlevel2">
-<li><a href="#_haskell">8.1. Haskell</a>
+<li><a href="#_introducing_the_nix_language">2.1. Introducing the Nix language</a></li>
+<li><a href="#_data_types">2.2. Data types</a>
 <ul class="sectlevel3">
-<li><a href="#_a_simple_haskell_program">8.1.1. A simple Haskell program</a></li>
-<li><a href="#_optional_testing_before_packaging">8.1.2. (Optional) Testing before packaging</a>
+<li><a href="#type-string">2.2.1. Strings</a></li>
+<li><a href="#type-integer">2.2.2. Integers</a></li>
+<li><a href="#type-float">2.2.3. Floating point numbers</a></li>
+<li><a href="#type-boolean">2.2.4. Boolean</a></li>
+<li><a href="#type-path">2.2.5. Paths</a></li>
+<li><a href="#type-list">2.2.6. Lists</a></li>
+<li><a href="#type-set">2.2.7. Attribute sets</a></li>
+<li><a href="#type-lambda">2.2.8. Functions</a></li>
+</ul>
+</li>
+<li><a href="#_stop_reading_this_chapter">2.3. Stop reading this chapter!</a></li>
+<li><a href="#_the_nix_repl">2.4. The Nix REPL</a></li>
+<li><a href="#_variables">2.5. Variables</a>
+<ul class="sectlevel3">
+<li><a href="#_assignment">2.5.1. Assignment</a></li>
+<li><a href="#_immutability">2.5.2. Immutability</a></li>
+</ul>
+</li>
+<li><a href="#_numeric_operations">2.6. Numeric operations</a>
+<ul class="sectlevel3">
+<li><a href="#_arithmetic_operators">2.6.1. Arithmetic operators</a></li>
+<li><a href="#_floating_point_calculations">2.6.2. Floating-point calculations</a></li>
+</ul>
+</li>
+<li><a href="#_string_operations">2.7. String operations</a>
+<ul class="sectlevel3">
+<li><a href="#_string_concatenation">2.7.1. String concatenation</a></li>
+<li><a href="#_string_interpolation">2.7.2. String interpolation</a></li>
+<li><a href="#_useful_built_in_functions_for_strings">2.7.3. Useful built-in functions for strings</a></li>
+</ul>
+</li>
+<li><a href="#_boolean_operations">2.8. Boolean operations</a></li>
+<li><a href="#_path_operations">2.9. Path operations</a>
+<ul class="sectlevel3">
+<li><a href="#_concatenating_paths">2.9.1. Concatenating paths</a></li>
+<li><a href="#_concatenating_a_path_a_string">2.9.2. Concatenating a path + a string</a></li>
+<li><a href="#_concatenating_a_string_a_path">2.9.3. Concatenating a string + a path</a></li>
+<li><a href="#_useful_built_in_functions_for_paths">2.9.4. Useful built-in functions for paths</a></li>
+</ul>
+</li>
+<li><a href="#_list_operations">2.10. List operations</a>
+<ul class="sectlevel3">
+<li><a href="#_list_concatenation">2.10.1. List concatenation</a></li>
+<li><a href="#_useful_built_in_functions_for_lists">2.10.2. Useful built-in functions for lists</a></li>
+</ul>
+</li>
+<li><a href="#_attribute_set_operations">2.11. Attribute set operations</a>
+<ul class="sectlevel3">
+<li><a href="#_selection">2.11.1. Selection</a></li>
+<li><a href="#_query">2.11.2. Query</a></li>
+<li><a href="#_modification">2.11.3. Modification</a></li>
+<li><a href="#rec-attrset">2.11.4. Recursive attribute sets</a></li>
+<li><a href="#_useful_built_in_functions_for_attribute_sets">2.11.5. Useful built-in functions for attribute sets</a></li>
+</ul>
+</li>
+<li><a href="#functions">2.12. Functions</a>
+<ul class="sectlevel3">
+<li><a href="#_anonymous_functions">2.12.1. Anonymous functions</a></li>
+<li><a href="#_named_functions_and_function_application">2.12.2. Named functions and function application</a></li>
+<li><a href="#_multiple_parameters_using_nested_functions">2.12.3. Multiple parameters using nested functions</a></li>
+<li><a href="#_multiple_parameters_using_attribute_sets">2.12.4. Multiple parameters using attribute sets</a></li>
+<li><a href="#_optional_parameters">2.12.5. Optional parameters</a></li>
+<li><a href="#_patterns">2.12.6. @-patterns</a></li>
+</ul>
+</li>
+<li><a href="#_if_expressions">2.13. If expressions</a></li>
+<li><a href="#_let_expressions">2.14. Let expressions</a></li>
+<li><a href="#_with_expressions">2.15. With expressions</a></li>
+</ul>
+</li>
+<li><a href="#_hello_flake">3. Hello, flake!</a></li>
+<li><a href="#_the_hello_flake_repo">4. The hello-flake repo</a></li>
+<li><a href="#_flake_structure">5. Flake structure</a>
+<ul class="sectlevel2">
+<li><a href="#_description">5.1. Description</a></li>
+<li><a href="#_inputs">5.2. Inputs</a></li>
+<li><a href="#_outputs">5.3. Outputs</a></li>
+</ul>
+</li>
+<li><a href="#_a_generic_flake">6. A generic flake</a></li>
+<li><a href="#_another_look_at_hello_flake">7. Another look at hello-flake</a></li>
+<li><a href="#_modifying_the_flake">8. Modifying the flake</a>
+<ul class="sectlevel2">
+<li><a href="#_the_nix_development_shell">8.1. The Nix development shell</a></li>
+<li><a href="#_introducing_a_dependency">8.2. Introducing a dependency</a></li>
+<li><a href="#_development_workflows">8.3. Development workflows</a></li>
+<li><a href="#_this_all_seems_like_a_hassle">8.4. This all seems like a hassle!</a></li>
+</ul>
+</li>
+<li><a href="#_a_new_flake_from_scratch">9. A new flake from scratch</a>
+<ul class="sectlevel2">
+<li><a href="#_haskell">9.1. Haskell</a>
+<ul class="sectlevel3">
+<li><a href="#_a_simple_haskell_program">9.1.1. A simple Haskell program</a></li>
+<li><a href="#_optional_testing_before_packaging">9.1.2. (Optional) Testing before packaging</a>
 <ul class="sectlevel4">
 <li><a href="#_some_unsuitable_shells">Some unsuitable shells</a></li>
 <li><a href="#_a_suitable_shell_for_a_quick_test">A suitable shell for a quick test</a></li>
 </ul>
 </li>
-<li><a href="#_the_cabal_file">8.1.3. The cabal file</a></li>
-<li><a href="#_optional_building_and_running_with_cabal_install">8.1.4. (Optional) Building and running with cabal-install</a></li>
-<li><a href="#_the_nix_flake">8.1.5. The Nix flake</a></li>
+<li><a href="#_the_cabal_file">9.1.3. The cabal file</a></li>
+<li><a href="#_optional_building_and_running_with_cabal_install">9.1.4. (Optional) Building and running with cabal-install</a></li>
+<li><a href="#_the_nix_flake">9.1.5. The Nix flake</a></li>
 </ul>
 </li>
-<li><a href="#_python">8.2. Python</a>
+<li><a href="#_python">9.2. Python</a>
 <ul class="sectlevel3">
-<li><a href="#_a_simple_python_program">8.2.1. A simple Python program</a></li>
-<li><a href="#_a_python_builder">8.2.2. A Python builder</a></li>
-<li><a href="#_the_nix_flake_2">8.2.3. The Nix flake</a></li>
+<li><a href="#_a_simple_python_program">9.2.1. A simple Python program</a></li>
+<li><a href="#_a_python_builder">9.2.2. A Python builder</a></li>
+<li><a href="#_the_nix_flake_2">9.2.3. The Nix flake</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_recipes">9. Recipes</a>
+<li><a href="#_recipes">10. Recipes</a>
 <ul class="sectlevel2">
-<li><a href="#_access_to_a_top_level_package_from_the_nixpkgsnixos_repo">9.1. Access to a top-level package from the Nixpkgs/NixOS repo</a>
+<li><a href="#_access_to_a_top_level_package_from_the_nixpkgsnixos_repo">10.1. Access to a top-level package from the Nixpkgs/NixOS repo</a>
 <ul class="sectlevel3">
-<li><a href="#_from_the_command_line">9.1.1. From the command line</a></li>
-<li><a href="#_in_shell_nix">9.1.2. In <code>shell.nix</code></a></li>
-<li><a href="#_in_a_bash_script">9.1.3. In a Bash script</a></li>
+<li><a href="#_from_the_command_line">10.1.1. From the command line</a></li>
+<li><a href="#_in_shell_nix">10.1.2. In <code>shell.nix</code></a></li>
+<li><a href="#_in_a_bash_script">10.1.3. In a Bash script</a></li>
 </ul>
 </li>
-<li><a href="#_access_to_a_package_defined_in_a_remote_git_repo">9.2. Access to a package defined in a remote git repo</a>
+<li><a href="#_access_to_a_package_defined_in_a_remote_git_repo">10.2. Access to a package defined in a remote git repo</a>
 <ul class="sectlevel3">
-<li><a href="#_in_shell_nix_2">9.2.1. In <code>shell.nix</code></a></li>
+<li><a href="#_in_shell_nix_2">10.2.1. In <code>shell.nix</code></a></li>
 </ul>
 </li>
-<li><a href="#_access_to_a_flake_defined_in_a_remote_git_repo">9.3. Access to a flake defined in a remote git repo</a>
+<li><a href="#_access_to_a_flake_defined_in_a_remote_git_repo">10.3. Access to a flake defined in a remote git repo</a>
 <ul class="sectlevel3">
-<li><a href="#_in_shell_nix_3">9.3.1. In <code>shell.nix</code></a></li>
+<li><a href="#_in_shell_nix_3">10.3.1. In <code>shell.nix</code></a></li>
 </ul>
 </li>
-<li><a href="#_access_to_a_haskell_library_package_in_the_nixpkgs_repo_without_a_cabal_file">9.4. Access to a Haskell library package in the nixpkgs repo (without a <code>.cabal</code> file)</a>
+<li><a href="#_access_to_a_haskell_library_package_in_the_nixpkgs_repo_without_a_cabal_file">10.4. Access to a Haskell library package in the nixpkgs repo (without a <code>.cabal</code> file)</a>
 <ul class="sectlevel3">
-<li><a href="#_in_shell_nix_4">9.4.1. In <code>shell.nix</code></a></li>
-<li><a href="#_in_a_haskell_script">9.4.2. In a Haskell script</a></li>
+<li><a href="#_in_shell_nix_4">10.4.1. In <code>shell.nix</code></a></li>
+<li><a href="#_in_a_haskell_script">10.4.2. In a Haskell script</a></li>
 </ul>
 </li>
-<li><a href="#_access_to_a_haskell_package_on_your_local_computer">9.5. Access to a Haskell package on your local computer</a>
+<li><a href="#_access_to_a_haskell_package_on_your_local_computer">10.5. Access to a Haskell package on your local computer</a>
 <ul class="sectlevel3">
-<li><a href="#_in_shell_nix_5">9.5.1. In <code>shell.nix</code></a></li>
+<li><a href="#_in_shell_nix_5">10.5.1. In <code>shell.nix</code></a></li>
 </ul>
 </li>
-<li><a href="#_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.6. Access to a Haskell package on your local computer, with interdependencies</a>
+<li><a href="#_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">10.6. Access to a Haskell package on your local computer, with interdependencies</a>
 <ul class="sectlevel3">
-<li><a href="#_in_shell_nix_6">9.6.1. In <code>shell.nix</code></a></li>
+<li><a href="#_in_shell_nix_6">10.6.1. In <code>shell.nix</code></a></li>
 </ul>
 </li>
-<li><a href="#_access_to_a_python_library_package_in_the_nixpkgs_repo_without_using_a_python_builder">9.7. Access to a Python library package in the nixpkgs repo (without using a Python builder)</a>
+<li><a href="#_access_to_a_python_library_package_in_the_nixpkgs_repo_without_using_a_python_builder">10.7. Access to a Python library package in the nixpkgs repo (without using a Python builder)</a>
 <ul class="sectlevel3">
-<li><a href="#_in_a_python_script">9.7.1. In a Python script</a></li>
+<li><a href="#_in_a_python_script">10.7.1. In a Python script</a></li>
 </ul>
 </li>
-<li><a href="#_set_an_environment_variable">9.8. Set an environment variable</a>
+<li><a href="#_set_an_environment_variable">10.8. Set an environment variable</a>
 <ul class="sectlevel3">
-<li><a href="#_in_shell_nix_7">9.8.1. In <code>shell.nix</code></a></li>
+<li><a href="#_in_shell_nix_7">10.8.1. In <code>shell.nix</code></a></li>
 </ul>
 </li>
 </ul>
@@ -314,7 +389,1361 @@ with flakes, while the hyphenated versions are for everything else.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_hello_flake">2. Hello, flake!</h2>
+<h2 id="_the_nix_language">2. The Nix language</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_introducing_the_nix_language">2.1. Introducing the Nix language</h3>
+<div class="paragraph">
+<p>Nix and NixOS use a functional programming language called <em>Nix</em>
+to specify how to build and install software,
+and how to configure system, user, and project-specific environments.
+(Yes, “Nix” is the name of both the package manager and the language it uses.)</p>
+</div>
+<div class="paragraph">
+<p>Nix is a <em>functional</em> language.
+In a <em>procedural</em> language such as C or Java,
+the focus is on writing a series of <em>steps</em> (statements) to achieve a desired result.
+By contrast, in a functional language the focus is on <em>defining</em> the desired result.</p>
+</div>
+<div class="paragraph">
+<p>In the case of Nix, the desired result is usually a <em>derivation</em>:
+a software package that has been built and is ready for use.
+The Nix language has been designed for that purpose,
+and thus has some features you don&#8217;t typically find in general-purpose languages.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_data_types">2.2. Data types</h3>
+<div class="sect3">
+<h4 id="type-string">2.2.1. Strings</h4>
+<div class="paragraph">
+<p>Strings are enclosed by double quotes (<code>"</code>), or <em>two</em> single quotes (<code>'</code>).</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">"Hello, world!"</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">''This string contains "double quotes"''</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>They can span multiple lines.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">''Old pond
+A frog jumps in
+The sound of water
+          -- Basho''</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="type-integer">2.2.2. Integers</h4>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">7
+256</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="type-float">2.2.3. Floating point numbers</h4>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">3.14
+6.022e23</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="type-boolean">2.2.4. Boolean</h4>
+<div class="paragraph">
+<p>The Boolean values in Nix are <code>true</code> and <code>false</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="type-path">2.2.5. Paths</h4>
+<div class="paragraph">
+<p>File paths are play an important role in building software, so Nix has a special data type for them.
+Paths may be absolute (e.g. <code>/bin/sh</code>) or relative (e.g. <code>./data/file1.csv</code>).
+Note that paths are not enclosed in quotation marks; they are not strings!</p>
+</div>
+<div class="paragraph">
+<p>Enclosing a path in angle brackets, e.g. &lt;nixpkgs&gt; causes the directories
+listed in the environment variable NIX_PATH to be searched for the given
+file or directory name.
+These are called <em>lookup paths</em>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="type-list">2.2.6. Lists</h4>
+<div class="paragraph">
+<p>List elements are enclosed in square brackets and separated by spaces (not commas).
+The elements need not be of the same type.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">[ "apple" 123 ./build.sh false ]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Lists can be empty.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">[]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>List elements can be of any type, and can even be lists themselves.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">[ [ 1 2 ] [ 3 4 ] ]</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="type-set">2.2.7. Attribute sets</h4>
+<div class="paragraph">
+<p>Attribute sets associate keys with values.
+They are enclosed in curly brackets, and the associations are terminated by semi-colons.
+Note that the final semi-colon before the closing bracket is required.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">{ name = "Professor Paws"; age = 10; species = "cat"; }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The keys of an attribute set must be strings.
+When the key is not a valid identifier, it must be enclosed in quotation marks.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">{ abc = true; "123" = false; }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Attribute sets can be empty.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">{}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Values of attribute sets can be of any type, and can even be attribute sets themselves.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">{ name = { first = "Professor"; last = "Paws"; }; age = 10; species = "cat"; }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In <a href="#rec-attrset">Section 2.11.4, &#8220;Recursive attribute sets&#8221;</a> you will be introduced to a special type of attribute set.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In some Nix documentation, and in many articles about Nix,
+attribute sets are simply called "sets".</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="type-lambda">2.2.8. Functions</h4>
+<div class="paragraph">
+<p>We&#8217;ll learn how to write functions later in this chapter.
+For now, note that functions are "first-class values",
+meaning that they can be treated like any other data type.
+For example, a function can be assigned to a variable, appear as an element in a list,
+or be associated with a key in an attribute set.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">[ "apple" 123 ./build.sh false (x: x*x) ]
+{ name = "Professor Paws"; age = 10; species = "cat"; formula = (x: x*2); }</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_stop_reading_this_chapter">2.3. Stop reading this chapter!</h3>
+<div class="paragraph">
+<p>When I first began using Nix, it seemed logical to start by learning the Nix language.
+However, after following an in-depth tutorial,
+I found that I didn&#8217;t know how to do anything useful with the language!
+It wasn&#8217;t until later that I understood what I was missing:
+a guide to the most useful library functions.</p>
+</div>
+<div class="paragraph">
+<p>When working with Nix or NixOS,
+it&#8217;s very rare that you&#8217;ll want to write something from scratch.
+Instead, you&#8217;ll use one of the many library functions
+that make things easier and shield you from the underlying complexity.
+Many of these functions are language-specific,
+and the documentation for them may be inadequate.
+Often the easiest (or only) way to learn to use them
+is to find an example that does something similar to what you want,
+and then modify the function parameters to suit your needs.</p>
+</div>
+<div class="paragraph">
+<p>At this point you&#8217;ve learned enough of the Nix language
+to do the majority of common Nix tasks.
+So when I say "Stop reading this chapter!", I&#8217;m only half-joking.
+Instead I suggest that you <em>skim</em> the rest of this chapter,
+paying special attention to anything marked with <span class="icon"><i class="fa fa-exclamation-circle"></i></span>.
+Then move on to the following chapters
+where you will learn how to develop and package software using Nix.
+Afterward, come back to this chapter and read it in more detail.</p>
+</div>
+<div class="paragraph">
+<p>While writing this book, I anticipated that readers would want to skip around,
+alternating between pure learning and learning-by-doing.
+I&#8217;ve tried to structure the book to support that;
+sometimes repeating information from earlier chapters that you might have skipped.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_nix_repl">2.4. The Nix REPL</h3>
+<div class="paragraph">
+<p>The Nix REPL <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>
+is an interactive environment for evaluating and debugging Nix code.
+It&#8217;s also a good place to begin learning Nix.
+Enter it using the command <code>nix repl</code>.
+Within the REPL, type <code>:?</code> to see a list of available commands.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>$# echo &quot;$ nix repl&quot;
+Welcome to Nix 2.18.1. Type :? for help.
+
+nix-repl&gt; :?
+The following commands are available:
+
+  &lt;expr&gt;                       Evaluate and print expression
+  &lt;x&gt; = &lt;expr&gt;                 Bind expression to variable
+  :a, :add &lt;expr&gt;              Add attributes from resulting set to scope
+  :b &lt;expr&gt;                    Build a derivation
+  :bl &lt;expr&gt;                   Build a derivation, creating GC roots in the
+                               working directory
+  :e, :edit &lt;expr&gt;             Open package or function in $EDITOR
+  :i &lt;expr&gt;                    Build derivation, then install result into
+                               current profile
+  :l, :load &lt;path&gt;             Load Nix expression and add it to scope
+  :lf, :load-flake &lt;ref&gt;       Load Nix flake and add it to scope
+  :p, :print &lt;expr&gt;            Evaluate and print expression recursively
+  :q, :quit                    Exit nix-repl
+  :r, :reload                  Reload all files
+  :sh &lt;expr&gt;                   Build dependencies of derivation, then start
+                               nix-shell
+  :t &lt;expr&gt;                    Describe result of evaluation
+  :u &lt;expr&gt;                    Build derivation, then start nix-shell
+  :doc &lt;expr&gt;                  Show documentation of a builtin function
+  :log &lt;expr&gt;                  Show logs for a derivation
+  :te, :trace-enable [bool]    Enable, disable or toggle showing traces for
+                               errors
+  :?, :help                    Brings up this help menu</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A command that is useful to beginners is <code>:t</code>, which tells you the type of an expression.</p>
+</div>
+<div class="paragraph">
+<p>Note that the command to exit the REPL is <code>:q</code> (or <code>:quit</code> if you prefer).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_variables">2.5. Variables</h3>
+<div class="sect3">
+<h4 id="_assignment">2.5.1. Assignment</h4>
+<div class="paragraph">
+<p>You can declare variables in Nix and assign values to them.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; a = 7
+
+nix-repl&gt; b = 3
+
+nix-repl&gt; a - b
+4</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The spaces before and after operators aren&#8217;t always required.
+However, you can get unexpected results when you omit them, as shown in the following example.
+Nix allows hyphens (<code>-</code>) in variable names,
+so <code>a-b</code> is interpreted as the name of a variable rather than a subtraction operation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; a-b
+error: undefined variable &#39;a-b&#39;
+
+       at «string»:1:1:
+
+            1| a-b
+             | ^</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_immutability">2.5.2. Immutability</h4>
+<div class="paragraph">
+<p>In Nix, values are <em>immutable</em>;
+once you assign a value to a variable, you cannot change it.
+You can, however, create a new variable with the same name, but in a different scope.
+Don&#8217;t worry if you don&#8217;t completely understand the previous sentence;
+we will see some examples in <a href="#_functions">[_functions]</a>, <a href="#_let_expressions">Section 2.14, &#8220;Let expressions&#8221;</a>, and <a href="#_with_expressions">Section 2.15, &#8220;With expressions&#8221;</a>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the Nix REPL, it may seem like the values of variables can be changed,
+in <em>apparent</em> contradiction to the previous paragraph.
+In truth, the REPL works some behind-the-scenes "magic",
+effectively creating a new nested scope with each assignment.
+This makes it much easier to experiment in the REPL.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; x = 1
+
+nix-repl&gt; x
+1
+
+nix-repl&gt; x = x + 1 # creates a new variable called &quot;x&quot;; the original is no longer in scope
+
+nix-repl&gt; x
+2</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_numeric_operations">2.6. Numeric operations</h3>
+<div class="sect3">
+<h4 id="_arithmetic_operators">2.6.1. Arithmetic operators</h4>
+<div class="paragraph">
+<p>The usual arithmetic operators are provided.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; 1 + 2   # addition
+3
+
+nix-repl&gt; 5 - 3   # subtraction
+2
+
+nix-repl&gt; 3 * 4   # multiplication
+12
+
+nix-repl&gt; 6 / 2   # division
+3
+
+nix-repl&gt; -1      # negation
+-1</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As mentioned in <a href="#_variables">Section 2.5, &#8220;Variables&#8221;</a>,
+you can get unexpected results when you omit spaces around operators.
+Consider the following example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; 6/2
+/home/amy/codeberg/nix-book/6/2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What happened?
+Let&#8217;s use the <code>:t</code> command to find out the type of the expression.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; :t 6/2
+a path</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If an expression can be interpreted as a path, Nix will do so.
+This is useful, because paths are <em>far</em> more commonly used in Nix expressions that arithmetic operators.
+In this case, Nix interpreted <code>6/2</code> as a relative path from the current directory,
+which in the above example was <code>/home/amy/codeberg/nix-book</code>.</p>
+</div>
+<div class="paragraph">
+<p>Adding a space after the <code>/</code> operator produces the expected result.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; 6/ 2
+3</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To avoid surprises and improve readability, I prefer to use spaces before and after all operators.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_floating_point_calculations">2.6.2. Floating-point calculations</h4>
+<div class="paragraph">
+<p>Numbers without a decimal point are assumed to be integers.
+To ensure that a number is interpreted as a floating-point value, add a decimal point.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; :t 5
+an integer
+
+nix-repl&gt; :t 5.0
+a float
+
+nix-repl&gt; :t 5.
+a float</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the example below, the first expression results in integer division (rounding down),
+while the second produces a floating-point result.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; 5 / 3
+1
+
+nix-repl&gt; 5.0 / 3
+1.66667</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_string_operations">2.7. String operations</h3>
+<div class="sect3">
+<h4 id="_string_concatenation">2.7.1. String concatenation</h4>
+<div class="paragraph">
+<p>String concatenation uses the <code>+</code> operator.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; &quot;Hello, &quot; + &quot;world!&quot;
+&quot;Hello, world!&quot;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_string_interpolation">2.7.2. String interpolation</h4>
+<div class="paragraph">
+<p>You can use the <code>${<em>variable</em>}</code> syntax to insert the value of a variable within a string.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; name = &quot;Wombat&quot;
+
+nix-repl&gt; &quot;Hi, I&#39;m ${name}.&quot;
+&quot;Hi, I&#39;m Wombat.&quot;</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You cannot mix numbers and strings.
+Earlier we set <code>a = 7</code>, so the following expression fails.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; &quot;My favourite number is ${a}.&quot;
+error:
+       … while evaluating a path segment
+
+         at «string»:1:25:
+
+            1| &quot;My favourite number is ${a}.&quot;
+             |                         ^
+
+       error: cannot coerce an integer to a string</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Nix does provide functions for converting between types; we&#8217;ll see these in <a href="#_built_in_functions">[_built_in_functions]</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_useful_built_in_functions_for_strings">2.7.3. Useful built-in functions for strings</h4>
+<div class="paragraph">
+<p>Nix provides some built-in functions for working with strings;
+a few examples are shown below.
+For more information on these and other built-in functions, see the Nix Manual
+(<a href="https://nixos.org/manual/nix/stable/language/builtins" class="bare">https://nixos.org/manual/nix/stable/language/builtins</a>).</p>
+</div>
+<div class="paragraph">
+<p>How long is this string?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.stringLength &quot;supercalifragilisticexpialidocious&quot;
+34</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Given a startiing position and a length, extract a substring.
+The first character of a string has index <code>0</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.substring 3 6 &quot;hayneedlestack&quot;
+&quot;needle&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Convert an expression to a string.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.toString 7
+&quot;7&quot;
+
+nix-repl&gt; builtins.toString (3*4 + 1)
+&quot;13&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_boolean_operations">2.8. Boolean operations</h3>
+<div class="paragraph">
+<p>The usual boolean operators are available.
+Recall that earlier we set <code>a = 7</code> and <code>b = 3</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; a == 7                     # equality test
+true
+
+nix-repl&gt; b != 3                     # inequality
+false
+
+nix-repl&gt; a &gt; 12                     # greater than
+false
+
+nix-repl&gt; b &gt;= 2                     # greater than or equal
+true
+
+nix-repl&gt; a &lt; b                      # less than
+false
+
+nix-repl&gt; b &lt;= a                     # less than or equal
+true
+
+nix-repl&gt; !true                      # logical negation
+false
+
+nix-repl&gt; (3 * a == 21) &amp;&amp; (a &gt; b)   # logical AND
+true
+
+nix-repl&gt; (b &gt; a) || (b &gt; 10)        # logical OR
+false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>One operator that might be unfamiliar to you is <em>logical implication</em>, which uses the symbol <code>&#8594;</code>.
+The expression <code>u &#8594; v</code> is equivalent to <code>!u || v</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; u = false
+
+nix-repl&gt; v = true
+
+nix-repl&gt; u -&gt; v
+true
+
+nix-repl&gt; v -&gt; u
+false</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_path_operations">2.9. Path operations</h3>
+<div class="paragraph">
+<p>Any expression that contains a forward slash (<code>/</code>) <em>not</em> followed by a space
+is interpreted as a path.
+To refer to a file or directory relative to the current directory, prefix it with <code>./</code>.
+You can specify the current directory as <code>./.</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; ./file.txt
+/home/amy/codeberg/nix-book/file.txt
+
+nix-repl&gt; ./.
+/home/amy/codeberg/nix-book</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_concatenating_paths">2.9.1. Concatenating paths</h4>
+<div class="paragraph">
+<p>Paths can be concatenated to produce a new path.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; /home/wombat + /bin/sh
+/home/wombat/bin/sh
+
+nix-repl&gt; :t /home/wombat + /bin/sh
+a path</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Relative paths are made absolute when they are parsed, which occurs before concatenation.
+This is why the result in the example below is not <code>/home/wombat/file.txt</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; /home/wombat + ./file.txt
+/home/wombat/home/amy/codeberg/nix-book/file.txt</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_concatenating_a_path_a_string">2.9.2. Concatenating a path + a string</h4>
+<div class="paragraph">
+<p>A path can be concatenated with a string to produce a new path.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; /home/wombat + &quot;/file.txt&quot;
+/home/wombat/file.txt
+
+nix-repl&gt; :t /home/wombat + &quot;/file.txt&quot;
+a path</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The Nix reference manual says that the string must not "have a string context" that refers to a store path.
+String contexts are beyond the scope of this book;
+for more information see <a href="https://nixos.org/manual/nix/stable/language/operators#path-concatenation" class="bare">https://nixos.org/manual/nix/stable/language/operators#path-concatenation</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_concatenating_a_string_a_path">2.9.3. Concatenating a string + a path</h4>
+<div class="paragraph">
+<p>Strings can be concatenated with paths, but with a side-effect that may surprise you:
+if the path exists, the file is copied to the Nix store!
+The result is a string, not a path.</p>
+</div>
+<div class="paragraph">
+<p>In the example below, the file <code>file.txt</code> is copied to <code>/nix/store/gp8ba25gpwvbqizqfr58jr014gmv1hd8-file.txt</code>
+(not, as you might expect, to <code>/home/wombat/nix/store/gp8ba25gpwvbqizqfr58jr014gmv1hd8-file.txt</code>).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; &quot;/home/wombat&quot; + ./file.txt
+&quot;/home/wombat/nix/store/gp8ba25gpwvbqizqfr58jr014gmv1hd8-file.txt&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The path must exist.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; &quot;/home/wombat&quot; + ./no-such-file.txt
+error (ignored): error: end of string reached
+error: getting status of &#39;/home/amy/codeberg/nix-book/no-such-file.txt&#39;: No such file or directory</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_useful_built_in_functions_for_paths">2.9.4. Useful built-in functions for paths</h4>
+<div class="paragraph">
+<p>Nix provides some built-in functions for working with paths;
+a few examples are shown below.
+For more information on these and other built-in functions, see the Nix Manual
+(<a href="https://nixos.org/manual/nix/stable/language/builtins" class="bare">https://nixos.org/manual/nix/stable/language/builtins</a>).</p>
+</div>
+<div class="paragraph">
+<p>Does the path exist?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.pathExists ./index.html
+true
+
+nix-repl&gt; builtins.pathExists /no/such/path
+false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Get a list of the files in a directory, along with the type of each file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.readDir ./.
+{ &quot;.envrc&quot; = &quot;regular&quot;; &quot;.git&quot; = &quot;directory&quot;; &quot;.gitignore&quot; = &quot;regular&quot;; Makefile = &quot;regular&quot;; images = &quot;directory&quot;; &quot;index.html&quot; = &quot;regular&quot;; &quot;shell.nix&quot; = &quot;regular&quot;; source = &quot;directory&quot;; themes = &quot;directory&quot;; &quot;wombats-book-of-nix.pdf&quot; = &quot;regular&quot;; }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Read the contents of a file into a string.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.readFile ./.envrc
+&quot;use nix\n&quot;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_list_operations">2.10. List operations</h3>
+<div class="sect3">
+<h4 id="_list_concatenation">2.10.1. List concatenation</h4>
+<div class="paragraph">
+<p>Lists can be concatenated using the <code>++</code> operator.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; [ 1 2 3 ] ++ [ &quot;apple&quot; &quot;banana&quot; ]
+[ 1 2 3 &quot;apple&quot; &quot;banana&quot; ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_useful_built_in_functions_for_lists">2.10.2. Useful built-in functions for lists</h4>
+<div class="paragraph">
+<p>Nix provides some built-in functions for working with lists;
+a few examples are shown below.
+For more information on these and other built-in functions, see the Nix Manual
+(<a href="https://nixos.org/manual/nix/stable/language/builtins" class="bare">https://nixos.org/manual/nix/stable/language/builtins</a>).</p>
+</div>
+<div class="paragraph">
+<p>Testing if an element appears in a list.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; fruit = [ &quot;apple&quot; &quot;banana&quot; &quot;canteloupe&quot; ]
+
+nix-repl&gt; builtins.elem &quot;apple&quot; fruit
+true
+
+nix-repl&gt; builtins.elem &quot;broccoli&quot; fruit
+false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Selecting an item from a list by index.
+The first element in a list has index <code>0</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.elemAt fruit 0
+&quot;apple&quot;
+
+nix-repl&gt; builtins.elemAt fruit 2
+&quot;canteloupe&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Determining the number of elements in a list.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.length fruit
+3</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Accessing the first element of a list.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.head fruit
+&quot;apple&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Dropping the first element of a list.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.tail fruit
+[ &quot;banana&quot; &quot;canteloupe&quot; ]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Functions are useful for working with lists.
+Functions will be introduced in <a href="#functions">Section 2.12, &#8220;Functions&#8221;</a>,
+but the following examples should be somewhat self-explanatory.</p>
+</div>
+<div class="paragraph">
+<p>Using a function to filter (select elements from) a list.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; numbers = [ 1 3 6 8 9 15 25 ]
+
+nix-repl&gt; isBig = n: n &gt; 10                 # is the number &quot;big&quot; (greater than 10)?
+
+nix-repl&gt; builtins.filter isBig numbers     # get just the &quot;big&quot; numbers
+[ 15 25 ]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Applying a function to all the elements in a list.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; double = n: 2*n                # multiply by two
+
+nix-repl&gt; builtins.map double numbers    # double each element in the list
+[ 2 6 12 16 18 30 50 ]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_attribute_set_operations">2.11. Attribute set operations</h3>
+<div class="sect3">
+<h4 id="_selection">2.11.1. Selection</h4>
+<div class="paragraph">
+<p>The <code>.</code> operator selects an attribute from a set.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; animal = { name = { first = &quot;Professor&quot;; last = &quot;Paws&quot;; }; age = 10; species = &quot;cat&quot;; }
+
+nix-repl&gt; animal . age
+10
+
+nix-repl&gt; animal . name . first
+&quot;Professor&quot;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_query">2.11.2. Query</h4>
+<div class="paragraph">
+<p>We can use the <code>?</code> operator to find out if a set has a particular attribute.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; animal ? species
+true
+
+nix-repl&gt; animal ? bicycle
+false</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_modification">2.11.3. Modification</h4>
+<div class="paragraph">
+<p>We can use the <code>//</code> operator to modify an attribute set.
+Recall that Nix values are immutable, so the result is a new value (the original is not modified).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; animal // { species = &quot;tiger&quot;; }
+{ age = 10; name = { ... }; species = &quot;tiger&quot;; }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="rec-attrset">2.11.4. Recursive attribute sets</h4>
+<div class="paragraph">
+<p>An ordinary attribute set cannot refer to its own elements.
+To do this, you need a <em>recursive</em> attribute set.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; { x = 3; y = 4*x; }
+error: undefined variable &#39;x&#39;
+
+       at «string»:1:16:
+
+            1| { x = 3; y = 4*x; }
+             |                ^
+
+nix-repl&gt; rec { x = 3; y = 4*x; }
+{ x = 3; y = 12; }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_useful_built_in_functions_for_attribute_sets">2.11.5. Useful built-in functions for attribute sets</h4>
+<div class="paragraph">
+<p>Nix provides some built-in functions for working with attribute sets;
+a few examples are shown below.
+For more information on these and other built-in functions, see the Nix Manual
+(<a href="https://nixos.org/manual/nix/stable/language/builtins" class="bare">https://nixos.org/manual/nix/stable/language/builtins</a>).</p>
+</div>
+<div class="paragraph">
+<p>Get an alphabetical list of the keys.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.attrNames animal
+[ &quot;age&quot; &quot;name&quot; &quot;species&quot; ]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Get the values associated with each key, in alphabetical order by the key names.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.attrValues animal
+[ 10 &quot;Professor Paws&quot; &quot;cat&quot; ]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What value is associated with a key?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.getAttr &quot;age&quot; animal
+10</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Does the set have a value for a key?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.hasAttr &quot;name&quot; animal
+true
+
+nix-repl&gt; builtins.hasAttr &quot;car&quot; animal
+false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remove one or more keys and associated values from a set.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.removeAttrs animal [ &quot;age&quot; &quot;species&quot; ]
+{ name = &quot;Professor Paws&quot;; }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="functions">2.12. Functions</h3>
+<div class="sect3">
+<h4 id="_anonymous_functions">2.12.1. Anonymous functions</h4>
+<div class="paragraph">
+<p>Functions are defined using the syntax <code><em>parameter</em>: <em>expression</em></code>,
+where the <em>expression</em> typically involves the <em>parameter</em>.
+Consider the following example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; x: x + 1
+«lambda @ «string»:1:1»</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We created a function that adds <code>1</code> to its input.
+However, it doesn&#8217;t have a name, so we can&#8217;t use it directly.
+Anonymous functions do have their uses, as we shall see shortly.</p>
+</div>
+<div class="paragraph">
+<p>Note that the message printed by the NixREPL when we created the function uses the term <em>lambda</em>.
+This derives from a branch of mathematics called <em>lambda calculus</em>.
+Lambda calculus was the inspiration for most functional languages such as Nix.
+Functional programmers often call anonymous functions "lambdas".</p>
+</div>
+<div class="paragraph">
+<p>The Nix REPL confirms that the expression <code>x: x + 1</code> defines a function.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; :t x: x + 1
+a function</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_named_functions_and_function_application">2.12.2. Named functions and function application</h4>
+<div class="paragraph">
+<p>How can we use a function?
+Recall from <a href="#type-lambda">Section 2.2.8, &#8220;Functions&#8221;</a> that functions can be treated like any other data type.
+In particular, we can assign it to a variable.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; f = x: x + 1
+
+nix-repl&gt; f
+«lambda @ «string»:1:2»</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Procedural languages such as C or Java often use parenthesis to apply a function to a value, e.g. <code>f(5)</code>.
+Nix, like lambda calculus and most functional languages, does not require parenthesis for function application.
+This reduces visual clutter when chaining a series of functions.</p>
+</div>
+<div class="paragraph">
+<p>Now that our function has a name, we can use it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; f 5
+6</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_multiple_parameters_using_nested_functions">2.12.3. Multiple parameters using nested functions</h4>
+<div class="paragraph">
+<p>Functions in Nix always have a single parameter.
+To define a calculation that requires more than one parameter,
+we create functions that return functions!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; add = a: (b: a+b)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We have created a function called <code>add</code>.
+When applied to a parameter <code>a</code>, it returns a new function that adds <code>a</code> to its input.
+Note that the expression <code>(b: a+b)</code> is an anonymous function.
+We never call it directly, so it doesn&#8217;t need a name.
+Anonymous functions are useful after all!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; add 3             # Returns a function that adds 3 to any input
+«lambda @ «string»:1:6»</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s apply <code>add 3</code> to the value <code>5</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; (add 3) 5
+8</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In fact, the parentheses aren&#8217;t needed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; add 3 5
+8</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In case that wasn&#8217;t clear, let&#8217;s repeat those steps, but in more detail.
+The function <code>add</code> takes a single parameter <code>a</code>,
+and returns a new function that takes a single parameter <code>b</code>, and returns the value <code>a + b</code>.
+Let&#8217;s apply <code>add</code> to the value <code>3</code>, and give the resulting new function a name, <code>g</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; g = add 3</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The function <code>g</code> takes a single parameter and adds <code>3</code> to it.
+The Nix REPL confirms that <code>g</code> is indeed a function.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; :t g
+a function</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can apply <code>g</code> to a number to get a new number.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; g 5
+8</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_multiple_parameters_using_attribute_sets">2.12.4. Multiple parameters using attribute sets</h4>
+<div class="paragraph">
+<p>I said earlier that a function in Nix always has a single parameter.
+However, that parameter need not be a simple value; it could be a list or an attribute set.
+To specify an attribute set as a parameter, we use a <em>set pattern</em>,
+which has the form</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">{ _name1_, _name2_, ... }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that while the key-value associations in attribute sets are separated by semi-colons,
+the key names in the attribute <em>set pattern</em> are separated by commas.
+Here&#8217;s an example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; greet = { first, last }: &quot;Hello ${first} ${last}! May I call you ${first}?&quot;
+
+nix-repl&gt; greet { first=&quot;Amy&quot;; last=&quot;de Buitléir&quot;; }
+&quot;Hello Amy de Buitléir! May I call you Amy?&quot;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_optional_parameters">2.12.5. Optional parameters</h4>
+<div class="paragraph">
+<p>We can make some values in an attribute set optional by providing default values,
+using the syntax <code><em>name</em> ? <em>value</em></code>.
+This is illustrated below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; greet = { first, last ? &quot;whatever-your-lastname-is&quot;, topic ? &quot;Nix&quot; }: &quot;Hello ${first} ${last}! May I call you ${first}? Are you enjoying learning ${topic}?&quot;
+
+nix-repl&gt; greet { first=&quot;Amy&quot;; }
+&quot;Hello Amy whatever-your-lastname-is! May I call you Amy? Are you enjoying learning Nix?&quot;
+
+nix-repl&gt; greet { first=&quot;Amy&quot;; topic=&quot;Mathematics&quot;;}
+&quot;Hello Amy whatever-your-lastname-is! May I call you Amy? Are you enjoying learning Mathematics?&quot;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_patterns">2.12.6. @-patterns</h4>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_if_expressions">2.13. If expressions</h3>
+<div class="paragraph">
+<p>The conditional construct in Nix is an <em>expression</em>, not a <em>statement</em>.
+Since expressions must have values in all cases, you must specify both the <code>then</code> and the <code>else</code> branch.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; a = 7
+
+nix-repl&gt; b = 3
+
+nix-repl&gt; if a &gt; b then &quot;yes&quot; else &quot;no&quot;
+&quot;yes&quot;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_let_expressions">2.14. Let expressions</h3>
+<div class="paragraph">
+<p>A <code>let</code> expression defines a value with a local scope.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; let x = 3; in x*x
+9
+
+nix-repl&gt; let x = 3; y = 2; in x*x + y
+11</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also nest <code>let</code> expressions.
+The previous expression is equivalent to the following.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; let x = 3; in let y = 2; in x*x + y
+11</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A variable defined inside a <code>let</code> expression will "shadow" an outer variable with the same name.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; x = 100
+
+nix-repl&gt; let x = 3; in x*x
+9
+
+nix-repl&gt; let x = 3; in let x = 7; in x+1
+8</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A variable in a let expression can refer to another variable in the expression.
+This is similar to how recursive attribute sets work.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; let x = 3; y = x + 1; in x*y
+12</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_with_expressions">2.15. With expressions</h3>
+<div class="paragraph">
+<p>A <code>with</code> expression is somewhat similar to a <code>let</code> expression,
+but it brings all of the associations in an attribute set into scope.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; point = { x1 = 3; x2 = 2; }
+
+nix-repl&gt; with point; x1*x1 + x2
+11</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Unlike a <code>let</code> expression, a variable defined inside a <code>with</code> expression will <em>not</em>
+"shadow" an outer variable with the same name.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; name = &quot;Amy&quot;
+
+nix-repl&gt; animal = { name = &quot;Professor Paws&quot;; age = 10; species = &quot;cat&quot;; }
+
+nix-repl&gt; with animal; &quot;Hello, &quot; + name
+&quot;Hello, Amy&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However, you can refer to the variable in the inner scope
+using the attribute selection operator (<code>.</code>).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; with animal; &quot;Hello, &quot; + animal.name
+&quot;Hello, Professor Paws&quot;</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hello_flake">3. Hello, flake!</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Before learning to write Nix flakes, let’s learn how to use them. I’ve
@@ -386,7 +1815,7 @@ that the package remains in the store for future use.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_hello_flake_repo">3. The hello-flake repo</h2>
+<h2 id="_the_hello_flake_repo">4. The hello-flake repo</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Let’s clone the repository and see how the flake is defined.</p>
@@ -539,11 +1968,10 @@ is always called <code>flake.nix</code>.</p>
 </div>
 <div class="paragraph">
 <p>If this is your first time seeing a flake definition, it probably looks
-intimidating. Flakes are written in a functional language called
-Nix<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>. Yes,
-&#8220;Nix&#8221; is the name of both the package manager and the language it
-uses. We’ll look at this in more detail shortly. For now, I’d like to
-focus on the inputs section.</p>
+intimidating.
+Flakes are written in the Nix language, introduced in an earlier chapter.
+However, you don&#8217;t really need to know Nix to follow this example.
+For now, I’d like to focus on the inputs section.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -627,7 +2055,7 @@ benefit of using flakes.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_flake_structure">4. Flake structure</h2>
+<h2 id="_flake_structure">5. Flake structure</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The basic structure of a flake is shown below.</p>
@@ -643,7 +2071,7 @@ benefit of using flakes.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_description">4.1. Description</h3>
+<h3 id="_description">5.1. Description</h3>
 <div class="paragraph">
 <p>The <code>description</code> part is self-explanatory; it’s just a string. You
 probably won’t need <code>nixConfig</code> unless you’re doing something fancy. I’m
@@ -652,7 +2080,7 @@ and highlight some of the things I found confusing when I began using flakes.</p
 </div>
 </div>
 <div class="sect2">
-<h3 id="_inputs">4.2. Inputs</h3>
+<h3 id="_inputs">5.2. Inputs</h3>
 <div class="paragraph">
 <p>This section specifies the dependencies of a flake. It’s an <em>attribute
 set</em>; it maps keys to values.</p>
@@ -776,7 +2204,7 @@ input.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_outputs">4.3. Outputs</h3>
+<h3 id="_outputs">5.3. Outputs</h3>
 <div class="paragraph">
 <p>This section is a function that essentially returns the recipe for
 building the flake.</p>
@@ -804,7 +2232,7 @@ regularly. We’ll look at some of these in the next section.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_a_generic_flake">5. A generic flake</h2>
+<h2 id="_a_generic_flake">6. A generic flake</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The previous section presented a very high-level view of flakes,
@@ -925,7 +2353,7 @@ standard environment version), <code>developPackage</code>, <code>callCabal2Nix<
 </div>
 </div>
 <div class="sect1">
-<h2 id="_another_look_at_hello_flake">6. Another look at hello-flake</h2>
+<h2 id="_another_look_at_hello_flake">7. Another look at hello-flake</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Now that we have a better understanding of the structure of <code>flake.nix</code>,
@@ -1118,10 +2546,10 @@ cannot rely on them.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_modifying_the_flake">7. Modifying the flake</h2>
+<h2 id="_modifying_the_flake">8. Modifying the flake</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_the_nix_development_shell">7.1. The Nix development shell</h3>
+<h3 id="_the_nix_development_shell">8.1. The Nix development shell</h3>
 <div class="paragraph">
 <p>Let’s make a simple modification to the script. This will give you an
 opportunity to check your understanding of flakes.</p>
@@ -1229,7 +2657,7 @@ the version in <code>result</code>.</p></td>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_introducing_a_dependency">7.2. Introducing a dependency</h3>
+<h3 id="_introducing_a_dependency">8.2. Introducing a dependency</h3>
 <div class="paragraph">
 <p>Now we’re ready to make the flake a little more interesting.
 Instead of using the <code>echo</code> command in the script, we can use the Linux <code>cowsay</code>
@@ -1395,7 +2823,7 @@ don’t need to <code>git push</code> the changes until we’re ready to share t
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
-[main a678b41] added bovine feature
+[main eb4d08c] added bovine feature
  2 files changed, 7 insertions(+), 1 deletion(-)
 $ nix run
  ________________________
@@ -1410,7 +2838,7 @@ $ nix run
 </div>
 </div>
 <div class="sect2">
-<h3 id="_development_workflows">7.3. Development workflows</h3>
+<h3 id="_development_workflows">8.3. Development workflows</h3>
 <div class="paragraph">
 <p>If you’re getting confused about when to use the different commands,
 it’s because there’s more than one way to use Nix. I tend to think of it
@@ -1474,7 +2902,7 @@ not execute anything (perhaps it’s just a library).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_this_all_seems_like_a_hassle">7.4. This all seems like a hassle!</h3>
+<h3 id="_this_all_seems_like_a_hassle">8.4. This all seems like a hassle!</h3>
 <div class="paragraph">
 <p>It is a bit annoying to modify <code>flake.nix</code> and ether rebuild or reload
 the development environment every time you need another tool. However,
@@ -1486,7 +2914,7 @@ else will be able to reproduce the development environment.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_a_new_flake_from_scratch">8. A new flake from scratch</h2>
+<h2 id="_a_new_flake_from_scratch">9. A new flake from scratch</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>At last we are ready to create a flake from scratch!
@@ -1496,7 +2924,7 @@ If you&#8217;re interested in a language that I haven&#8217;t covered, feel free
 <a href="https://codeberg.org/mhwombat/nix-book/issues">issue</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="_haskell">8.1. Haskell</h3>
+<h3 id="_haskell">9.1. Haskell</h3>
 <div class="paragraph">
 <p>Start with an empty directory and create a git repository.</p>
 </div>
@@ -1509,7 +2937,7 @@ Initialized empty Git repository in /home/amy/codeberg/nix-book/source/new-flake
 </div>
 </div>
 <div class="sect3">
-<h4 id="_a_simple_haskell_program">8.1.1. A simple Haskell program</h4>
+<h4 id="_a_simple_haskell_program">9.1.1. A simple Haskell program</h4>
 <div class="paragraph">
 <p>Next, we’ll create a simple Haskell program.</p>
 </div>
@@ -1534,7 +2962,7 @@ Initialized empty Git repository in /home/amy/codeberg/nix-book/source/new-flake
 </div>
 </div>
 <div class="sect3">
-<h4 id="_optional_testing_before_packaging">8.1.2. (Optional) Testing before packaging</h4>
+<h4 id="_optional_testing_before_packaging">9.1.2. (Optional) Testing before packaging</h4>
 <div class="paragraph">
 <p>Before we package the program, let’s verify that it runs. We’re going to
 need a Haskell compiler. By now you’ve probably figured out that we can write a
@@ -1704,7 +3132,7 @@ Your hostname is: wombat11k</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the_cabal_file">8.1.3. The cabal file</h4>
+<h4 id="_the_cabal_file">9.1.3. The cabal file</h4>
 <div class="paragraph">
 <p>It&#8217;s time to write a Cabal file for this program.
 This is just an ordinary Cabal file; we don&#8217;t need to do anything special for Nix.</p>
@@ -1768,7 +3196,7 @@ executable hello-flake-haskell
 </div>
 </div>
 <div class="sect3">
-<h4 id="_optional_building_and_running_with_cabal_install">8.1.4. (Optional) Building and running with cabal-install</h4>
+<h4 id="_optional_building_and_running_with_cabal_install">9.1.4. (Optional) Building and running with cabal-install</h4>
 <div class="paragraph">
 <p>At this point, I would normally write <code>flake.nix</code> and use Nix to build the program.
 I&#8217;ll cover that in the next section.
@@ -1792,7 +3220,7 @@ Rather than launch another shell-within-a-shell, let&#8217;s exit create a new o
 <pre class="nowrap">$ exit
 $ nix-shell -p "[ cabal-install (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ hostname ]))]"
 $ cabal build
-Warning: The package list for 'hackage.haskell.org' is 19 days old.
+Warning: The package list for 'hackage.haskell.org' is 21 days old.
 Run 'cabal update' to get the latest list of available packages.
 Resolving dependencies...
 Build profile: -w ghc-9.4.8 -O1
@@ -1820,7 +3248,7 @@ $ exit</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the_nix_flake">8.1.5. The Nix flake</h4>
+<h4 id="_the_nix_flake">9.1.5. The Nix flake</h4>
 <div class="paragraph">
 <p>Now we should write <code>flake.nix</code>. We already know how to write most of
 the flake from the examples we did earlier. The two parts that would be
@@ -1907,20 +3335,20 @@ warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/he
 warning: creating lock file '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/flake.lock'
 warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell' is dirty
 these 2 derivations will be built:
-  /nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv
-  /nix/store/yv4fbbfl1jmh4i9j6ylvg1rd9d4anc5g-hello-flake-haskell-1.0.0.drv
-building '/nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv'...
-error: builder for '/nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
+  /nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv
+  /nix/store/hi70w0gzjfj213r0xhhva7n617hfa378-hello-flake-haskell-1.0.0.drv
+building '/nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv'...
+error: builder for '/nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
        last 7 log lines:
-       &gt; unpacking source archive /nix/store/6w4qxvrlm1p1yhwv0kv57da7azz8y2mn-source-hello-flake-haskell
+       &gt; unpacking source archive /nix/store/fdxvjgdpsfjrkanzbx43g1yxf2b1lp4b-source-hello-flake-haskell
        &gt; source root is source-hello-flake-haskell
        &gt; Config file path source is default config file.
        &gt; Config file not found: /build/source-hello-flake-haskell/.config/cabal/config
        &gt; Writing default configuration to
        &gt; /build/source-hello-flake-haskell/.config/cabal/config
        &gt; /build/source-hello-flake-haskell/./LICENSE: withBinaryFile: does not exist (No such file or directory)
-       For full logs, run 'nix log /nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv'.
-error: 1 dependencies of derivation '/nix/store/yv4fbbfl1jmh4i9j6ylvg1rd9d4anc5g-hello-flake-haskell-1.0.0.drv' failed to build</pre>
+       For full logs, run 'nix log /nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv'.
+error: 1 dependencies of derivation '/nix/store/hi70w0gzjfj213r0xhhva7n617hfa378-hello-flake-haskell-1.0.0.drv' failed to build</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1933,7 +3361,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) 5604d0a] initial commit
+[master (root-commit) 39ade13] initial commit
  4 files changed, 137 insertions(+)
  create mode 100644 Main.hs
  create mode 100644 flake.lock
@@ -1950,20 +3378,20 @@ another directory and running it from there.</p>
 <pre class="nowrap">$ cd ..
 $ nix run ./hello-haskell
 these 2 derivations will be built:
-  /nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv
-  /nix/store/yv4fbbfl1jmh4i9j6ylvg1rd9d4anc5g-hello-flake-haskell-1.0.0.drv
-building '/nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv'...
-error: builder for '/nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
+  /nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv
+  /nix/store/hi70w0gzjfj213r0xhhva7n617hfa378-hello-flake-haskell-1.0.0.drv
+building '/nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv'...
+error: builder for '/nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
        last 7 log lines:
-       &gt; unpacking source archive /nix/store/6w4qxvrlm1p1yhwv0kv57da7azz8y2mn-source-hello-flake-haskell
+       &gt; unpacking source archive /nix/store/fdxvjgdpsfjrkanzbx43g1yxf2b1lp4b-source-hello-flake-haskell
        &gt; source root is source-hello-flake-haskell
        &gt; Config file path source is default config file.
        &gt; Config file not found: /build/source-hello-flake-haskell/.config/cabal/config
        &gt; Writing default configuration to
        &gt; /build/source-hello-flake-haskell/.config/cabal/config
        &gt; /build/source-hello-flake-haskell/./LICENSE: withBinaryFile: does not exist (No such file or directory)
-       For full logs, run 'nix log /nix/store/ckn90lz6ans1q84fkasyyjr4p4b89j4q-source-hello-flake-haskell-sdist.tar.gz.drv'.
-error: 1 dependencies of derivation '/nix/store/yv4fbbfl1jmh4i9j6ylvg1rd9d4anc5g-hello-flake-haskell-1.0.0.drv' failed to build</pre>
+       For full logs, run 'nix log /nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv'.
+error: 1 dependencies of derivation '/nix/store/hi70w0gzjfj213r0xhhva7n617hfa378-hello-flake-haskell-1.0.0.drv' failed to build</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1983,7 +3411,7 @@ Haskell flake.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_python">8.2. Python</h3>
+<h3 id="_python">9.2. Python</h3>
 <div class="paragraph">
 <p>Start with an empty directory and create a git repository.</p>
 </div>
@@ -1996,7 +3424,7 @@ Initialized empty Git repository in /home/amy/codeberg/nix-book/source/new-flake
 </div>
 </div>
 <div class="sect3">
-<h4 id="_a_simple_python_program">8.2.1. A simple Python program</h4>
+<h4 id="_a_simple_python_program">9.2.1. A simple Python program</h4>
 <div class="paragraph">
 <p>Next, we’ll create a simple Python program.</p>
 </div>
@@ -2072,7 +3500,7 @@ Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_a_python_builder">8.2.2. A Python builder</h4>
+<h4 id="_a_python_builder">9.2.2. A Python builder</h4>
 <div class="paragraph">
 <p>Next, create a Python script to build the package. We’ll use Python’s
 setuptools, but you can use other build tools. For more information on
@@ -2150,7 +3578,7 @@ twice. Alternatively, we could have done <code>exit</code> followed by the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the_nix_flake_2">8.2.3. The Nix flake</h4>
+<h4 id="_the_nix_flake_2">9.2.3. The Nix flake</h4>
 <div class="paragraph">
 <p>Now we should write <code>flake.nix</code>. We already know how to write most of
 the flake from the examples we did earlier. The two parts that will be
@@ -2333,6 +3761,9 @@ $ nix run
 warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python' is dirty
 warning: creating lock file '/home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python/flake.lock'
 warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python' is dirty
+this derivation will be built:
+  /nix/store/dh97mik5m481j14am9dgy8jx9ppv5b6d-hello-flake-python.drv
+building '/nix/store/dh97mik5m481j14am9dgy8jx9ppv5b6d-hello-flake-python.drv'...
 Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
@@ -2346,7 +3777,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) 4677957] initial commit
+[master (root-commit) 6bec7c3] initial commit
  4 files changed, 127 insertions(+)
  create mode 100644 flake.lock
  create mode 100644 flake.nix
@@ -2384,7 +3815,7 @@ Python flake.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_recipes">9. Recipes</h2>
+<h2 id="_recipes">10. Recipes</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter provides examples of how to use Nix in a variety of scanarios.
@@ -2419,13 +3850,13 @@ interpreter and any dependencies.</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_access_to_a_top_level_package_from_the_nixpkgsnixos_repo">9.1. Access to a top-level package from the Nixpkgs/NixOS repo</h3>
+<h3 id="_access_to_a_top_level_package_from_the_nixpkgsnixos_repo">10.1. Access to a top-level package from the Nixpkgs/NixOS repo</h3>
 <div class="paragraph">
 <p>Ex: Access two packages from nixpkgs:
 hello and cowsay.</p>
 </div>
 <div class="sect3">
-<h4 id="_from_the_command_line">9.1.1. From the command line</h4>
+<h4 id="_from_the_command_line">10.1.1. From the command line</h4>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ nix-shell -p "[hello cowsay]"
@@ -2444,7 +3875,7 @@ $ cowsay "moo"
 </div>
 </div>
 <div class="sect3">
-<h4 id="_in_shell_nix">9.1.2. In <code>shell.nix</code></h4>
+<h4 id="_in_shell_nix">10.1.2. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
@@ -2485,7 +3916,7 @@ $ cowsay "moo"
 </div>
 </div>
 <div class="sect3">
-<h4 id="_in_a_bash_script">9.1.3. In a Bash script</h4>
+<h4 id="_in_a_bash_script">10.1.3. In a Bash script</h4>
 <div class="listingblock">
 <div class="title">Script</div>
 <div class="content">
@@ -2516,7 +3947,7 @@ cowsay<span class="tok-w"> </span><span class="tok-s2">&quot;Pretty cool, huh?&q
 </div>
 </div>
 <div class="sect2">
-<h3 id="_access_to_a_package_defined_in_a_remote_git_repo">9.2. Access to a package defined in a remote git repo</h3>
+<h3 id="_access_to_a_package_defined_in_a_remote_git_repo">10.2. Access to a package defined in a remote git repo</h3>
 <div class="paragraph">
 <p>Ex: Access a package called <code>hello-nix</code>,
 which is defined in a remote git repo on codeberg.
@@ -2524,7 +3955,7 @@ To use a package from GitHub, GitLab, or any other public platform,
 modify the URL.</p>
 </div>
 <div class="sect3">
-<h4 id="_in_shell_nix_2">9.2.1. In <code>shell.nix</code></h4>
+<h4 id="_in_shell_nix_2">10.2.1. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
@@ -2563,7 +3994,7 @@ Hello from your nix package!</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_access_to_a_flake_defined_in_a_remote_git_repo">9.3. Access to a flake defined in a remote git repo</h3>
+<h3 id="_access_to_a_flake_defined_in_a_remote_git_repo">10.3. Access to a flake defined in a remote git repo</h3>
 <div class="paragraph">
 <p>Ex: Access a flake called <code>hello-flake</code>,
 which is defined in a remote git repo on codeberg.
@@ -2571,7 +4002,7 @@ To use a package from GitHub, GitLab, or any other public platform,
 modify the URL.</p>
 </div>
 <div class="sect3">
-<h4 id="_in_shell_nix_3">9.3.1. In <code>shell.nix</code></h4>
+<h4 id="_in_shell_nix_3">10.3.1. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
@@ -2612,7 +4043,7 @@ Hello from your flake!</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_access_to_a_haskell_library_package_in_the_nixpkgs_repo_without_a_cabal_file">9.4. Access to a Haskell library package in the nixpkgs repo (without a <code>.cabal</code> file)</h3>
+<h3 id="_access_to_a_haskell_library_package_in_the_nixpkgs_repo_without_a_cabal_file">10.4. Access to a Haskell library package in the nixpkgs repo (without a <code>.cabal</code> file)</h3>
 <div class="paragraph">
 <p>Occasionally you might want to run a short Haskell program that depends on a Haskell library,
 but you don&#8217;t want to bother writing a cabal file.</p>
@@ -2621,7 +4052,7 @@ but you don&#8217;t want to bother writing a cabal file.</p>
 <p>Example: Access the <code>containers</code> package from the <code>haskellPackages</code> set in the nixpkgs repo.</p>
 </div>
 <div class="sect3">
-<h4 id="_in_shell_nix_4">9.4.1. In <code>shell.nix</code></h4>
+<h4 id="_in_shell_nix_4">10.4.1. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
@@ -2687,7 +4118,7 @@ $ runghc Main.hs
 </div>
 </div>
 <div class="sect3">
-<h4 id="_in_a_haskell_script">9.4.2. In a Haskell script</h4>
+<h4 id="_in_a_haskell_script">10.4.2. In a Haskell script</h4>
 <div class="listingblock">
 <div class="title">Script</div>
 <div class="content">
@@ -2732,14 +4163,14 @@ $ runghc Main.hs
 </div>
 </div>
 <div class="sect2">
-<h3 id="_access_to_a_haskell_package_on_your_local_computer">9.5. Access to a Haskell package on your local computer</h3>
+<h3 id="_access_to_a_haskell_package_on_your_local_computer">10.5. Access to a Haskell package on your local computer</h3>
 <div class="paragraph">
 <p>Ex: Access three Haskell packages
 (<code>pandoc-linear-table</code>, <code>pandoc-logic-proof</code>, and <code>pandoc-columns</code>)
 that are on my hard drive.</p>
 </div>
 <div class="sect3">
-<h4 id="_in_shell_nix_5">9.5.1. In <code>shell.nix</code></h4>
+<h4 id="_in_shell_nix_5">10.5.1. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
@@ -2776,7 +4207,7 @@ mkShell <span class="tok-p">{</span>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">9.6. Access to a Haskell package on your local computer, with interdependencies</h3>
+<h3 id="_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">10.6. Access to a Haskell package on your local computer, with interdependencies</h3>
 <div class="paragraph">
 <p>Ex: Access four Haskell packages
 (<code>pandoc-linear-table</code>, <code>pandoc-logic-proof</code>, <code>pandoc-columns</code> and <code>pandoc-maths-web</code>)
@@ -2784,7 +4215,7 @@ that are on my hard drive.
 The fourth package depends on the first three to build.</p>
 </div>
 <div class="sect3">
-<h4 id="_in_shell_nix_6">9.6.1. In <code>shell.nix</code></h4>
+<h4 id="_in_shell_nix_6">10.6.1. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
@@ -2831,7 +4262,7 @@ mkShell <span class="tok-p">{</span>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_access_to_a_python_library_package_in_the_nixpkgs_repo_without_using_a_python_builder">9.7. Access to a Python library package in the nixpkgs repo (without using a Python builder)</h3>
+<h3 id="_access_to_a_python_library_package_in_the_nixpkgs_repo_without_using_a_python_builder">10.7. Access to a Python library package in the nixpkgs repo (without using a Python builder)</h3>
 <div class="paragraph">
 <p>Occasionally you might want to run a short Python program that depends on a Python library,
 but you don&#8217;t want to bother configuring a builder.</p>
@@ -2840,7 +4271,7 @@ but you don&#8217;t want to bother configuring a builder.</p>
 <p>Example: Access the <code>html_sanitizer</code> package from the <code>python3nnPackages</code> set in the nixpkgs repo.</p>
 </div>
 <div class="sect3">
-<h4 id="_in_a_python_script">9.7.1. In a Python script</h4>
+<h4 id="_in_a_python_script">10.7.1. In a Python script</h4>
 <div class="listingblock">
 <div class="title">Script</div>
 <div class="content">
@@ -2878,12 +4309,12 @@ sanitized:  &lt;strong&gt;some text&lt;/strong&gt;</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_set_an_environment_variable">9.8. Set an environment variable</h3>
+<h3 id="_set_an_environment_variable">10.8. Set an environment variable</h3>
 <div class="paragraph">
 <p>Ex: Set the value of the environment variable FOO to &#8220;bar&#8221;</p>
 </div>
 <div class="sect3">
-<h4 id="_in_shell_nix_7">9.8.1. In <code>shell.nix</code></h4>
+<h4 id="_in_shell_nix_7">10.8.1. In <code>shell.nix</code></h4>
 <div class="listingblock">
 <div class="title">shell.nix</div>
 <div class="content">
@@ -2909,7 +4340,7 @@ mkShell <span class="tok-p">{</span>
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnotedef_1">
-<a href="#_footnoteref_1">1</a>. For an introduction to the Nix language, see <a href="https://nixos.org/guides/nix-language.html">Nix language basics</a>.
+<a href="#_footnoteref_1">1</a>. REPL is an acronym for (Read-Eval-Print-Loop).
 </div>
 <div class="footnote" id="_footnotedef_2">
 <a href="#_footnoteref_2">2</a>. For more information on the standard environment, see the <a href="https://nixos.org/manual/nixpkgs/stable/#sec-tools-of-stdenv">Nixpkgs manual</a>
@@ -2917,7 +4348,7 @@ mkShell <span class="tok-p">{</span>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-11-28 16:01:42 GMT
+Last updated 2023-12-02 17:31:07 GMT
 </div>
 </div>
 </body>
