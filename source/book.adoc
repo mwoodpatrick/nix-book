@@ -9,6 +9,7 @@
 :!prewrap:
 :icons: font
 :title-logo-image: image::wombat.svg["wombat reclining against a lambda"]
+:xrefstyle: full
 
 image::wombat.svg["wombat reclining against a lambda"]
 
@@ -36,3 +37,5 @@ include::modify-hello-flake/main-generated.adoc[leveloffset=+1]
 include::new-flake/main.adoc[leveloffset=+1]
 
 include::recipes/main.adoc[leveloffset=+1]
+
+// TODO Acknowledge and provide links to nix pills, nix reference manual
