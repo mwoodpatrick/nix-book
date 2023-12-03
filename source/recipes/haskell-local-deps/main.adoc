@@ -1,4 +1,4 @@
-= Access to a Haskell package on your local computer, with interdependencies
+= Access to a Haskell package on your local computer, with inter-dependencies
 
 Ex: Access four Haskell packages
 (`pandoc-linear-table`, `pandoc-logic-proof`, `pandoc-columns` and `pandoc-maths-web`)
