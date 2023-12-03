@@ -7,7 +7,7 @@ detail.
 Flakes are written in the Nix programming language, which is a
 functional language. As with most programming languages, there are many
 ways to achieve the same result. Below is an example you can follow when
-writing your own flakes. I’ll explain the example in some detail.
+writing your own flakes. I'll explain the example in some detail.
 
 [source,subs=quotes]
 ----
@@ -52,7 +52,7 @@ this part of the flake should be familiar. Remember also that any
 dependencies in the input section should also be listed at the beginning
 of the outputs section `❷`.
 
-Now it’s time to look at the content of the output section. If we want
+Now it's time to look at the content of the output section. If we want
 the package to be available for multiple systems (e.g.,
 "`x86_64-linux`", "`aarch64-linux`", "`x86_64-darwin`", and
 "`aarch64-darwin`"), we need to define the output for each of those
@@ -63,7 +63,7 @@ The function then iterates over all default systems to generate the
 outputs for each one.
 
 The `devShells` variable specifies the environment that should be
-available when doing development on the package. If you don’t need a
+available when doing development on the package. If you don't need a
 special development environment, you can omit this section. At `❹` you
 would list any tools (e.g., compilers and language-specific build tools)
 you want to have available in a development shell. If the compiler needs
@@ -84,7 +84,7 @@ were written or updated recently.
 
 The `apps` variable identifies any applications provided by the flake.
 In particular, it identifies the default executable ❻ that `nix run`
-will run if you don’t specify an app.
+will run if you don't specify an app.
 
 Below is a list of some functions that are commonly used in
 this section.
@@ -92,7 +92,7 @@ this section.
 General-purpose::
   The standard environment provides `mkDerivation`, which is especially
   useful for the typical `./configure; make; make install` scenario.
-  It’s customisable.
+  It's customisable.
 Python::
   `buildPythonApplication`, `buildPythonPackage`.
 Haskell::
