@@ -21,7 +21,7 @@ Testing if an element appears in a list.
 
 [source]
 ....
-nix-repl> fruit = [ "apple" "banana" "canteloupe" ]
+nix-repl> fruit = [ "apple" "banana" "cantaloupe" ]
 
 nix-repl> builtins.elem "apple" fruit
 true
@@ -39,7 +39,7 @@ nix-repl> builtins.elemAt fruit 0
 "apple"
 
 nix-repl> builtins.elemAt fruit 2
-"canteloupe"
+"cantaloupe"
 ....
 
 Determining the number of elements in a list.
@@ -63,7 +63,7 @@ Dropping the first element of a list.
 [source]
 ....
 nix-repl> builtins.tail fruit
-[ "banana" "canteloupe" ]
+[ "banana" "cantaloupe" ]
 ....
 
 Functions are useful for working with lists.
