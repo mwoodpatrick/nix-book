@@ -17,7 +17,7 @@ We created a function that adds `1` to its input.
 However, it doesn't have a name, so we can't use it directly.
 Anonymous functions do have their uses, as we shall see shortly.
 
-Note that the message printed by the NixREPL when we created the function uses the term _lambda_.
+Note that the message printed by the Nix REPL when we created the function uses the term _lambda_.
 This derives from a branch of mathematics called _lambda calculus_.
 Lambda calculus was the inspiration for most functional languages such as Nix.
 Functional programmers often call anonymous functions "lambdas".
@@ -73,6 +73,17 @@ Note that the expression `(b: a+b)` is an anonymous function.
 We never call it directly, so it doesn't need a name.
 Anonymous functions are useful after all!
 
+I used parentheses to emphasise the inner function, but they aren't necessary.
+More commonly we would write the following.
+
+[source]
+....
+nix-repl> add = a: b: a+b
+....
+
+If we only supply one parameter to `add`, the result is a new function rather than a simple value.
+Invoking a function without supplying all of the expected parameters is called _partial application_.
+
 [source]
 ....
 nix-repl> add 3             # Returns a function that adds 3 to any input
@@ -95,7 +106,13 @@ nix-repl> add 3 5
 8
 ....
 
-In case that wasn't clear, let's repeat those steps, but in more detail.
+If you've never used a functional programming language, this all probably seems very strange.
+Imagine that you want to add two numbers, but you have a very unusual calculator labeled "add".
+This calculator never displays a result, it only produces more calculators!
+If you enter the value `3` into the "add" calculator, it gives you a second calculator labeled  "add 3".
+You then enter `5` into the "add 3" calculator, which displays the result of the addition, `8`.
+
+With that image in mind, let's walk through the steps again in the REPL, but this time in more detail.
 The function `add` takes a single parameter `a`,
 and returns a new function that takes a single parameter `b`, and returns the value `a + b`.
 Let's apply `add` to the value `3`, and give the resulting new function a name, `g`.
@@ -126,48 +143,5 @@ nix-repl> g 5
 
 I said earlier that a function in Nix always has a single parameter.
 However, that parameter need not be a simple value; it could be a list or an attribute set.
-To specify an attribute set as a parameter, we use a _set pattern_,
-which has the form
-
-    { _name1_, _name2_, ... }
-
-Note that while the key-value associations in attribute sets are separated by semi-colons,
-the key names in the attribute _set pattern_ are separated by commas.
-Here's an example.
-
-[source]
-....
-nix-repl> greet = { first, last }: "Hello ${first} ${last}! May I call you ${first}?"
-
-nix-repl> greet { first="Amy"; last="de Buitléir"; }
-"Hello Amy de Buitléir! May I call you Amy?"
-....
-
-== Optional parameters
-
-We can make some values in an attribute set optional by providing default values,
-using the syntax `_name_ ? _value_`.
-This is illustrated below.
-
-[source]
-....
-nix-repl> greet = { first, last ? "whatever-your-lastname-is", topic ? "Nix" }: "Hello ${first} ${last}! May I call you ${first}? Are you enjoying learning ${topic}?"
-
-nix-repl> greet { first="Amy"; }
-"Hello Amy whatever-your-lastname-is! May I call you Amy? Are you enjoying learning Nix?"
-
-nix-repl> greet { first="Amy"; topic="Mathematics";}
-"Hello Amy whatever-your-lastname-is! May I call you Amy? Are you enjoying learning Mathematics?"
-....
-
-== @-patterns
-
-TODO
-
-TODO
-
-TODO
-
-TODO
-
-TODO
+This approach is widely used in Nix, and the language has some special features to support it.
+This is an important topic, so we will cover it separately in <<argument-sets>>.
