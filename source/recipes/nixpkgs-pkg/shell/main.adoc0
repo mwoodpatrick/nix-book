@@ -6,7 +6,7 @@
 include::shell.nix[]
 ....
 
-Here’s a demonstration using the shell.
+Here's a demonstration using the shell.
 
 ....
 $# echo '$ nix-shell'
