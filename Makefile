@@ -52,3 +52,10 @@ $(PDF_FILE) : $(ADOC_FILES)
 clean :
 > rm -rf $(HTML_FILE) $(PDF_FILE)
 > find source -name '*-generated.adoc' -delete
+
+.PHONY: spellcheck
+spellcheck :
+> cat index.html | aspell --lang=en_IE --encoding=utf-8 --add-extra-dicts=./wordlist --mode=html list | sort -u
+
+# dictionary/en_book.rws : wordlist
+# > aspell --lang=en create master ./$@ < $<
