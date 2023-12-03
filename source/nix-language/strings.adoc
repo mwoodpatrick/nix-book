@@ -58,7 +58,7 @@ nix-repl> builtins.stringLength "supercalifragilisticexpialidocious"
 34
 ....
 
-Given a startiing position and a length, extract a substring.
+Given a starting position and a length, extract a substring.
 The first character of a string has index `0`.
 
 [source]
