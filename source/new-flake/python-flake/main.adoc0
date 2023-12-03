@@ -10,7 +10,7 @@ $ git init
 
 == A simple Python program
 
-Next, we’ll create a simple Python program.
+Next, we'll create a simple Python program.
 
 ////
 $ curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/hello.py --silent --output hello.py
@@ -22,14 +22,14 @@ $ curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/hello.py
 $# cat hello.py
 ....
 
-Before we package the program, let’s verify that it runs. We’re going to
-need Python. By now you’ve probably figured out that we can write a
-`flake.nix` and define a development shell that includes Python. We’ll
+Before we package the program, let's verify that it runs. We're going to
+need Python. By now you've probably figured out that we can write a
+`flake.nix` and define a development shell that includes Python. We'll
 do that shortly, but first I want to show you a handy shortcut. We can
-lauch a _temporary_ shell with any Nix packages we want. This is
-convenient when you just want to try out some new software and you’re
-not sure if you’ll use it again. It’s also convenient when you’re not
-ready to write `flake.nix` (perhaps you’re not sure what tools and
+launch a _temporary_ shell with any Nix packages we want. This is
+convenient when you just want to try out some new software and you're
+not sure if you'll use it again. It's also convenient when you're not
+ready to write `flake.nix` (perhaps you're not sure what tools and
 packages you need), and you want to experiment a bit first.
 
 The command to enter a temporary shell is
@@ -43,14 +43,14 @@ If there are multiple packages, they should be separated by spaces.
 The command used here is `nix-shell` with a hyphen, not `nix shell`
 with a space; those are two different commands. In fact there are
 hyphenated and non-hyphenated versions of many Nix commands, and yes,
-it’s confusing. The non-hyphenated commands were introduced when support
+it's confusing. The non-hyphenated commands were introduced when support
 for flakes was added to Nix. I predict that eventually all hyphenated
 commands will be replaced with non-hyphenated versions. Until then, a
 useful rule of thumb is that non-hyphenated commands are for for working
 directly with flakes; hyphenated commands are for everything else.
 ====
 
-Let’s enter a shell with Python so we can test the program.
+Let's enter a shell with Python so we can test the program.
 
 ....
 $# echo '$ nix-shell -p python3'
@@ -60,7 +60,7 @@ $ python hello.py
 
 == A Python builder
 
-Next, create a Python script to build the package. We’ll use Python’s
+Next, create a Python script to build the package. We'll use Python's
 setuptools, but you can use other build tools. For more information on
 setuptools, see the
 https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/[Python
@@ -78,17 +78,17 @@ $ curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/setup.py
 $# cat setup.py
 ....
 
-We won’t write `flake.nix` just yet. First we’ll try building the
+We won't write `flake.nix` just yet. First we'll try building the
 package manually.
 
 ....
 $ python -m build
 ....
 
-The missing module error happens because we don’t have `build` available
+The missing module error happens because we don't have `build` available
 in the temporary shell. We can fix that by adding "`build`" to the
 temporary shell. When you need support for both a language and some of
-its packages, it’s best to use one of the Nix functions that are
+its packages, it's best to use one of the Nix functions that are
 specific to the programming language and build system. For Python, we
 can use the `withPackages` function.
 
@@ -97,7 +97,7 @@ $# echo '$ nix-shell -p "python3.withPackages (ps: with ps; [ build ])"'
 $# nix-shell -p "python3.withPackages (ps: with ps; [ build ])" --command sh
 ....
 
-Note that we’re now inside a temporary shell inside the previous
+Note that we're now inside a temporary shell inside the previous
 temporary shell! To get back to the original shell, we have to `exit`
 twice. Alternatively, we could have done `exit` followed by the
 `nix-shell` command.
@@ -115,7 +115,7 @@ Now we should write `flake.nix`. We already know how to write most of
 the flake from the examples we did earlier. The two parts that will be
 different are the development shell and the package builder.
 
-Let’s start with the development shell. It seems logical to write
+Let's start with the development shell. It seems logical to write
 something like the following.
 
 ....
@@ -172,13 +172,13 @@ $ curl https://codeberg.org/mhwombat/hello-flake-python/raw/branch/main/flake.ni
 $# cat flake.nix
 ....
 
-Let’s try out the new flake.
+Let's try out the new flake.
 
 ....
 $ nix run
 ....
 
-Why can’t it find `flake.nix`? Nix flakes only "`see`" files that are
+Why can't it find `flake.nix`? Nix flakes only "`see`" files that are
 part of the repository. We need to add all of the important files to the
 repo before building or running the flake.
 
@@ -187,7 +187,7 @@ $ git add flake.nix setup.py hello.py
 $ nix run
 ....
 
-We’d like to share this package with others, but first we should do some
+We'd like to share this package with others, but first we should do some
 cleanup. When the package was built (automatically by the `nix run`
 command), it created a `flake.lock` file. We need to add this to the
 repo, and commit all important files.
