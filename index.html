@@ -173,13 +173,19 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_named_functions_and_function_application">2.12.2. Named functions and function application</a></li>
 <li><a href="#_multiple_parameters_using_nested_functions">2.12.3. Multiple parameters using nested functions</a></li>
 <li><a href="#_multiple_parameters_using_attribute_sets">2.12.4. Multiple parameters using attribute sets</a></li>
-<li><a href="#_optional_parameters">2.12.5. Optional parameters</a></li>
-<li><a href="#_patterns">2.12.6. @-patterns</a></li>
 </ul>
 </li>
-<li><a href="#_if_expressions">2.13. If expressions</a></li>
-<li><a href="#_let_expressions">2.14. Let expressions</a></li>
-<li><a href="#_with_expressions">2.15. With expressions</a></li>
+<li><a href="#argument-sets">2.13. Argument sets</a>
+<ul class="sectlevel3">
+<li><a href="#_set_patterns">2.13.1. Set patterns</a></li>
+<li><a href="#_optional_parameters">2.13.2. Optional parameters</a></li>
+<li><a href="#_variadic_attributes">2.13.3. Variadic attributes</a></li>
+<li><a href="#at-patterns">2.13.4. @-patterns</a></li>
+</ul>
+</li>
+<li><a href="#_if_expressions">2.14. If expressions</a></li>
+<li><a href="#_let_expressions">2.15. Let expressions</a></li>
+<li><a href="#_with_expressions">2.16. With expressions</a></li>
 </ul>
 </li>
 <li><a href="#_hello_flake">3. Hello, flake!</a></li>
@@ -256,7 +262,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_in_shell_nix_5">10.5.1. In <code>shell.nix</code></a></li>
 </ul>
 </li>
-<li><a href="#_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">10.6. Access to a Haskell package on your local computer, with interdependencies</a>
+<li><a href="#_access_to_a_haskell_package_on_your_local_computer_with_inter_dependencies">10.6. Access to a Haskell package on your local computer, with inter-dependencies</a>
 <ul class="sectlevel3">
 <li><a href="#_in_shell_nix_6">10.6.1. In <code>shell.nix</code></a></li>
 </ul>
@@ -298,8 +304,8 @@ and as a downloadable
 <div class="sect2">
 <h3 id="_why_nix">1.1. Why Nix?</h3>
 <div class="paragraph">
-<p>If you’ve opened this PDF, you already have your own motivation for
-learning Nix. Here’s how it helps me. As a researcher, I tend to work on
+<p>If you&#8217;ve opened this PDF, you already have your own motivation for
+learning Nix. Here&#8217;s how it helps me. As a researcher, I tend to work on
 a series of short-term projects, mostly demos and prototypes. For each
 one, I typically develop some software using a compiler, often with some
 open source libraries. Often I use other tools to analyse data or
@@ -310,21 +316,21 @@ generate documentation, for example.</p>
 would report errors when trying to build or run the project. Belatedly I
 would realise that my code relies on a library that they need to
 install. Or perhaps they had installed the library, but the version
-they’re using is incompatible.</p>
+they&#8217;re using is incompatible.</p>
 </div>
 <div class="paragraph">
-<p>Using containers helped with the problem. However, I didn’t want to
+<p>Using containers helped with the problem. However, I didn&#8217;t want to
 <em>develop</em> in a container. I did all my development in my nice, familiar,
 environment with my custom aliases and shell prompt. and <em>then</em> I
 containerised the software. This added step was annoying for me, and if
 my colleague wanted to do some additional development, they would
 probably extract all of the source code from the container first anyway.
-Containers are great, but this isn’t the ideal use case for them.</p>
+Containers are great, but this isn&#8217;t the ideal use case for them.</p>
 </div>
 <div class="paragraph">
 <p>Nix allows me to work in my custom environment, but forces me to specify
 any dependencies. It automatically tracks the version of each dependency
-so that it can replicate the environment wherever and whenever it’s
+so that it can replicate the environment wherever and whenever it&#8217;s
 needed.</p>
 </div>
 </div>
@@ -333,9 +339,9 @@ needed.</p>
 <div class="paragraph">
 <p>Flakes are labeled as an experimental feature, so it might seem safer to
 avoid them. However, they have been in use for years, and there is
-widespread adoption, so the aren’t going away any time soon. Flakes are
+widespread adoption, so the aren&#8217;t going away any time soon. Flakes are
 easier to understand, and offer more features than the traditional Nix
-approach. After weighing the pros and cons, I feel it’s better to learn
+approach. After weighing the pros and cons, I feel it&#8217;s better to learn
 and use flakes; and this seems to be the general consensus.</p>
 </div>
 </div>
@@ -366,12 +372,12 @@ see the instructions in the <a href="https://nixos.wiki/wiki/Flakes">NixOS wiki<
 </td>
 <td class="content">
 <div class="paragraph">
-<p>There are hyphenated and unhyphenated versions of many Nix commands.
+<p>There are hyphenated and un-hyphenated versions of many Nix commands.
 For example, <code>nix-shell</code> and <code>nix shell</code> are two different commands.
 Don&#8217;t confuse them!</p>
 </div>
 <div class="paragraph">
-<p>Generally speaking, the unhyphenated versions are for working directly
+<p>Generally speaking, the un-hyphenated versions are for working directly
 with flakes, while the hyphenated versions are for everything else.</p>
 </div>
 </td>
@@ -407,7 +413,7 @@ By contrast, in a functional language the focus is on <em>defining</em> the desi
 </div>
 <div class="paragraph">
 <p>In the case of Nix, the desired result is usually a <em>derivation</em>:
-a software package that has been built and is ready for use.
+a software package that has been built and make available for use.
 The Nix language has been designed for that purpose,
 and thus has some features you don&#8217;t typically find in general-purpose languages.</p>
 </div>
@@ -719,7 +725,7 @@ error: undefined variable &#39;a-b&#39;
 once you assign a value to a variable, you cannot change it.
 You can, however, create a new variable with the same name, but in a different scope.
 Don&#8217;t worry if you don&#8217;t completely understand the previous sentence;
-we will see some examples in <a href="#_functions">[_functions]</a>, <a href="#_let_expressions">Section 2.14, &#8220;Let expressions&#8221;</a>, and <a href="#_with_expressions">Section 2.15, &#8220;With expressions&#8221;</a>.</p>
+we will see some examples in <a href="#_functions">[_functions]</a>, <a href="#_let_expressions">Section 2.15, &#8220;Let expressions&#8221;</a>, and <a href="#_with_expressions">Section 2.16, &#8220;With expressions&#8221;</a>.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -941,7 +947,7 @@ For more information on these and other built-in functions, see the Nix Manual
 </div>
 </div>
 <div class="paragraph">
-<p>Given a startiing position and a length, extract a substring.
+<p>Given a starting position and a length, extract a substring.
 The first character of a string has index <code>0</code>.</p>
 </div>
 <div class="listingblock">
@@ -1202,7 +1208,7 @@ For more information on these and other built-in functions, see the Nix Manual
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; fruit = [ &quot;apple&quot; &quot;banana&quot; &quot;canteloupe&quot; ]
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; fruit = [ &quot;apple&quot; &quot;banana&quot; &quot;cantaloupe&quot; ]
 
 nix-repl&gt; builtins.elem &quot;apple&quot; fruit
 true
@@ -1221,7 +1227,7 @@ The first element in a list has index <code>0</code>.</p>
 &quot;apple&quot;
 
 nix-repl&gt; builtins.elemAt fruit 2
-&quot;canteloupe&quot;</code></pre>
+&quot;cantaloupe&quot;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1248,7 +1254,7 @@ nix-repl&gt; builtins.elemAt fruit 2
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; builtins.tail fruit
-[ &quot;banana&quot; &quot;canteloupe&quot; ]</code></pre>
+[ &quot;banana&quot; &quot;cantaloupe&quot; ]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1320,7 +1326,8 @@ false</code></pre>
 <h4 id="_modification">2.11.3. Modification</h4>
 <div class="paragraph">
 <p>We can use the <code>//</code> operator to modify an attribute set.
-Recall that Nix values are immutable, so the result is a new value (the original is not modified).</p>
+Recall that Nix values are immutable, so the result is a new value (the original is not modified).
+Attributes in the right-hand set take preference.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1429,7 +1436,7 @@ However, it doesn&#8217;t have a name, so we can&#8217;t use it directly.
 Anonymous functions do have their uses, as we shall see shortly.</p>
 </div>
 <div class="paragraph">
-<p>Note that the message printed by the NixREPL when we created the function uses the term <em>lambda</em>.
+<p>Note that the message printed by the Nix REPL when we created the function uses the term <em>lambda</em>.
 This derives from a branch of mathematics called <em>lambda calculus</em>.
 Lambda calculus was the inspiration for most functional languages such as Nix.
 Functional programmers often call anonymous functions "lambdas".</p>
@@ -1493,6 +1500,19 @@ Note that the expression <code>(b: a+b)</code> is an anonymous function.
 We never call it directly, so it doesn&#8217;t need a name.
 Anonymous functions are useful after all!</p>
 </div>
+<div class="paragraph">
+<p>I used parentheses to emphasise the inner function, but they aren&#8217;t necessary.
+More commonly we would write the following.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; add = a: b: a+b</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we only supply one parameter to <code>add</code>, the result is a new function rather than a simple value.
+Invoking a function without supplying all of the expected parameters is called <em>partial application</em>.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; add 3             # Returns a function that adds 3 to any input
@@ -1518,7 +1538,14 @@ Anonymous functions are useful after all!</p>
 </div>
 </div>
 <div class="paragraph">
-<p>In case that wasn&#8217;t clear, let&#8217;s repeat those steps, but in more detail.
+<p>If you&#8217;ve never used a functional programming language, this all probably seems very strange.
+Imagine that you want to add two numbers, but you have a very unusual calculator labeled "add".
+This calculator never displays a result, it only produces more calculators!
+If you enter the value <code>3</code> into the "add" calculator, it gives you a second calculator labeled  "add 3".
+You then enter <code>5</code> into the "add 3" calculator, which displays the result of the addition, <code>8</code>.</p>
+</div>
+<div class="paragraph">
+<p>With that image in mind, let&#8217;s walk through the steps again in the REPL, but this time in more detail.
 The function <code>add</code> takes a single parameter <code>a</code>,
 and returns a new function that takes a single parameter <code>b</code>, and returns the value <code>a + b</code>.
 Let&#8217;s apply <code>add</code> to the value <code>3</code>, and give the resulting new function a name, <code>g</code>.</p>
@@ -1553,7 +1580,20 @@ a function</code></pre>
 <div class="paragraph">
 <p>I said earlier that a function in Nix always has a single parameter.
 However, that parameter need not be a simple value; it could be a list or an attribute set.
-To specify an attribute set as a parameter, we use a <em>set pattern</em>,
+This approach is widely used in Nix, and the language has some special features to support it.
+This is an important topic, so we will cover it separately in <a href="#argument-sets">Section 2.13, &#8220;Argument sets&#8221;</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="argument-sets">2.13. Argument sets</h3>
+<div class="paragraph">
+<p>An attribute set that is used as a function parameter is often called an <em>argument set</em>.</p>
+</div>
+<div class="sect3">
+<h4 id="_set_patterns">2.13.1. Set patterns</h4>
+<div class="paragraph">
+<p>To specify an attribute set as a function parameter, we use a <em>set pattern</em>,
 which has the form</p>
 </div>
 <div class="literalblock">
@@ -1563,8 +1603,8 @@ which has the form</p>
 </div>
 <div class="paragraph">
 <p>Note that while the key-value associations in attribute sets are separated by semi-colons,
-the key names in the attribute <em>set pattern</em> are separated by commas.
-Here&#8217;s an example.</p>
+the key names in the attribute set _pattern are separated by commas.
+Here&#8217;s an example of a function that has an attribute set as an input parameter.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1576,9 +1616,9 @@ nix-repl&gt; greet { first=&quot;Amy&quot;; last=&quot;de Buitléir&quot;; }
 </div>
 </div>
 <div class="sect3">
-<h4 id="_optional_parameters">2.12.5. Optional parameters</h4>
+<h4 id="_optional_parameters">2.13.2. Optional parameters</h4>
 <div class="paragraph">
-<p>We can make some values in an attribute set optional by providing default values,
+<p>We can make some values in an argument set optional by providing default values,
 using the syntax <code><em>name</em> ? <em>value</em></code>.
 This is illustrated below.</p>
 </div>
@@ -1595,26 +1635,76 @@ nix-repl&gt; greet { first=&quot;Amy&quot;; topic=&quot;Mathematics&quot;;}
 </div>
 </div>
 <div class="sect3">
-<h4 id="_patterns">2.12.6. @-patterns</h4>
+<h4 id="_variadic_attributes">2.13.3. Variadic attributes</h4>
 <div class="paragraph">
-<p>TODO</p>
+<p>A function can allow the caller to supply argument sets that contain "extra" values.
+This is done with the special parameter <code>&#8230;&#8203;</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; formatName = { first, last, ... }: &quot;${first} ${last}&quot;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>TODO</p>
+<p>One reason for doing this is to allow the caller to pass the same argument set to multiple functions,
+even though each function may not need all of the values.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; person = { first=&quot;Joe&quot;; last=&quot;Bloggs&quot;; address=&quot;123 Main Street&quot;; }
+
+nix-repl&gt; formatName person
+&quot;Joe Bloggs&quot;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>TODO</p>
+<p>Another reason for allowing variadic arguments is when a function calls another function,
+supplying the same argument set.
+An example is shown in <a href="#at-patterns">Section 2.13.4, &#8220;@-patterns&#8221;</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="at-patterns">2.13.4. @-patterns</h4>
+<div class="paragraph">
+<p>It can be convenient for a function to be able to reference the argument set as a whole.
+This is done using an <em>@-pattern</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; formatPoint = p@{ x, y, ... }: builtins.toXML p
+
+nix-repl&gt; formatPoint { x=5; y=3; z=2; }
+&quot;&lt;?xml version=&#39;1.0&#39; encoding=&#39;utf-8&#39;?&gt;\n&lt;expr&gt;\n  &lt;attrs&gt;\n    &lt;attr name=\&quot;x\&quot;&gt;\n      &lt;int value=\&quot;5\&quot; /&gt;\n    &lt;/attr&gt;\n    &lt;attr name=\&quot;y\&quot;&gt;\n      &lt;int value=\&quot;3\&quot; /&gt;\n    &lt;/attr&gt;\n    &lt;attr name=\&quot;z\&quot;&gt;\n      &lt;int value=\&quot;2\&quot; /&gt;\n    &lt;/attr&gt;\n  &lt;/attrs&gt;\n&lt;/expr&gt;\n&quot;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>TODO</p>
+<p>Alternatively, the @-pattern can appear <em>after</em> the argument set, as in the example below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; formatPoint = { x, y, ... } @ p: builtins.toXML p</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>TODO</p>
+<p>An @-pattern is the only way a function can access variadic attributes,
+so they are often used together.
+In the example below, the function <code>greet</code> passes its argument set, including the variadic arguments,
+to the function <code>confirmAddress</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code><span></span>nix-repl&gt; confirmAddress = { address, ... }: &quot;Do you still live at ${address}?&quot;
+
+nix-repl&gt; greet = args@{ first, last, ... }: &quot;Hello ${first}. &quot; + confirmAddress args
+
+nix-repl&gt; greet person
+&quot;Hello Joe. Do you still live at 123 Main Street?&quot;</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_if_expressions">2.13. If expressions</h3>
+<h3 id="_if_expressions">2.14. If expressions</h3>
 <div class="paragraph">
 <p>The conditional construct in Nix is an <em>expression</em>, not a <em>statement</em>.
 Since expressions must have values in all cases, you must specify both the <code>then</code> and the <code>else</code> branch.</p>
@@ -1631,7 +1721,7 @@ nix-repl&gt; if a &gt; b then &quot;yes&quot; else &quot;no&quot;
 </div>
 </div>
 <div class="sect2">
-<h3 id="_let_expressions">2.14. Let expressions</h3>
+<h3 id="_let_expressions">2.15. Let expressions</h3>
 <div class="paragraph">
 <p>A <code>let</code> expression defines a value with a local scope.</p>
 </div>
@@ -1691,7 +1781,7 @@ This is similar to how recursive attribute sets work.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_with_expressions">2.15. With expressions</h3>
+<h3 id="_with_expressions">2.16. With expressions</h3>
 <div class="paragraph">
 <p>A <code>with</code> expression is somewhat similar to a <code>let</code> expression,
 but it brings all of the associations in an attribute set into scope.</p>
@@ -1746,10 +1836,10 @@ using the attribute selection operator (<code>.</code>).</p>
 <h2 id="_hello_flake">3. Hello, flake!</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Before learning to write Nix flakes, let’s learn how to use them. I’ve
+<p>Before learning to write Nix flakes, let&#8217;s learn how to use them. I&#8217;ve
 created a simple example of a flake in this git
 <a href="https://codeberg.org/mhwombat/hello-flake">repository</a>. To run this
-flake, you don’t need to install anything; simply run the command below.
+flake, you don&#8217;t need to install anything; simply run the command below.
 The first time you use a flake, Nix has to fetch and build it, which
 may take time. Subsequent invocations should be instantaneous.</p>
 </div>
@@ -1760,7 +1850,7 @@ Hello from your flake!</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>That’s a lot to type every time we want to use this package. Instead, we
+<p>That&#8217;s a lot to type every time we want to use this package. Instead, we
 can enter a shell with the package available to us, using the
 <code>nix shell</code> command.</p>
 </div>
@@ -1780,10 +1870,10 @@ Hello from your flake!</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Nix didn’t <em>install</em> the package; it merely built and placed it in a
+<p>Nix didn&#8217;t <em>install</em> the package; it merely built and placed it in a
 directory called the &#8220;Nix store&#8221;. Thus we can have multiple versions
 of a package without worrying about conflicts. We can find out the
-location of the executable, if we’re curious.</p>
+location of the executable, if we&#8217;re curious.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1804,7 +1894,7 @@ sh: line 3: hello-flake: command not found</pre>
 </div>
 <div class="paragraph">
 <p>However, we can still run the command using the store path we found
-earlier. That’s not particularly convenient, but it does demonstrate
+earlier. That&#8217;s not particularly convenient, but it does demonstrate
 that the package remains in the store for future use.</p>
 </div>
 <div class="literalblock">
@@ -1818,7 +1908,7 @@ that the package remains in the store for future use.</p>
 <h2 id="_the_hello_flake_repo">4. The hello-flake repo</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let’s clone the repository and see how the flake is defined.</p>
+<p>Let&#8217;s clone the repository and see how the flake is defined.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1841,7 +1931,7 @@ which provides information about the repo.</p>
 <div class="paragraph">
 <p>The <code>hello-flake</code> file is the executable we ran earlier.
 This particular executable is just a shell script, so we can view it.
-It’s an extremly simple script with just two lines.</p>
+It&#8217;s an extremely simple script with just two lines.</p>
 </div>
 <div class="listingblock">
 <div class="title">hello-flake</div>
@@ -1867,10 +1957,10 @@ Hello from your flake!</pre>
 <div class="paragraph">
 <p>Not terribly exciting, I know. But starting with such a simple package
 makes it easier to focus on the flake system without getting bogged down
-in the details. We’ll make this script a little more interesting later.</p>
+in the details. We&#8217;ll make this script a little more interesting later.</p>
 </div>
 <div class="paragraph">
-<p>Let’s look at another file. The file that defines how to package a flake
+<p>Let&#8217;s look at another file. The file that defines how to package a flake
 is always called <code>flake.nix</code>.</p>
 </div>
 <div class="listingblock">
@@ -1971,7 +2061,7 @@ is always called <code>flake.nix</code>.</p>
 intimidating.
 Flakes are written in the Nix language, introduced in an earlier chapter.
 However, you don&#8217;t really need to know Nix to follow this example.
-For now, I’d like to focus on the inputs section.</p>
+For now, I&#8217;d like to focus on the inputs section.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1990,7 +2080,7 @@ flakes. The important thing to note is that the <code>hello-flake</code> package
 <em>depends</em> on <code>nixpkgs</code> and <code>flake-utils</code>.</p>
 </div>
 <div class="paragraph">
-<p>Finally, let’s look at <code>flake.lock</code>, or rather, just part of it.</p>
+<p>Finally, let&#8217;s look at <code>flake.lock</code>, or rather, just part of it.</p>
 </div>
 <div class="listingblock">
 <div class="title">flake.lock</div>
@@ -2073,8 +2163,8 @@ benefit of using flakes.</p>
 <div class="sect2">
 <h3 id="_description">5.1. Description</h3>
 <div class="paragraph">
-<p>The <code>description</code> part is self-explanatory; it’s just a string. You
-probably won’t need <code>nixConfig</code> unless you’re doing something fancy. I’m
+<p>The <code>description</code> part is self-explanatory; it&#8217;s just a string. You
+probably won&#8217;t need <code>nixConfig</code> unless you&#8217;re doing something fancy. I&#8217;m
 going to focus on what goes into the <code>inputs</code> and <code>outputs</code> sections,
 and highlight some of the things I found confusing when I began using flakes.</p>
 </div>
@@ -2082,7 +2172,7 @@ and highlight some of the things I found confusing when I began using flakes.</p
 <div class="sect2">
 <h3 id="_inputs">5.2. Inputs</h3>
 <div class="paragraph">
-<p>This section specifies the dependencies of a flake. It’s an <em>attribute
+<p>This section specifies the dependencies of a flake. It&#8217;s an <em>attribute
 set</em>; it maps keys to values.</p>
 </div>
 <div class="paragraph">
@@ -2173,7 +2263,7 @@ Reference Manual</a>.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Although you probably won’t need to use it, there is another syntax for
+<p>Although you probably won&#8217;t need to use it, there is another syntax for
 flake references that you might encounter. This example</p>
 </div>
 <div class="listingblock">
@@ -2226,7 +2316,7 @@ dependency defined in the previous example.</p>
 That depends on the programming languages your software is written in,
 the build system you use, and more. There are Nix functions and tools
 that can simplify much of this, and new, easier-to-use ones are released
-regularly. We’ll look at some of these in the next section.</p>
+regularly. We&#8217;ll look at some of these in the next section.</p>
 </div>
 </div>
 </div>
@@ -2243,7 +2333,7 @@ detail.</p>
 <p>Flakes are written in the Nix programming language, which is a
 functional language. As with most programming languages, there are many
 ways to achieve the same result. Below is an example you can follow when
-writing your own flakes. I’ll explain the example in some detail.</p>
+writing your own flakes. I&#8217;ll explain the example in some detail.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2290,7 +2380,7 @@ dependencies in the input section should also be listed at the beginning
 of the outputs section <code>❷</code>.</p>
 </div>
 <div class="paragraph">
-<p>Now it’s time to look at the content of the output section. If we want
+<p>Now it&#8217;s time to look at the content of the output section. If we want
 the package to be available for multiple systems (e.g.,
 &#8220;x86_64-linux&#8221;, &#8220;aarch64-linux&#8221;, &#8220;x86_64-darwin&#8221;, and
 &#8220;aarch64-darwin&#8221;), we need to define the output for each of those
@@ -2302,7 +2392,7 @@ outputs for each one.</p>
 </div>
 <div class="paragraph">
 <p>The <code>devShells</code> variable specifies the environment that should be
-available when doing development on the package. If you don’t need a
+available when doing development on the package. If you don&#8217;t need a
 special development environment, you can omit this section. At <code>❹</code> you
 would list any tools (e.g., compilers and language-specific build tools)
 you want to have available in a development shell. If the compiler needs
@@ -2325,7 +2415,7 @@ were written or updated recently.</p>
 <div class="paragraph">
 <p>The <code>apps</code> variable identifies any applications provided by the flake.
 In particular, it identifies the default executable ❻ that <code>nix run</code>
-will run if you don’t specify an app.</p>
+will run if you don&#8217;t specify an app.</p>
 </div>
 <div class="paragraph">
 <p>Below is a list of some functions that are commonly used in
@@ -2337,7 +2427,7 @@ this section.</p>
 <dd>
 <p>The standard environment provides <code>mkDerivation</code>, which is especially
 useful for the typical <code>./configure; make; make install</code> scenario.
-It’s customisable.</p>
+It&#8217;s customisable.</p>
 </dd>
 <dt class="hdlist1">Python</dt>
 <dd>
@@ -2357,7 +2447,7 @@ standard environment version), <code>developPackage</code>, <code>callCabal2Nix<
 <div class="sectionbody">
 <div class="paragraph">
 <p>Now that we have a better understanding of the structure of <code>flake.nix</code>,
-let’s have a look at the one we saw earlier, in the <code>hello-flake</code> repo.
+let&#8217;s have a look at the one we saw earlier, in the <code>hello-flake</code> repo.
 If you compare this flake definition to the colour-coded template
 presented in the previous section, most of it should look familiar.</p>
 </div>
@@ -2397,13 +2487,13 @@ presented in the previous section, most of it should look familiar.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This <code>flake.nix</code> doesn’t have a <code>devShells</code> section, because development
-on the current version doesn’t require anything beyond
+<p>This <code>flake.nix</code> doesn&#8217;t have a <code>devShells</code> section, because development
+on the current version doesn&#8217;t require anything beyond
 the &#8220;bare bones&#8221; linux commands. Later we will add a feature that requires
 additional development tools.</p>
 </div>
 <div class="paragraph">
-<p>Now let’s look at the section I labeled <code>SOME UNFAMILIAR STUFF</code> and
+<p>Now let&#8217;s look at the section I labeled <code>SOME UNFAMILIAR STUFF</code> and
 see what it does.</p>
 </div>
 <div class="literalblock">
@@ -2430,8 +2520,8 @@ see what it does.</p>
 <div class="paragraph">
 <p>This flake uses <code>mkDerivation</code> <code>❶</code> which is a very useful
 general-purpose package builder provided by the Nix standard
-environment. It’s especially useful for the typical
-<code>./configure; make; make install</code> scenario, but for this flake we don’t
+environment. It&#8217;s especially useful for the typical
+<code>./configure; make; make install</code> scenario, but for this flake we don&#8217;t
 even need that.</p>
 </div>
 <div class="paragraph">
@@ -2446,7 +2536,7 @@ unpacked.</p>
 <div class="paragraph">
 <p>The <code>buildPhase</code> variable is a sequence of Linux commands to build the
 package. Typically, building a package requires compiling the source
-code. However, that’s not required for a simple shell script. So
+code. However, that&#8217;s not required for a simple shell script. So
 <code>buildPhase</code> consists of a single command, <code>:</code>,
 which is a no-op or &#8220;do nothing&#8221; command.</p>
 </div>
@@ -2466,7 +2556,7 @@ Nix standard environment and the external dependencies identified in the
 <code>inputs</code> section of the flake.</p>
 </div>
 <div class="paragraph">
-<p>I’ve mentioned the Nix standard environment before, but I didn’t explain
+<p>I&#8217;ve mentioned the Nix standard environment before, but I didn&#8217;t explain
 what it is. The standard environment, or <code>stdenv</code>, refers to the
 functionality that is available during the build and install phases of a
 Nix package (or flake). It includes the commands listed
@@ -2551,7 +2641,7 @@ cannot rely on them.</p>
 <div class="sect2">
 <h3 id="_the_nix_development_shell">8.1. The Nix development shell</h3>
 <div class="paragraph">
-<p>Let’s make a simple modification to the script. This will give you an
+<p>Let&#8217;s make a simple modification to the script. This will give you an
 opportunity to check your understanding of flakes.</p>
 </div>
 <div class="paragraph">
@@ -2565,15 +2655,15 @@ opportunity to check your understanding of flakes.</p>
 <div class="paragraph">
 <p>The <code>flake.nix</code> file specifies all of the tools that are needed during
 development of the package. The <code>nix develop</code> command puts us in a shell
-with those tools. As it turns out, we didn’t need any extra tools
-(beyond the standard environment) for development yet, but that’s
+with those tools. As it turns out, we didn&#8217;t need any extra tools
+(beyond the standard environment) for development yet, but that&#8217;s
 usually not the case. Also, we will soon need another tool.</p>
 </div>
 <div class="paragraph">
 <p>A development environment only allows you to <em>develop</em> the package.
-Don’t expect the package <em>outputs</em> (e.g. executables) to be available
-until you build them. However, our script doesn’t need to be compiled,
-so can’t we just run it?</p>
+Don&#8217;t expect the package <em>outputs</em> (e.g. executables) to be available
+until you build them. However, our script doesn&#8217;t need to be compiled,
+so can&#8217;t we just run it?</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -2582,11 +2672,11 @@ bash: line 16: hello-flake: command not found</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>That worked before; why isn’t it working now? Earlier we used
+<p>That worked before; why isn&#8217;t it working now? Earlier we used
 <code>nix shell</code> to enter a <em>runtime</em> environment where <code>hello-flake</code> was
 available and on the <code>$PATH</code>. This time we entered a <em>development</em>
-environment using the <code>nix develop</code> command. Since the flake hasn’t been
-built yet, the executable won’t be on the <code>$PATH</code>. We can, however, run
+environment using the <code>nix develop</code> command. Since the flake hasn&#8217;t been
+built yet, the executable won&#8217;t be on the <code>$PATH</code>. We can, however, run
 it by specifying the path to the script.</p>
 </div>
 <div class="literalblock">
@@ -2607,7 +2697,7 @@ Hello from your flake!</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Rather than typing the full path to the executable, it’s more convenient
+<p>Rather than typing the full path to the executable, it&#8217;s more convenient
 to use <code>nix run</code>.</p>
 </div>
 <div class="literalblock">
@@ -2617,7 +2707,7 @@ Hello from your flake!</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Here’s a summary of the more common Nix commands.</p>
+<p>Here&#8217;s a summary of the more common Nix commands.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2639,7 +2729,7 @@ by <code>flake.nix</code>).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>nix shell</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enters a <em>runtime</em> shell where the flake’s executables are
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enters a <em>runtime</em> shell where the flake&#8217;s executables are
 available on the <code>$PATH</code>.</p></td>
 </tr>
 <tr>
@@ -2649,7 +2739,7 @@ available on the <code>$PATH</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>nix run</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Runs the flake’s default executable, rebuilding the package
+<td class="tableblock halign-left valign-top"><p class="tableblock">Runs the flake&#8217;s default executable, rebuilding the package
 first if needed. Specifically, it runs the version in the Nix store, not
 the version in <code>result</code>.</p></td>
 </tr>
@@ -2659,7 +2749,7 @@ the version in <code>result</code>.</p></td>
 <div class="sect2">
 <h3 id="_introducing_a_dependency">8.2. Introducing a dependency</h3>
 <div class="paragraph">
-<p>Now we’re ready to make the flake a little more interesting.
+<p>Now we&#8217;re ready to make the flake a little more interesting.
 Instead of using the <code>echo</code> command in the script, we can use the Linux <code>cowsay</code>
 command.
 Here&#8217;s the <code>hello-flake</code> file, with the modified line highlighted.</p>
@@ -2673,7 +2763,7 @@ cowsay <span class="tok-s2">&quot;Hello from your flake!&quot;</span></code></pr
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s test the modified script.</p>
+<p>Let&#8217;s test the modified script.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -2683,15 +2773,15 @@ cowsay <span class="tok-s2">&quot;Hello from your flake!&quot;</span></code></pr
 </div>
 <div class="paragraph">
 <p>What went wrong? Remember that we are in a <em>development</em> shell. Since
-<code>flake.nix</code> didn’t define the <code>devShells</code> variable, the development
+<code>flake.nix</code> didn&#8217;t define the <code>devShells</code> variable, the development
 shell only includes the Nix standard environment. In particular, the
 <code>cowsay</code> command is not available.</p>
 </div>
 <div class="paragraph">
 <p>To fix the problem, we can modify <code>flake.nix</code>.
-We don’t need to add <code>cowsay</code> to the <code>inputs</code> section because it’s included in <code>nixpkgs</code>,
+We don&#8217;t need to add <code>cowsay</code> to the <code>inputs</code> section because it&#8217;s included in <code>nixpkgs</code>,
 which is already an input.
-However, we also want it to be available in a develoment shell.
+However, we also want it to be available in a development shell.
 The highlighted modifications below will accomplish that.</p>
 </div>
 <div class="listingblock">
@@ -2751,9 +2841,9 @@ The highlighted modifications below will accomplish that.</p>
 </div>
 <div class="paragraph">
 <p>Now we restart the development shell and see that the <code>cowsay</code> command is
-available and the script works. Because we’ve updated source files
-but haven’t <code>git commit</code>ed the new version, we get a warning message
-about it being &#8220;dirty&#8221;. It’s just a warning, though; the script runs
+available and the script works. Because we&#8217;ve updated source files
+but haven&#8217;t <code>git commit</code>ed the new version, we get a warning message
+about it being &#8220;dirty&#8221;. It&#8217;s just a warning, though; the script runs
 correctly.</p>
 </div>
 <div class="literalblock">
@@ -2793,7 +2883,7 @@ warning: Git tree '/home/amy/codeberg/nix-book/source/modify-hello-flake/hello-f
 <div class="paragraph">
 <p>Note, however, that <code>nix run</code> rebuilt the package in the Nix store and
 ran <em>that</em>. It did not alter the copy in the <code>result</code> directory, as
-we’ll see next.</p>
+we&#8217;ll see next.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -2817,13 +2907,13 @@ cowsay "Hello from your flake!"</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s <code>git commit</code> the changes and verify that the warning goes away. We
-don’t need to <code>git push</code> the changes until we’re ready to share them.</p>
+<p>Let&#8217;s <code>git commit</code> the changes and verify that the warning goes away. We
+don&#8217;t need to <code>git push</code> the changes until we&#8217;re ready to share them.</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre class="nowrap">$ git commit hello-flake flake.nix -m 'added bovine feature'
-[main eb4d08c] added bovine feature
+[main c264cad] added bovine feature
  2 files changed, 7 insertions(+), 1 deletion(-)
 $ nix run
  ________________________
@@ -2840,8 +2930,8 @@ $ nix run
 <div class="sect2">
 <h3 id="_development_workflows">8.3. Development workflows</h3>
 <div class="paragraph">
-<p>If you’re getting confused about when to use the different commands,
-it’s because there’s more than one way to use Nix. I tend to think of it
+<p>If you&#8217;re getting confused about when to use the different commands,
+it&#8217;s because there&#8217;s more than one way to use Nix. I tend to think of it
 as two different development workflows.</p>
 </div>
 <div class="paragraph">
@@ -2861,15 +2951,15 @@ as two different development workflows.</p>
 </ol>
 </div>
 <div class="paragraph">
-<p>In the high-level workflow, I don’t use a development shell because I
-don’t need to directly invoke development tools such as compilers and
+<p>In the high-level workflow, I don&#8217;t use a development shell because I
+don&#8217;t need to directly invoke development tools such as compilers and
 linkers. Nix invokes them for me according to the output definition in
 <code>flake.nix</code>.</p>
 </div>
 <div class="paragraph">
 <p>Occasionally I want to work at a lower level, and invoke compiler,
 linkers, etc. directly. Perhaps want to work on one component without
-rebuilding the entire package. Or perhaps I’m confused by some error
+rebuilding the entire package. Or perhaps I&#8217;m confused by some error
 message, so I want to temporarily bypass Nix and work directly with
 the compiler. In this case I temporarily switch to a <em>low-level
 workflow</em>.</p>
@@ -2888,7 +2978,7 @@ I need (e.g. compilers, linkers, documentation generators).</p>
 </li>
 <li>
 <p>Directly invoke the executable. Note that the location of the
-executable depends on the development tools – It probably isn’t
+executable depends on the development tools – It probably isn&#8217;t
 <code>result</code>!</p>
 </li>
 <li>
@@ -2898,7 +2988,7 @@ executable depends on the development tools – It probably isn’t
 </div>
 <div class="paragraph">
 <p>I generally only use <code>nix build</code> if I just want to build the package but
-not execute anything (perhaps it’s just a library).</p>
+not execute anything (perhaps it&#8217;s just a library).</p>
 </div>
 </div>
 <div class="sect2">
@@ -2939,7 +3029,7 @@ Initialized empty Git repository in /home/amy/codeberg/nix-book/source/new-flake
 <div class="sect3">
 <h4 id="_a_simple_haskell_program">9.1.1. A simple Haskell program</h4>
 <div class="paragraph">
-<p>Next, we’ll create a simple Haskell program.</p>
+<p>Next, we&#8217;ll create a simple Haskell program.</p>
 </div>
 <div class="listingblock">
 <div class="title">Main.hs</div>
@@ -2964,14 +3054,14 @@ Initialized empty Git repository in /home/amy/codeberg/nix-book/source/new-flake
 <div class="sect3">
 <h4 id="_optional_testing_before_packaging">9.1.2. (Optional) Testing before packaging</h4>
 <div class="paragraph">
-<p>Before we package the program, let’s verify that it runs. We’re going to
-need a Haskell compiler. By now you’ve probably figured out that we can write a
-<code>flake.nix</code> and define a development shell that includes Haskell. We’ll
+<p>Before we package the program, let&#8217;s verify that it runs. We&#8217;re going to
+need a Haskell compiler. By now you&#8217;ve probably figured out that we can write a
+<code>flake.nix</code> and define a development shell that includes Haskell. We&#8217;ll
 do that shortly, but first I want to show you a handy shortcut. We can
-lauch a <em>temporary</em> shell with any Nix packages we want. This is
-convenient when you just want to try out some new software and you’re
-not sure if you’ll use it again. It’s also convenient when you’re not
-ready to write <code>flake.nix</code> (perhaps you’re not sure what tools and
+launch a <em>temporary</em> shell with any Nix packages we want. This is
+convenient when you just want to try out some new software and you&#8217;re
+not sure if you&#8217;ll use it again. It&#8217;s also convenient when you&#8217;re not
+ready to write <code>flake.nix</code> (perhaps you&#8217;re not sure what tools and
 packages you need), and you want to experiment a bit first.</p>
 </div>
 <div class="paragraph">
@@ -2994,7 +3084,7 @@ packages you need), and you want to experiment a bit first.</p>
 <p>The command used here is <code>nix-shell</code> with a hyphen, not <code>nix shell</code>
 with a space; those are two different commands. In fact there are
 hyphenated and non-hyphenated versions of many Nix commands, and yes,
-it’s confusing. The non-hyphenated commands were introduced when support
+it&#8217;s confusing. The non-hyphenated commands were introduced when support
 for flakes was added to Nix. I predict that eventually all hyphenated
 commands will be replaced with non-hyphenated versions. Until then, a
 useful rule of thumb is that non-hyphenated commands are for for working
@@ -3025,7 +3115,7 @@ You can come back to this section later to learn more.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>Let’s enter a shell with the Glasgow Haskell Compiler ("ghc") and try to run the program.</p>
+<p>Let&#8217;s enter a shell with the Glasgow Haskell Compiler ("ghc") and try to run the program.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -3200,7 +3290,7 @@ executable hello-flake-haskell
 <div class="paragraph">
 <p>At this point, I would normally write <code>flake.nix</code> and use Nix to build the program.
 I&#8217;ll cover that in the next section.
-However, it&#8217;s useful to know how to build the package manually in a Nix envronment,
+However, it&#8217;s useful to know how to build the package manually in a Nix environment,
 without using a Nix flake.
 When you&#8217;re new to Nix, this can help you differentiate between problems in your flake definition
 and problems in your Cabal file.</p>
@@ -3220,7 +3310,7 @@ Rather than launch another shell-within-a-shell, let&#8217;s exit create a new o
 <pre class="nowrap">$ exit
 $ nix-shell -p "[ cabal-install (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ hostname ]))]"
 $ cabal build
-Warning: The package list for 'hackage.haskell.org' is 21 days old.
+Warning: The package list for 'hackage.haskell.org' is 24 days old.
 Run 'cabal update' to get the latest list of available packages.
 Resolving dependencies...
 Build profile: -w ghc-9.4.8 -O1
@@ -3313,7 +3403,7 @@ different are the development shell and the package builder.</p>
 <div class="paragraph">
 <p>The above definition will work for most of your haskell projects;
 simply change the <code>description</code> and the package name in <code>packages.default</code>.
-Let’s try out the new flake.</p>
+Let&#8217;s try out the new flake.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -3323,7 +3413,7 @@ error: getting status of '/nix/store/0ccnxa25whszw7mgbgyzdm4nqc0zwnm8-source/fla
 </div>
 </div>
 <div class="paragraph">
-<p>Why can’t it find <code>flake.nix</code>? Nix flakes only &#8220;see&#8221; files that are
+<p>Why can&#8217;t it find <code>flake.nix</code>? Nix flakes only &#8220;see&#8221; files that are
 part of the repository. We need to add all of the important files to the
 repo before building or running the flake.</p>
 </div>
@@ -3335,24 +3425,24 @@ warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/he
 warning: creating lock file '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell/flake.lock'
 warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/haskell-flake/hello-haskell' is dirty
 these 2 derivations will be built:
-  /nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv
-  /nix/store/hi70w0gzjfj213r0xhhva7n617hfa378-hello-flake-haskell-1.0.0.drv
-building '/nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv'...
-error: builder for '/nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
+  /nix/store/qhb3mvp8i87n58iwi3ldkwpin2m9zgya-source-hello-flake-haskell-sdist.tar.gz.drv
+  /nix/store/8qdbmfms1h0b60aqdxfk28fmdnlkcm1l-hello-flake-haskell-1.0.0.drv
+building '/nix/store/qhb3mvp8i87n58iwi3ldkwpin2m9zgya-source-hello-flake-haskell-sdist.tar.gz.drv'...
+error: builder for '/nix/store/qhb3mvp8i87n58iwi3ldkwpin2m9zgya-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
        last 7 log lines:
-       &gt; unpacking source archive /nix/store/fdxvjgdpsfjrkanzbx43g1yxf2b1lp4b-source-hello-flake-haskell
+       &gt; unpacking source archive /nix/store/gg6b20p83m5mqcfp1qr0w37bjhz3k33y-source-hello-flake-haskell
        &gt; source root is source-hello-flake-haskell
        &gt; Config file path source is default config file.
        &gt; Config file not found: /build/source-hello-flake-haskell/.config/cabal/config
        &gt; Writing default configuration to
        &gt; /build/source-hello-flake-haskell/.config/cabal/config
        &gt; /build/source-hello-flake-haskell/./LICENSE: withBinaryFile: does not exist (No such file or directory)
-       For full logs, run 'nix log /nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv'.
-error: 1 dependencies of derivation '/nix/store/hi70w0gzjfj213r0xhhva7n617hfa378-hello-flake-haskell-1.0.0.drv' failed to build</pre>
+       For full logs, run 'nix log /nix/store/qhb3mvp8i87n58iwi3ldkwpin2m9zgya-source-hello-flake-haskell-sdist.tar.gz.drv'.
+error: 1 dependencies of derivation '/nix/store/8qdbmfms1h0b60aqdxfk28fmdnlkcm1l-hello-flake-haskell-1.0.0.drv' failed to build</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We’d like to share this package with others, but first we should do some
+<p>We&#8217;d like to share this package with others, but first we should do some
 cleanup. When the package was built (automatically by the <code>nix run</code>
 command), it created a <code>flake.lock</code> file. We need to add this to the
 repo, and commit all important files.</p>
@@ -3361,7 +3451,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) 39ade13] initial commit
+[master (root-commit) 666b827] initial commit
  4 files changed, 137 insertions(+)
  create mode 100644 Main.hs
  create mode 100644 flake.lock
@@ -3378,20 +3468,20 @@ another directory and running it from there.</p>
 <pre class="nowrap">$ cd ..
 $ nix run ./hello-haskell
 these 2 derivations will be built:
-  /nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv
-  /nix/store/hi70w0gzjfj213r0xhhva7n617hfa378-hello-flake-haskell-1.0.0.drv
-building '/nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv'...
-error: builder for '/nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
+  /nix/store/qhb3mvp8i87n58iwi3ldkwpin2m9zgya-source-hello-flake-haskell-sdist.tar.gz.drv
+  /nix/store/8qdbmfms1h0b60aqdxfk28fmdnlkcm1l-hello-flake-haskell-1.0.0.drv
+building '/nix/store/qhb3mvp8i87n58iwi3ldkwpin2m9zgya-source-hello-flake-haskell-sdist.tar.gz.drv'...
+error: builder for '/nix/store/qhb3mvp8i87n58iwi3ldkwpin2m9zgya-source-hello-flake-haskell-sdist.tar.gz.drv' failed with exit code 1;
        last 7 log lines:
-       &gt; unpacking source archive /nix/store/fdxvjgdpsfjrkanzbx43g1yxf2b1lp4b-source-hello-flake-haskell
+       &gt; unpacking source archive /nix/store/gg6b20p83m5mqcfp1qr0w37bjhz3k33y-source-hello-flake-haskell
        &gt; source root is source-hello-flake-haskell
        &gt; Config file path source is default config file.
        &gt; Config file not found: /build/source-hello-flake-haskell/.config/cabal/config
        &gt; Writing default configuration to
        &gt; /build/source-hello-flake-haskell/.config/cabal/config
        &gt; /build/source-hello-flake-haskell/./LICENSE: withBinaryFile: does not exist (No such file or directory)
-       For full logs, run 'nix log /nix/store/5ar7vhd4nz8wbqrsgaxqzkh6b4ggvsrv-source-hello-flake-haskell-sdist.tar.gz.drv'.
-error: 1 dependencies of derivation '/nix/store/hi70w0gzjfj213r0xhhva7n617hfa378-hello-flake-haskell-1.0.0.drv' failed to build</pre>
+       For full logs, run 'nix log /nix/store/qhb3mvp8i87n58iwi3ldkwpin2m9zgya-source-hello-flake-haskell-sdist.tar.gz.drv'.
+error: 1 dependencies of derivation '/nix/store/8qdbmfms1h0b60aqdxfk28fmdnlkcm1l-hello-flake-haskell-1.0.0.drv' failed to build</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3426,7 +3516,7 @@ Initialized empty Git repository in /home/amy/codeberg/nix-book/source/new-flake
 <div class="sect3">
 <h4 id="_a_simple_python_program">9.2.1. A simple Python program</h4>
 <div class="paragraph">
-<p>Next, we’ll create a simple Python program.</p>
+<p>Next, we&#8217;ll create a simple Python program.</p>
 </div>
 <div class="listingblock">
 <div class="title">hello.py</div>
@@ -3448,14 +3538,14 @@ Initialized empty Git repository in /home/amy/codeberg/nix-book/source/new-flake
 </div>
 </div>
 <div class="paragraph">
-<p>Before we package the program, let’s verify that it runs. We’re going to
-need Python. By now you’ve probably figured out that we can write a
-<code>flake.nix</code> and define a development shell that includes Python. We’ll
+<p>Before we package the program, let&#8217;s verify that it runs. We&#8217;re going to
+need Python. By now you&#8217;ve probably figured out that we can write a
+<code>flake.nix</code> and define a development shell that includes Python. We&#8217;ll
 do that shortly, but first I want to show you a handy shortcut. We can
-lauch a <em>temporary</em> shell with any Nix packages we want. This is
-convenient when you just want to try out some new software and you’re
-not sure if you’ll use it again. It’s also convenient when you’re not
-ready to write <code>flake.nix</code> (perhaps you’re not sure what tools and
+launch a <em>temporary</em> shell with any Nix packages we want. This is
+convenient when you just want to try out some new software and you&#8217;re
+not sure if you&#8217;ll use it again. It&#8217;s also convenient when you&#8217;re not
+ready to write <code>flake.nix</code> (perhaps you&#8217;re not sure what tools and
 packages you need), and you want to experiment a bit first.</p>
 </div>
 <div class="paragraph">
@@ -3478,7 +3568,7 @@ packages you need), and you want to experiment a bit first.</p>
 <p>The command used here is <code>nix-shell</code> with a hyphen, not <code>nix shell</code>
 with a space; those are two different commands. In fact there are
 hyphenated and non-hyphenated versions of many Nix commands, and yes,
-it’s confusing. The non-hyphenated commands were introduced when support
+it&#8217;s confusing. The non-hyphenated commands were introduced when support
 for flakes was added to Nix. I predict that eventually all hyphenated
 commands will be replaced with non-hyphenated versions. Until then, a
 useful rule of thumb is that non-hyphenated commands are for for working
@@ -3489,7 +3579,7 @@ directly with flakes; hyphenated commands are for everything else.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>Let’s enter a shell with Python so we can test the program.</p>
+<p>Let&#8217;s enter a shell with Python so we can test the program.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -3502,7 +3592,7 @@ Hello from inside a Python program built with a Nix flake!</pre>
 <div class="sect3">
 <h4 id="_a_python_builder">9.2.2. A Python builder</h4>
 <div class="paragraph">
-<p>Next, create a Python script to build the package. We’ll use Python’s
+<p>Next, create a Python script to build the package. We&#8217;ll use Python&#8217;s
 setuptools, but you can use other build tools. For more information on
 setuptools, see the
 <a href="https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/">Python
@@ -3540,7 +3630,7 @@ args</a>.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We won’t write <code>flake.nix</code> just yet. First we’ll try building the
+<p>We won&#8217;t write <code>flake.nix</code> just yet. First we&#8217;ll try building the
 package manually.</p>
 </div>
 <div class="literalblock">
@@ -3550,10 +3640,10 @@ package manually.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The missing module error happens because we don’t have <code>build</code> available
+<p>The missing module error happens because we don&#8217;t have <code>build</code> available
 in the temporary shell. We can fix that by adding &#8220;build&#8221; to the
 temporary shell. When you need support for both a language and some of
-its packages, it’s best to use one of the Nix functions that are
+its packages, it&#8217;s best to use one of the Nix functions that are
 specific to the programming language and build system. For Python, we
 can use the <code>withPackages</code> function.</p>
 </div>
@@ -3563,7 +3653,7 @@ can use the <code>withPackages</code> function.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Note that we’re now inside a temporary shell inside the previous
+<p>Note that we&#8217;re now inside a temporary shell inside the previous
 temporary shell! To get back to the original shell, we have to <code>exit</code>
 twice. Alternatively, we could have done <code>exit</code> followed by the
 <code>nix-shell</code> command.</p>
@@ -3585,7 +3675,7 @@ the flake from the examples we did earlier. The two parts that will be
 different are the development shell and the package builder.</p>
 </div>
 <div class="paragraph">
-<p>Let’s start with the development shell. It seems logical to write
+<p>Let&#8217;s start with the development shell. It seems logical to write
 something like the following.</p>
 </div>
 <div class="literalblock">
@@ -3740,7 +3830,7 @@ something like this.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s try out the new flake.</p>
+<p>Let&#8217;s try out the new flake.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -3750,7 +3840,7 @@ error: getting status of '/nix/store/0ccnxa25whszw7mgbgyzdm4nqc0zwnm8-source/fla
 </div>
 </div>
 <div class="paragraph">
-<p>Why can’t it find <code>flake.nix</code>? Nix flakes only &#8220;see&#8221; files that are
+<p>Why can&#8217;t it find <code>flake.nix</code>? Nix flakes only &#8220;see&#8221; files that are
 part of the repository. We need to add all of the important files to the
 repo before building or running the flake.</p>
 </div>
@@ -3761,14 +3851,11 @@ $ nix run
 warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python' is dirty
 warning: creating lock file '/home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python/flake.lock'
 warning: Git tree '/home/amy/codeberg/nix-book/source/new-flake/python-flake/hello-python' is dirty
-this derivation will be built:
-  /nix/store/dh97mik5m481j14am9dgy8jx9ppv5b6d-hello-flake-python.drv
-building '/nix/store/dh97mik5m481j14am9dgy8jx9ppv5b6d-hello-flake-python.drv'...
 Hello from inside a Python program built with a Nix flake!</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We’d like to share this package with others, but first we should do some
+<p>We&#8217;d like to share this package with others, but first we should do some
 cleanup. When the package was built (automatically by the <code>nix run</code>
 command), it created a <code>flake.lock</code> file. We need to add this to the
 repo, and commit all important files.</p>
@@ -3777,7 +3864,7 @@ repo, and commit all important files.</p>
 <div class="content">
 <pre class="nowrap">$ git add flake.lock
 $ git commit -a -m 'initial commit'
-[master (root-commit) 6bec7c3] initial commit
+[master (root-commit) ddb5606] initial commit
  4 files changed, 127 insertions(+)
  create mode 100644 flake.lock
  create mode 100644 flake.nix
@@ -3818,7 +3905,7 @@ Python flake.</p>
 <h2 id="_recipes">10. Recipes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter provides examples of how to use Nix in a variety of scanarios.
+<p>This chapter provides examples of how to use Nix in a variety of scenarios.
 Multiple types of recipes are provided are provided for some scenarios;
 comparing the different recipes will help you better understand Nix.</p>
 </div>
@@ -3841,7 +3928,7 @@ are the recommended approach for development projects.</p>
 <li>
 <p>You can use <code>nix-shell</code> to run scripts in arbitrary languages, providing
 the necessary dependencies. This is particularly convenient for
-standalone scripts because you don’t need to create a repo and write a
+standalone scripts because you don&#8217;t need to create a repo and write a
 separate <code>flake.nix</code>.
 The script should start with two <em>"shebang"</em> (<code>#!</code>) commands. The first
 should invoke <code>nix-shell</code>. The second should declares the script
@@ -3896,7 +3983,7 @@ mkShell <span class="tok-p">{</span>
 </div>
 </div>
 <div class="paragraph">
-<p>Here’s a demonstration using the shell.</p>
+<p>Here&#8217;s a demonstration using the shell.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -3982,7 +4069,7 @@ mkShell <span class="tok-p">{</span>
 </div>
 </div>
 <div class="paragraph">
-<p>Here’s a demonstration using the shell.</p>
+<p>Here&#8217;s a demonstration using the shell.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -4031,7 +4118,7 @@ mkShell <span class="tok-p">{</span>
 </div>
 </div>
 <div class="paragraph">
-<p>Here’s a demonstration using the shell.</p>
+<p>Here&#8217;s a demonstration using the shell.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -4207,7 +4294,7 @@ mkShell <span class="tok-p">{</span>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_access_to_a_haskell_package_on_your_local_computer_with_interdependencies">10.6. Access to a Haskell package on your local computer, with interdependencies</h3>
+<h3 id="_access_to_a_haskell_package_on_your_local_computer_with_inter_dependencies">10.6. Access to a Haskell package on your local computer, with inter-dependencies</h3>
 <div class="paragraph">
 <p>Ex: Access four Haskell packages
 (<code>pandoc-linear-table</code>, <code>pandoc-logic-proof</code>, <code>pandoc-columns</code> and <code>pandoc-maths-web</code>)
@@ -4348,7 +4435,7 @@ mkShell <span class="tok-p">{</span>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-12-02 17:31:07 GMT
+Last updated 2023-12-03 19:55:00 GMT
 </div>
 </div>
 </body>
