@@ -10,7 +10,7 @@ $ git init
 
 == A simple Haskell program
 
-Next, we’ll create a simple Haskell program.
+Next, we'll create a simple Haskell program.
 
 ////
 $ curl https://codeberg.org/mhwombat/hello-flake-haskell/raw/branch/main/Main.hs --silent --output Main.hs
@@ -24,14 +24,14 @@ $# cat Main.hs
 
 == (Optional) Testing before packaging
 
-Before we package the program, let’s verify that it runs. We’re going to
-need a Haskell compiler. By now you’ve probably figured out that we can write a
-`flake.nix` and define a development shell that includes Haskell. We’ll
+Before we package the program, let's verify that it runs. We're going to
+need a Haskell compiler. By now you've probably figured out that we can write a
+`flake.nix` and define a development shell that includes Haskell. We'll
 do that shortly, but first I want to show you a handy shortcut. We can
-lauch a _temporary_ shell with any Nix packages we want. This is
-convenient when you just want to try out some new software and you’re
-not sure if you’ll use it again. It’s also convenient when you’re not
-ready to write `flake.nix` (perhaps you’re not sure what tools and
+launch a _temporary_ shell with any Nix packages we want. This is
+convenient when you just want to try out some new software and you're
+not sure if you'll use it again. It's also convenient when you're not
+ready to write `flake.nix` (perhaps you're not sure what tools and
 packages you need), and you want to experiment a bit first.
 
 The command to enter a temporary shell is
@@ -45,7 +45,7 @@ If there are multiple packages, they should be separated by spaces.
 The command used here is `nix-shell` with a hyphen, not `nix shell`
 with a space; those are two different commands. In fact there are
 hyphenated and non-hyphenated versions of many Nix commands, and yes,
-it’s confusing. The non-hyphenated commands were introduced when support
+it's confusing. The non-hyphenated commands were introduced when support
 for flakes was added to Nix. I predict that eventually all hyphenated
 commands will be replaced with non-hyphenated versions. Until then, a
 useful rule of thumb is that non-hyphenated commands are for for working
@@ -63,7 +63,7 @@ If you're impatient, you can skip to the next section to see the right way to do
 You can come back to this section later to learn more.
 ====
 
-Let’s enter a shell with the Glasgow Haskell Compiler ("ghc") and try to run the program.
+Let's enter a shell with the Glasgow Haskell Compiler ("ghc") and try to run the program.
 
 ....
 $# echo '$ nix-shell -p ghc'
@@ -149,7 +149,7 @@ $# cat hello-flake-haskell.cabal
 
 At this point, I would normally write `flake.nix` and use Nix to build the program.
 I'll cover that in the next section.
-However, it's useful to know how to build the package manually in a Nix envronment,
+However, it's useful to know how to build the package manually in a Nix environment,
 without using a Nix flake.
 When you're new to Nix, this can help you differentiate between problems in your flake definition
 and problems in your Cabal file.
@@ -192,13 +192,13 @@ $# cat flake.nix
 
 The above definition will work for most of your haskell projects;
 simply change the `description` and the package name in `packages.default`.
-Let’s try out the new flake.
+Let's try out the new flake.
 
 ....
 $ nix run
 ....
 
-Why can’t it find `flake.nix`? Nix flakes only "`see`" files that are
+Why can't it find `flake.nix`? Nix flakes only "`see`" files that are
 part of the repository. We need to add all of the important files to the
 repo before building or running the flake.
 
@@ -207,7 +207,7 @@ $ git add flake.nix hello-flake-haskell.cabal Main.hs
 $ nix run
 ....
 
-We’d like to share this package with others, but first we should do some
+We'd like to share this package with others, but first we should do some
 cleanup. When the package was built (automatically by the `nix run`
 command), it created a `flake.lock` file. We need to add this to the
 repo, and commit all important files.
