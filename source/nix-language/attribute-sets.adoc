@@ -32,6 +32,7 @@ false
 
 We can use the `//` operator to modify an attribute set.
 Recall that Nix values are immutable, so the result is a new value (the original is not modified).
+Attributes in the right-hand set take preference.
 
 [source]
 ....
