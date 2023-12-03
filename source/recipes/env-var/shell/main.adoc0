@@ -9,7 +9,7 @@ include::shell.nix[]
 ////
 TODO FIX
 
-Here’s a demonstration using the shell.
+Here's a demonstration using the shell.
 
 ....
 $# echo '$ nix-shell'
