@@ -1,0 +1,105 @@
+[#argument-sets]
+
+= Argument sets
+
+An attribute set that is used as a function parameter is often called an _argument set_.
+
+== Set patterns
+
+To specify an attribute set as a function parameter, we use a _set pattern_,
+which has the form
+
+    { _name1_, _name2_, ... }
+
+Note that while the key-value associations in attribute sets are separated by semi-colons,
+the key names in the attribute set _pattern are separated by commas.
+Here's an example of a function that has an attribute set as an input parameter.
+
+[source]
+....
+nix-repl> greet = { first, last }: "Hello ${first} ${last}! May I call you ${first}?"
+
+nix-repl> greet { first="Amy"; last="de Buitléir"; }
+"Hello Amy de Buitléir! May I call you Amy?"
+....
+
+
+// TODO Review my use of "we" vs "I".
+
+== Optional parameters
+
+We can make some values in an argument set optional by providing default values,
+using the syntax `_name_ ? _value_`.
+This is illustrated below.
+
+[source]
+....
+nix-repl> greet = { first, last ? "whatever-your-lastname-is", topic ? "Nix" }: "Hello ${first} ${last}! May I call you ${first}? Are you enjoying learning ${topic}?"
+
+nix-repl> greet { first="Amy"; }
+"Hello Amy whatever-your-lastname-is! May I call you Amy? Are you enjoying learning Nix?"
+
+nix-repl> greet { first="Amy"; topic="Mathematics";}
+"Hello Amy whatever-your-lastname-is! May I call you Amy? Are you enjoying learning Mathematics?"
+....
+
+== Variadic attributes
+
+A function can allow the caller to supply argument sets that contain "extra" values.
+This is done with the special parameter `...`.
+
+[source]
+....
+nix-repl> formatName = { first, last, ... }: "${first} ${last}"
+....
+
+One reason for doing this is to allow the caller to pass the same argument set to multiple functions,
+even though each function may not need all of the values.
+
+[source]
+....
+nix-repl> person = { first="Joe"; last="Bloggs"; address="123 Main Street"; }
+
+nix-repl> formatName person
+"Joe Bloggs"
+....
+
+Another reason for allowing variadic arguments is when a function calls another function,
+supplying the same argument set.
+An example is shown in <<at-patterns>>.
+
+[#at-patterns]
+== @-patterns
+
+It can be convenient for a function to be able to reference the argument set as a whole.
+This is done using an _@-pattern_.
+
+[source]
+....
+nix-repl> formatPoint = p@{ x, y, ... }: builtins.toXML p
+
+nix-repl> formatPoint { x=5; y=3; z=2; }
+"<?xml version='1.0' encoding='utf-8'?>\n<expr>\n  <attrs>\n    <attr name=\"x\">\n      <int value=\"5\" />\n    </attr>\n    <attr name=\"y\">\n      <int value=\"3\" />\n    </attr>\n    <attr name=\"z\">\n      <int value=\"2\" />\n    </attr>\n  </attrs>\n</expr>\n"
+....
+
+Alternatively, the @-pattern can appear _after_ the argument set, as in the example below.
+
+[source]
+....
+nix-repl> formatPoint = { x, y, ... } @ p: builtins.toXML p
+....
+
+An @-pattern is the only way a function can access variadic attributes,
+so they are often used together.
+In the example below, the function `greet` passes its argument set, including the variadic arguments,
+to the function `confirmAddress`.
+
+[source]
+....
+nix-repl> confirmAddress = { address, ... }: "Do you still live at ${address}?"
+
+nix-repl> greet = args@{ first, last, ... }: "Hello ${first}. " + confirmAddress args
+
+nix-repl> greet person
+"Hello Joe. Do you still live at 123 Main Street?"
+....
