@@ -11,12 +11,14 @@ TIME != date +"%T %Z"
 MAIN_ADOC_FILE = source/book.adoc
 HTML_FILE = index.html
 PDF_FILE = wombats-book-of-nix.pdf
+EPUB_FILE = wombats-book-of-nix.epub
 
 ADOC_ATTR_DATE = -a docdate="$(DATE)" -a doctime="$(TIME)"
 ADOC_ATTR_AUTHORS = -a authors="Amy de Buitléir"
 ADOC_ATTRIBUTES = $(ADOC_ATTR_DATE) $(ADOC_ATTR_AUTHORS)
 ADOC_HTML_ATTRIBUTES = -a stylesheet=../themes/html.css -a imagesdir=images
 ADOC_PDF_ATTRIBUTES = -a pdf-themesdir=themes -a pdf-theme=pdf -a imagesdir=../images
+ADOC_EPUB_ATTRIBUTES = $(ADOC_HTML_ATTRIBUTES)
 
 .PHONY: debug
 debug :
@@ -33,6 +35,9 @@ html : $(HTML_FILE)
 .PHONY: pdf
 pdf : $(PDF_FILE)
 
+.PHONY: epub
+epub : $(EPUB_FILE)
+
 # Files with the "adoc0" extension contain code that must be executed and included in order to generate asciidoc files.
 # My "run-code-inline" script is available at https://github.com/mhwombat/bin/blob/master/run-code-inline.
 # We want to treat any paths in commands as relative to the adoc0 file, so we cd to its directory.
@@ -48,9 +53,12 @@ $(HTML_FILE) : $(ADOC_FILES)
 $(PDF_FILE) : $(ADOC_FILES)
 > asciidoctor-pdf -d book $(ADOC_ATTRIBUTES) $(ADOC_PDF_ATTRIBUTES) -o $@ $(MAIN_ADOC_FILE)
 
+$(EPUB_FILE) : $(ADOC_FILES)
+> asciidoctor-epub3 -d book $(ADOC_ATTRIBUTES) $(ADOC_EPUB_ATTRIBUTES) -o $@ $(MAIN_ADOC_FILE)
+
 .PHONY: clean
 clean :
-> rm -rf $(HTML_FILE) $(PDF_FILE)
+> rm -rf $(HTML_FILE) $(PDF_FILE) $(EPUB_FILE)
 > find source -name '*-generated.adoc' -delete
 
 .PHONY: spellcheck
