@@ -11,6 +11,6 @@ the focus is on writing a series of _steps_ (statements) to achieve a desired re
 By contrast, in a functional language the focus is on _defining_ the desired result.
 
 In the case of Nix, the desired result is usually a _derivation_:
-a software package that has been built and make available for use.
+a software package that has been built and made available for use.
 The Nix language has been designed for that purpose,
 and thus has some features you don't typically find in general-purpose languages.
