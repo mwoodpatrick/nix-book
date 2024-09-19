@@ -36,7 +36,7 @@ The Boolean values in Nix are `true` and `false`.
 [#type-path]
 == Paths
 
-File paths are play an important role in building software, so Nix has a special data type for them.
+File paths play an important role in building software, so Nix has a special data type for them.
 Paths may be absolute (e.g. `/bin/sh`) or relative (e.g. `./data/file1.csv`).
 Note that paths are not enclosed in quotation marks; they are not strings!
 
