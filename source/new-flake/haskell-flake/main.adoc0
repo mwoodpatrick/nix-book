@@ -48,7 +48,7 @@ hyphenated and non-hyphenated versions of many Nix commands, and yes,
 it's confusing. The non-hyphenated commands were introduced when support
 for flakes was added to Nix. I predict that eventually all hyphenated
 commands will be replaced with non-hyphenated versions. Until then, a
-useful rule of thumb is that non-hyphenated commands are for for working
+useful rule of thumb is that non-hyphenated commands are for working
 directly with flakes; hyphenated commands are for everything else.
 ====
 

@@ -132,6 +132,6 @@ ones are listed below.
 * `$out` is the path to the location in the Nix store where the package
 will be added.
 * `$system` is the system that the package is being built for.
-* `$PWD` and `$TMP` both point to a temporary build directories
+* `$PWD` and `$TMP` both point to temporary build directories
 * `$HOME` and `$PATH` point to nonexistent directories, so the build
 cannot rely on them.
